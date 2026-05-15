@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"d:\\\\Stu\\\\Github\\\\cap.binhduong.new.version\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(ls -la \"/d/Stu/Github/cap.binhduong.new.version/.claude/\" && echo \"---\" && find \"/d/Stu/Github\" -name \"package.json\" 2>/dev/null | head -10)",
+      "Read(//d/Stu/Github/**)",
+      "Skill(superpowers:writing-plans)",
+      "Skill(engineering-advanced-skills:skill-security-auditor)",
+      "Bash(npm -v)",
+      "Bash(git --version)"
+    ]
+  }
+}
