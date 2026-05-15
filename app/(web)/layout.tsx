@@ -1,4 +1,15 @@
-// TODO: Task 7 — Header + Footer layout
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import PageTransition from "@/components/layout/PageTransition";
+
 export default function WebLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Header />
+      <main className="flex-1">
+        <PageTransition>{children}</PageTransition>
+      </main>
+      <Footer />
+    </>
+  );
 }
