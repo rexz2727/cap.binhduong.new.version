@@ -40,11 +40,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# claude code local settings
+# claude code
 .claude/
+CLAUDE.md
+AGENTS.md
 
 # database files
 *.db
 
-# internal work reports
-docs/bao-cao-*.md
+# internal docs
+docs/
