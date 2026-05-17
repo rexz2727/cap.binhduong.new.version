@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cổng thông tin Công an phường Bình Dương
 
-## Getting Started
+Cổng thông tin chính thống của Công an phường Bình Dương — phục vụ nhân dân, đảm bảo an ninh trật tự.
 
-First, run the development server:
+## Tính năng
+
+- Tin tức an ninh trật tự cập nhật hàng tuần
+- Văn bản pháp luật, thủ tục hành chính (cư trú, CCCD, VNeID, đăng ký xe)
+- Gửi phản ánh trực tuyến (ẩn danh hoặc có tên)
+- Tìm kiếm thủ tục và nội dung an ninh ngay tại trang chủ
+- Thông tin ban lãnh đạo, sơ đồ tổ chức, lịch tiếp công dân
+- Đường dây khẩn cấp 113 / 114 / 115
+
+## Công nghệ
+
+| Thành phần | Công nghệ |
+|------------|-----------|
+| Framework | Next.js 16 (App Router) |
+| UI | React 19, Tailwind CSS v4 |
+| CMS | Sanity v5 |
+| Email | Resend |
+| Validation | Zod |
+| Deploy | Vercel |
+
+## Cài đặt
+
+```bash
+npm install
+```
+
+Tạo file `.env.local` từ mẫu dưới đây:
+
+```env
+NEXT_PUBLIC_SITE_URL=https://cap-binhduong.vercel.app
+
+# Sanity CMS
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+NEXT_PUBLIC_SANITY_DATASET=production
+SANITY_API_TOKEN=your_api_token
+
+# Email (Resend)
+RESEND_API_KEY=your_resend_api_key
+CONTACT_EMAIL=your@email.com
+```
+
+## Chạy local
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Mở [http://localhost:3000](http://localhost:3000) để xem trang web.  
+Sanity Studio tại [http://localhost:3000/studio](http://localhost:3000/studio).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Lệnh
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev      # Chạy môi trường phát triển
+npm run build    # Build production
+npm run lint     # Kiểm tra ESLint
+```
 
-## Learn More
+## Cấu trúc thư mục
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  (web)/          # Trang công khai
+  (admin)/        # Sanity Studio
+  api/feedback/   # API nhận phản ánh
+components/
+  layout/         # Header, Footer, PageTransition
+  sections/       # Hero, ContactInfo, GioiThieuTabs...
+  ui/             # Button, Badge, CopBubble...
+constants/        # Thông tin site, điều hướng
+sanity/           # Cấu hình CMS và schemas
+types/            # TypeScript types
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Bảo mật
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Security headers đầy đủ (HSTS, CSP, X-Frame-Options...)
+- Validate và escape toàn bộ input người dùng trước khi xử lý
+- Biến môi trường nhạy cảm không được commit lên repo
 
-## Deploy on Vercel
+## Liên hệ
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Công an phường Bình Dương**  
+Số 01, Đường D27, KP. Hòa Phú 1, Phường Bình Dương, TP. Hồ Chí Minh  
+Điện thoại: 0274 3515 097 | Khẩn cấp: **113**
