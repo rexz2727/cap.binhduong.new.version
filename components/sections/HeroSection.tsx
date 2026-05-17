@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SITE } from "@/constants/site";
+import HeroSearch from "./HeroSearch";
 
 export default function HeroSection() {
   return (
@@ -36,8 +37,13 @@ export default function HeroSection() {
           {SITE.description}
         </p>
 
+        {/* Search */}
+        <div className="animate-fade-up delay-300 mb-10">
+          <HeroSearch />
+        </div>
+
         {/* CTA Buttons */}
-        <div className="animate-fade-up delay-300 flex flex-wrap justify-center gap-4 mb-16">
+        <div className="animate-fade-up delay-400 flex flex-wrap justify-center gap-4 mb-16">
           <Link
             href="/phan-anh"
             className="group bg-police-red hover:bg-police-red-dark text-white font-semibold px-8 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-police-red/30 hover:shadow-police-red/50 hover:-translate-y-0.5"
@@ -54,7 +60,7 @@ export default function HeroSection() {
         </div>
 
         {/* Stats */}
-        <div className="animate-fade-up delay-400 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+        <div className="animate-fade-up delay-500 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
           {[
             { label: "Tin tức cập nhật", value: "Hàng tuần", icon: "📰" },
             { label: "Văn bản pháp luật", value: "Đầy đủ", icon: "📄" },

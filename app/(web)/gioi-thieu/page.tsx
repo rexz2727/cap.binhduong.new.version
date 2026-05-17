@@ -5,6 +5,7 @@ import { client } from "@/sanity/lib/client";
 import { getPersonnel } from "@/sanity/lib/queries";
 import { SITE } from "@/constants/site";
 import PageHeader from "@/components/ui/PageHeader";
+import GioiThieuTabs from "@/components/sections/GioiThieuTabs";
 
 export const metadata: Metadata = {
   title: "Giới thiệu",
@@ -23,6 +24,9 @@ export default async function AboutPage() {
         breadcrumbs={[{ label: "Giới thiệu" }]}
       />
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-12">
+        {/* Sub-tabs: Chức năng - Sơ đồ tổ chức - Lịch tiếp công dân */}
+        <GioiThieuTabs />
+
         <section>
           <h2 className="text-2xl font-bold text-police-navy mb-4">Về chúng tôi</h2>
           <div className="prose prose-gray max-w-none">

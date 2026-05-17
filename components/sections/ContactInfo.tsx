@@ -75,9 +75,18 @@ export default function ContactInfo() {
 
             {/* Emergency call */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 text-center">
-              <p className="text-blue-200 text-sm mb-3">Đường dây khẩn cấp 24/7</p>
-              <div className="text-8xl font-extrabold text-police-gold mb-4 tracking-tight">
-                {SITE.hotline}
+              <p className="text-blue-200 text-sm mb-4">Đường dây khẩn cấp 24/7</p>
+              <div className="grid grid-cols-3 gap-3 mb-6">
+                {[
+                  { number: "113", label: "Công an", color: "text-police-gold" },
+                  { number: "114", label: "PCCC", color: "text-orange-400" },
+                  { number: "115", label: "Cấp cứu", color: "text-green-400" },
+                ].map((line) => (
+                  <a key={line.number} href={`tel:${line.number}`} className="bg-white/10 hover:bg-white/20 rounded-2xl py-3 transition-colors">
+                    <p className={`text-3xl font-extrabold ${line.color} tracking-tight`}>{line.number}</p>
+                    <p className="text-xs text-blue-300 mt-1">{line.label}</p>
+                  </a>
+                ))}
               </div>
               <p className="text-blue-200 text-sm mb-6">
                 Gọi ngay khi có sự cố an ninh trật tự, tội phạm hoặc tai nạn cần can thiệp khẩn cấp

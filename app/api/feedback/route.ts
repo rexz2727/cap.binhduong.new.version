@@ -2,7 +2,14 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function escapeHtml(str: string) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
 const feedbackSchema = z.object({
   fullName: z.string().min(2, "Vui lòng nhập họ tên (ít nhất 2 ký tự)").max(100),
@@ -27,8 +34,9 @@ export async function POST(request: Request) {
   }
 
   const { fullName, phone, subject, content, anonymous } = result.data;
-  const senderLabel = anonymous ? "Người gửi ẩn danh" : `${fullName} (${phone})`;
+  const senderLabel = anonymous ? "Người gửi ẩn danh" : `${escapeHtml(fullName)} (${escapeHtml(phone)})`;
 
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const { error } = await resend.emails.send({
     from: "Cổng Phản ánh <onboarding@resend.dev>",
     to: process.env.CONTACT_EMAIL!,
@@ -37,10 +45,10 @@ export async function POST(request: Request) {
       <h2>Phản ánh mới từ cổng thông tin Công an phường Bình Dương</h2>
       <hr/>
       <p><strong>Người gửi:</strong> ${senderLabel}</p>
-      <p><strong>Chủ đề:</strong> ${subject}</p>
+      <p><strong>Chủ đề:</strong> ${escapeHtml(subject)}</p>
       <p><strong>Nội dung:</strong></p>
       <blockquote style="border-left: 4px solid #C8102E; padding-left: 12px; color: #333;">
-        ${content.replace(/\n/g, "<br/>")}
+        ${escapeHtml(content).replace(/\n/g, "<br/>")}
       </blockquote>
       <hr/>
       <p style="font-size: 12px; color: #888;">Gửi lúc: ${new Date().toLocaleString("vi-VN")}</p>
