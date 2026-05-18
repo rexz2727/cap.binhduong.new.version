@@ -18,6 +18,22 @@ const LINKS = [
     bg: "bg-purple-50 group-hover:bg-purple-100",
   },
   {
+    icon: "💬",
+    title: "Hỏi đáp pháp luật",
+    desc: "Câu hỏi thường gặp, giải đáp trực tuyến",
+    href: "/hoi-dap",
+    color: "from-green-500 to-green-600",
+    bg: "bg-green-50 group-hover:bg-green-100",
+  },
+  {
+    icon: "📅",
+    title: "Lịch tiếp công dân",
+    desc: "Lịch tiếp dân, đăng ký gặp cán bộ",
+    href: "/lich-tiep-cong-dan",
+    color: "from-orange-500 to-orange-600",
+    bg: "bg-orange-50 group-hover:bg-orange-100",
+  },
+  {
     icon: "📢",
     title: "Phản ánh trực tuyến",
     desc: "Gửi tin báo tội phạm, kiến nghị",
@@ -47,30 +63,21 @@ export default function QuickLinks() {
           <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-police-red" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {LINKS.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`group relative bg-white rounded-2xl border border-gray-100 p-6 text-center card-hover shadow-sm animate-fade-up`}
-              style={{ animationDelay: `${i * 100}ms` }}
+              className="group relative bg-white rounded-2xl border border-gray-100 p-5 text-center card-hover shadow-sm animate-fade-up"
+              style={{ animationDelay: `${i * 80}ms` }}
             >
-              {/* Icon circle */}
-              <div className={`w-16 h-16 mx-auto rounded-2xl ${link.bg} flex items-center justify-center text-3xl mb-4 transition-colors duration-200`}>
+              <div className={`w-14 h-14 mx-auto rounded-2xl ${link.bg} flex items-center justify-center text-2xl mb-3 transition-colors duration-200`}>
                 {link.icon}
               </div>
-
-              <h3 className="font-bold text-gray-900 group-hover:text-police-red mb-2 transition-colors duration-200">
+              <h3 className="font-bold text-gray-900 group-hover:text-police-red mb-1 transition-colors duration-200 text-xs leading-tight">
                 {link.title}
               </h3>
-              <p className="text-sm text-gray-500 leading-relaxed">{link.desc}</p>
-
-              {/* Arrow */}
-              <div className="mt-4 text-police-red opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm font-medium">
-                Xem ngay →
-              </div>
-
-              {/* Bottom border accent */}
+              <p className="text-[11px] text-gray-400 leading-snug hidden sm:block">{link.desc}</p>
               <div className={`absolute bottom-0 left-0 right-0 h-1 rounded-b-2xl bg-gradient-to-r ${link.color} opacity-0 group-hover:opacity-100 transition-opacity duration-200`} />
             </Link>
           ))}

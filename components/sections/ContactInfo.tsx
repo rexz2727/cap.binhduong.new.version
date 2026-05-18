@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { SITE } from "@/constants/site";
 
 const STATS = [
@@ -88,15 +87,9 @@ export default function ContactInfo() {
                   </a>
                 ))}
               </div>
-              <p className="text-blue-200 text-sm mb-6">
+              <p className="text-blue-200 text-sm">
                 Gọi ngay khi có sự cố an ninh trật tự, tội phạm hoặc tai nạn cần can thiệp khẩn cấp
               </p>
-              <Link
-                href="/phan-anh"
-                className="inline-block bg-police-red hover:bg-police-red-dark text-white font-semibold px-8 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-police-red/30 hover:-translate-y-0.5"
-              >
-                Gửi phản ánh trực tuyến →
-              </Link>
             </div>
           </div>
         </div>

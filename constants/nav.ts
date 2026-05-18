@@ -18,5 +18,4 @@ export const NAV_ITEMS: NavItem[] = [
   },
   { label: "Văn bản pháp luật", href: "/van-ban-phap-luat" },
   { label: "Thủ tục hành chính", href: "/thu-tuc-hanh-chinh" },
-  { label: "Phản ánh", href: "/phan-anh" },
 ];

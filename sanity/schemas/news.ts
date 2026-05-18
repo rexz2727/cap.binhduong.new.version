@@ -10,9 +10,20 @@ export const newsSchema = defineType({
     defineField({ name: "publishedAt", title: "Ngày đăng", type: "datetime", validation: (r) => r.required() }),
     defineField({
       name: "category", title: "Phân loại", type: "string",
-      options: { list: [{ title: "Tin tức", value: "tin-tuc" }, { title: "Thông báo", value: "thong-bao" }, { title: "Cảnh báo", value: "canh-bao" }], layout: "radio" },
+      options: {
+        list: [
+          { title: "An ninh trật tự", value: "an-ninh-trat-tu" },
+          { title: "Hoạt động đơn vị", value: "hoat-dong-don-vi" },
+          { title: "Người tốt việc tốt", value: "nguoi-tot-viec-tot" },
+          { title: "Thông báo", value: "thong-bao" },
+          { title: "Chỉ đạo điều hành", value: "chi-dao-dieu-hanh" },
+        ],
+        layout: "radio",
+      },
       validation: (r) => r.required(),
     }),
+    defineField({ name: "isFeatured", title: "Ghim lên slider trang chủ", type: "boolean", initialValue: false }),
+    defineField({ name: "isNguoiTotViecTot", title: "Hiển thị mục Người tốt việc tốt", type: "boolean", initialValue: false }),
     defineField({ name: "excerpt", title: "Tóm tắt", type: "text", rows: 3, validation: (r) => r.required().max(300) }),
     defineField({
       name: "mainImage", title: "Ảnh đại diện", type: "image", options: { hotspot: true },

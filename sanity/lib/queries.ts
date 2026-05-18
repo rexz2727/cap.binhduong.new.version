@@ -4,6 +4,13 @@ import type { NewsPost, NewsPostPreview } from "@/types/news";
 import type { LegalDocument, LegalDocumentPreview } from "@/types/legalDocument";
 import type { Personnel } from "@/types/personnel";
 import type { Procedure } from "@/types/procedure";
+import type { PhotoAlbum, PhotoAlbumPreview } from "@/types/photoAlbum";
+import type { VideoPreviewItem } from "@/types/video";
+import type { QnaPreview } from "@/types/qna";
+import type { Announcement } from "@/types/announcement";
+import type { DraftDocument } from "@/types/draftDocument";
+import type { WantedPerson } from "@/types/wantedPerson";
+import type { CitizenSchedule } from "@/types/citizenSchedule";
 
 const isConfigured = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID !== "placeholder";
 
@@ -121,5 +128,184 @@ export async function getProcedureBySlug(slug: string): Promise<Procedure | null
       { next: { revalidate: 3600 } }
     ),
     null
+  );
+}
+
+// ─── Featured News (NewsCarousel) ────────────────────────────────────────────
+
+export async function getFeaturedNews(): Promise<NewsPostPreview[]> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "newsPost" && isFeatured == true] | order(publishedAt desc) [0...5] {
+        _id, title, slug, publishedAt, excerpt, mainImage, category, isFeatured
+      }`,
+      {},
+      { next: { revalidate: 300 } }
+    ),
+    []
+  );
+}
+
+// ─── Người tốt việc tốt ──────────────────────────────────────────────────────
+
+export async function getNguoiTotViecTot(limit = 6): Promise<NewsPostPreview[]> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "newsPost" && isNguoiTotViecTot == true] | order(publishedAt desc) [0...$limit] {
+        _id, title, slug, publishedAt, excerpt, mainImage, category
+      }`,
+      { limit },
+      { next: { revalidate: 300 } }
+    ),
+    []
+  );
+}
+
+// ─── Announcements (Ticker) ───────────────────────────────────────────────────
+
+export async function getActiveAnnouncements(): Promise<Announcement[]> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "announcement" && isActive == true && (expiryDate > now() || !defined(expiryDate))]
+        | order(priority asc)
+        { _id, text, url }`,
+      {},
+      { next: { revalidate: 120 } }
+    ),
+    []
+  );
+}
+
+// ─── Photo Albums ─────────────────────────────────────────────────────────────
+
+export async function getPhotoAlbums(limit = 12): Promise<PhotoAlbumPreview[]> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "photoAlbum"] | order(date desc) [0...$limit] {
+        _id, title, slug, date, coverImage, description, "photoCount": count(photos)
+      }`,
+      { limit },
+      { next: { revalidate: 3600 } }
+    ),
+    []
+  );
+}
+
+export async function getPhotoAlbumBySlug(slug: string): Promise<PhotoAlbum | null> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "photoAlbum" && slug.current == $slug][0] {
+        _id, title, slug, date, description, category,
+        photos[]{ asset->, caption }
+      }`,
+      { slug },
+      { next: { revalidate: 3600 } }
+    ),
+    null
+  );
+}
+
+// ─── Videos ───────────────────────────────────────────────────────────────────
+
+export async function getVideos(category = "all", limit = 12): Promise<VideoPreviewItem[]> {
+  const filter = category === "all"
+    ? groq`*[_type == "video"]`
+    : groq`*[_type == "video" && category == $category]`;
+  return safeFetch(
+    () => client.fetch(
+      groq`${filter} | order(date desc) [0...$limit] {
+        _id, title, slug, date, youtubeId, thumbnail, category
+      }`,
+      { category, limit },
+      { next: { revalidate: 3600 } }
+    ),
+    []
+  );
+}
+
+// ─── Q&A ──────────────────────────────────────────────────────────────────────
+
+export async function getQnaAnswered(category = "all", limit = 20): Promise<QnaPreview[]> {
+  const filter = category === "all"
+    ? groq`*[_type == "qna" && isAnswered == true]`
+    : groq`*[_type == "qna" && isAnswered == true && category == $category]`;
+  return safeFetch(
+    () => client.fetch(
+      groq`${filter} | order(publishedAt desc) [0...$limit] {
+        _id, question, askerName, category, answer, answeredBy, answeredAt, viewCount, publishedAt
+      }`,
+      { category, limit },
+      { next: { revalidate: 600 } }
+    ),
+    []
+  );
+}
+
+// ─── Draft Documents ──────────────────────────────────────────────────────────
+
+export async function getDraftDocuments(): Promise<DraftDocument[]> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "draftDocument" && deadline > now()] | order(deadline asc) {
+        _id, title, slug, description, deadline, fileUrl, publishedAt
+      }`,
+      {},
+      { next: { revalidate: 1800 } }
+    ),
+    []
+  );
+}
+
+// ─── Wanted Persons ───────────────────────────────────────────────────────────
+
+export async function getWantedPersons(status = "dang-truy-na"): Promise<WantedPerson[]> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "wantedPerson" && status == $status] | order(warrantDate desc) {
+        _id, fullName, aliases, photo, birthYear, hometown, crime, warrantDate, warrantAgency, status, note
+      }`,
+      { status },
+      { next: { revalidate: 1800 } }
+    ),
+    []
+  );
+}
+
+// ─── Citizen Schedule ─────────────────────────────────────────────────────────
+
+export async function getScheduleByMonth(startDate: string, endDate: string): Promise<CitizenSchedule[]> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "citizenSchedule" && date >= $startDate && date <= $endDate]
+        | order(date asc) {
+        _id, date, timeSlot, location, note, isRegular,
+        officer->{ fullName, rank, position, photo }
+      }`,
+      { startDate, endDate },
+      { next: { revalidate: 3600 } }
+    ),
+    []
+  );
+}
+
+// ─── Legal Docs Filtered ──────────────────────────────────────────────────────
+
+export async function getLegalDocsFiltered(
+  category?: string,
+  status?: string,
+  limit = 20
+): Promise<LegalDocumentPreview[]> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "legalDocument"
+        && ($category == null || category == $category)
+        && ($status == null || status == $status)]
+        | order(issuedDate desc) [0...$limit] {
+        _id, title, slug, documentNumber, issuedDate, category, issuingBody, effectiveDate, status
+      }`,
+      { category: category ?? null, status: status ?? null, limit },
+      { next: { revalidate: 3600 } }
+    ),
+    []
   );
 }

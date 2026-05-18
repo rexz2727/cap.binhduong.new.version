@@ -15,8 +15,21 @@ export const legalDocumentSchema = defineType({
       options: { list: [{ title: "Nghị quyết", value: "nghi-quyet" }, { title: "Kế hoạch", value: "ke-hoach" }, { title: "Quyết định", value: "quyet-dinh" }, { title: "Thông tư", value: "thong-tu" }, { title: "Khác", value: "khac" }] },
       validation: (r) => r.required(),
     }),
+    defineField({ name: "effectiveDate", title: "Ngày có hiệu lực", type: "date" }),
+    defineField({
+      name: "status", title: "Hiệu lực", type: "string",
+      options: {
+        list: [
+          { title: "Còn hiệu lực", value: "con-hieu-luc" },
+          { title: "Hết hiệu lực", value: "het-hieu-luc" },
+          { title: "Chờ có hiệu lực", value: "cho-hieu-luc" },
+        ],
+      },
+      initialValue: "con-hieu-luc",
+    }),
     defineField({ name: "summary", title: "Tóm tắt nội dung", type: "text", rows: 4 }),
     defineField({ name: "fileUrl", title: "Link tải file (PDF)", type: "url" }),
+    defineField({ name: "body", title: "Nội dung chi tiết", type: "array", of: [{ type: "block" }] }),
   ],
   preview: { select: { title: "title", subtitle: "documentNumber" } },
 });

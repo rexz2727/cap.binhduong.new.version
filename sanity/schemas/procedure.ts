@@ -16,6 +16,18 @@ export const procedureSchema = defineType({
     defineField({ name: "fee", title: "Lệ phí", type: "string" }),
     defineField({ name: "requirements", title: "Thành phần hồ sơ", type: "array", of: [{ type: "block" }] }),
     defineField({ name: "steps", title: "Các bước thực hiện", type: "array", of: [{ type: "block" }] }),
+    defineField({ name: "legalBasis", title: "Cơ sở pháp lý", type: "array", of: [{ type: "string" }] }),
+    defineField({
+      name: "forms", title: "Biểu mẫu tải về", type: "array",
+      of: [{
+        type: "object",
+        fields: [
+          defineField({ name: "title", title: "Tên biểu mẫu", type: "string" }),
+          defineField({ name: "fileUrl", title: "Link tải (PDF)", type: "url" }),
+        ],
+      }],
+    }),
+    defineField({ name: "onlineServiceUrl", title: "Link nộp hồ sơ trực tuyến (Cổng DVC)", type: "url" }),
   ],
   preview: { select: { title: "title", subtitle: "category" } },
 });

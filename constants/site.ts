@@ -9,4 +9,6 @@ export const SITE = {
   description:
     "Cổng thông tin chính thống của Công an phường Bình Dương — phục vụ nhân dân, đảm bảo an ninh trật tự.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://cap-binhduong.vercel.app",
+  facebook: "https://www.facebook.com",
+  youtube: "https://www.youtube.com",
 } as const;

@@ -15,8 +15,8 @@ export default function HeroSection() {
       />
 
       {/* Decorative circles */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-police-red/10 blur-3xl" />
-      <div className="absolute -bottom-32 -left-16 w-80 h-80 rounded-full bg-police-gold/10 blur-3xl" />
+      <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-police-red/10 blur-xl" />
+      <div className="absolute -bottom-32 -left-16 w-80 h-80 rounded-full bg-police-gold/10 blur-xl" />
 
       <div className="relative max-w-7xl mx-auto px-4 py-20 md:py-28">
         {/* Badge */}
@@ -44,13 +44,6 @@ export default function HeroSection() {
 
         {/* CTA Buttons */}
         <div className="animate-fade-up delay-400 flex flex-wrap justify-center gap-4 mb-16">
-          <Link
-            href="/phan-anh"
-            className="group bg-police-red hover:bg-police-red-dark text-white font-semibold px-8 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-police-red/30 hover:shadow-police-red/50 hover:-translate-y-0.5"
-          >
-            Gửi phản ánh trực tuyến
-            <span className="ml-2 group-hover:translate-x-1 inline-block transition-transform">→</span>
-          </Link>
           <Link
             href="/thu-tuc-hanh-chinh"
             className="border-2 border-white/40 hover:border-white/70 hover:bg-white/10 text-white font-semibold px-8 py-3.5 rounded-xl transition-all duration-200 backdrop-blur-sm hover:-translate-y-0.5"
