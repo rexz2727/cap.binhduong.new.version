@@ -1,48 +1,31 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+# === THU VIEN / DEPENDENCIES ===
+# Khong dong bo - chay "npm install" de cai lai
+node_modules/
+.pnp
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# === BUILD CACHE ===
+# Khong dong bo - tu dong tao lai khi chay "npm run dev"
 /.next/
 /out/
-
-# production
 /build
+/coverage
 
-# misc
+# === THONG TIN BAO MAT ===
+# QUAN TRONG: Khong bao gio dong bo file nay len GitHub
+.env
+.env.local
+.env*.local
+
+# === HE DIEU HANH ===
 .DS_Store
 *.pem
 
-# debug
+# === DEBUG LOGS ===
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
+# === TYPESCRIPT BUILD ===
 *.tsbuildinfo
 next-env.d.ts
-
-# claude code
-.claude/
-
-# database files
-*.db
-
