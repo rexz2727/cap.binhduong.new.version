@@ -1,4 +1,10 @@
 @AGENTS.md
+@docs/README.md
+@docs/PLAN.md
+@docs/SECURITY.md
+@docs/PROGRESS.md
+@docs/PERFORMANCE_OPTIMIZE.md
+@docs/REPORT.md
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
