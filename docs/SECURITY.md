@@ -6,7 +6,33 @@
 
 ---
 
-## I. CÁC LỚP BẢO MẬT ĐÃ TRIỂN KHAI
+## I. THREAT MODEL
+
+### Tài sản cần bảo vệ
+
+| Tài sản | Mức độ nhạy cảm | Rủi ro nếu bị xâm phạm |
+|---|---|---|
+| Thông tin người dân gửi phản ánh (tên, SĐT, nội dung) | 🔴 Cao | Lộ danh tính người tố giác tội phạm |
+| `RESEND_API_KEY` | 🔴 Cao | Spam email hàng loạt, tốn chi phí |
+| `STUDIO_BASIC_PASS` + tài khoản admin | 🔴 Cao | Chỉnh sửa nội dung chính thống của đơn vị |
+| `SANITY_API_TOKEN` | 🟡 Trung bình | Đọc/ghi nội dung CMS không qua Studio |
+| `CONTACT_EMAIL` | 🟡 Trung bình | Spam, phishing nhắm vào đơn vị |
+| Nội dung trang web (tin tức, văn bản) | 🟡 Trung bình | Defacement, phát tán tin giả |
+
+### STRIDE Analysis
+
+| Mối đe dọa | Điểm tấn công | Mức độ | Trạng thái |
+|---|---|---|---|
+| **Spoofing** — giả mạo request đến API feedback | `POST /api/feedback` không có auth | 🔴 Cao | ✅ Zod validation + escapeHtml |
+| **Tampering** — chỉnh sửa nội dung CMS qua Sanity API | Token Sanity lộ ra client | 🟡 Trung bình | ✅ Token server-only |
+| **Repudiation** — spam feedback không có audit trail | Không có server-side logging | 🟡 Trung bình | ⏳ Chưa có rate limiting |
+| **Information Disclosure** — lộ env vars ra browser | `NEXT_PUBLIC_` prefix dùng sai | 🔴 Cao | ✅ Phân tách đúng |
+| **Denial of Service** — spam form → vét quota Resend | Không có rate limiting | 🔴 Cao | ⏳ Chưa triển khai |
+| **Elevation of Privilege** — truy cập `/studio` trái phép | Không có auth middleware | 🟡 Trung bình | ✅ Basic Auth middleware |
+
+---
+
+## II. CÁC LỚP BẢO MẬT ĐÃ TRIỂN KHAI
 
 ### 1. Security Headers (`next.config.ts`)
 

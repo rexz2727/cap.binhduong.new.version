@@ -8,13 +8,33 @@
 
 ## I. ĐÃ TỐI ƯU
 
+### Tóm tắt kết quả
+
+| Thay đổi | File | Lợi ích |
+|---|---|---|
+| Bỏ `framer-motion` | `components/layout/PageTransition.tsx` | −~100KB JS bundle, giảm TTI |
+| `next/font` thay `@import url()` | `app/layout.tsx`, `app/globals.css` | Bỏ render-blocking font request |
+| Loading skeleton | `app/(web)/loading.tsx` | Perceived load time tốt hơn |
+| `blur-xl` thay `blur-3xl` | `components/sections/HeroSection.tsx` | Giảm GPU repaint trên mobile |
+| Xóa nút Phản ánh trùng | `components/sections/ContactInfo.tsx` | UX sạch, không nhầm lẫn |
+| Sanity CDN bật | `sanity/lib/client.ts` | Ảnh cache tại edge gần người dùng |
+
 ### 1. Bundle Size — Bỏ thư viện nặng
 
 | Thư viện bị bỏ | Kích thước tiết kiệm | Thay thế |
 |---|---|---|
 | `framer-motion` | ~100KB gzipped | CSS `transition` + Tailwind |
 
-Hiệu ứng fade-up, card hover, page transition hiện dùng CSS thuần — đủ dùng, không cần JS animation library.
+`components/layout/PageTransition.tsx` đã được viết lại thành:
+```tsx
+"use client";
+import { usePathname } from "next/navigation";
+export default function PageTransition({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  return <div key={pathname} className="animate-fade-in">{children}</div>;
+}
+```
+`animate-fade-in` được định nghĩa trong `app/globals.css` (opacity 0→1, 0.5s ease-out).
 
 ### 2. Font Optimization
 
