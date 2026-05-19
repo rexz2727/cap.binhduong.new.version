@@ -1,4 +1,4 @@
-@AGENTS.md
+@docs/AGENTS.md
 @docs/README.md
 @docs/PLAN.md
 @docs/SECURITY.md
