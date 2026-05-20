@@ -108,13 +108,30 @@
 
 ---
 
-## ⏳ CÒN LẠI — LẬP TRÌNH VIÊN (tuỳ chọn, ưu tiên thấp)
+## ⏳ CÒN LẠI — GIAI ĐOẠN 3 (UX & SEO)
 
-### C1 — Sitemap & robots.txt
-- [ ] Tạo `app/sitemap.ts` và `app/robots.ts` — giúp Google index đúng
+### Ưu tiên cao
 
-### C2 — YouTube lazy-load
-- [ ] Đổi `VideoPlayer` từ iframe tải ngay sang click-to-play — giảm ~500KB script thừa
+| Mã | File | Nội dung |
+|---|---|---|
+| C1 | `app/(web)/search/page.tsx` + `HeroSearch.tsx` | Tìm kiếm toàn site thật — route `/search?q=`, GROQ full-text trên newsPost + procedure + legalDocument |
+| C2 | `app/not-found.tsx` | Trang 404 tùy chỉnh — có logo, điều hướng, số 113 |
+| C3 | `app/sitemap.ts` + `app/robots.ts` | SEO — Google index đúng các trang công khai, loại `/studio` |
+
+### Ưu tiên trung bình
+
+| Mã | File | Nội dung |
+|---|---|---|
+| C4 | `app/globals.css` | CSS `@media print` cho trang thủ tục — ẩn header/footer/nav khi in |
+| C5 | `app/(web)/phan-anh/page.tsx`, `forms/QnaForm.tsx` | Toast/banner thành công rõ ràng sau khi gửi form |
+| C6 | `components/ui/EmergencyButton.tsx` | Nút gọi 113 cố định trên mobile — chỉ hiện trên màn hình nhỏ |
+
+### Ưu tiên thấp
+
+| Mã | File | Nội dung |
+|---|---|---|
+| C7 | `components/ui/VideoPlayer.tsx` | Click-to-play thay iframe YouTube tải ngay — giảm ~500KB script |
+| C8 | `app/opengraph-image.tsx` | OG image động cho từng bài tin — đẹp khi share Zalo/Facebook |
 
 ---
 

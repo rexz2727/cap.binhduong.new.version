@@ -2,7 +2,7 @@
 
 **Dự án:** Cổng thông tin Công an phường Bình Dương  
 **Người thực hiện:** Rex Nguyen  
-**Ngày lập:** 18/05/2026 | **Cập nhật:** 19/05/2026  
+**Ngày lập:** 18/05/2026 | **Cập nhật:** 20/05/2026  
 **Mục tiêu hoàn thành:** Quý III/2026
 
 ---
@@ -11,15 +11,15 @@
 
 ```
 / (root)
-├── next.config.ts              ✅ Security headers đầy đủ
+├── next.config.ts              ✅ Security headers + CSP YouTube
 ├── middleware.ts               ✅ Basic Auth /studio
 ├── tsconfig.json               ✅
 ├── eslint.config.mjs           ✅ eslint-plugin-security
-├── .env.local                  ⚠️  Còn placeholder — cần điền thật
+├── .env.local                  ⚠️  Chưa có — cần đơn vị điền thật
 │
 ├── constants/
-│   ├── site.ts                 ⚠️  Cần xác nhận SĐT/địa chỉ chính thức
-│   └── nav.ts                  ⏳ Cần thêm mục menu Giai đoạn 2 (B13)
+│   ├── site.ts                 ⚠️  Facebook/YouTube URL cần URL thật (A5)
+│   └── nav.ts                  ✅ 9 mục đầy đủ
 │
 ├── types/                      ✅ 11 files — đủ cho tất cả schemas
 │
@@ -34,12 +34,12 @@
 │   ├── layout/
 │   │   ├── Header.tsx          ✅ LiveClock, NewsTicker, social icons
 │   │   ├── Footer.tsx          ✅ 4 cột, số khẩn cấp
-│   │   ├── MobileMenu.tsx      ✅ cần cập nhật menu mới (B13)
+│   │   ├── MobileMenu.tsx      ✅
 │   │   ├── PageTransition.tsx  ✅ CSS thuần, không framer-motion
 │   │   └── NewsTicker.tsx      ✅
 │   ├── sections/
 │   │   ├── HeroSection.tsx     ✅ blur-xl (đã tối ưu GPU)
-│   │   ├── HeroSearch.tsx      ✅
+│   │   ├── HeroSearch.tsx      ⚠️  UI có sẵn nhưng chưa có logic tìm kiếm (C1)
 │   │   ├── NewsCarousel.tsx    ✅
 │   │   ├── NguoiTotViecTot.tsx ✅
 │   │   ├── PhotoAlbumPreview.tsx ✅
@@ -67,23 +67,26 @@
 ├── app/
 │   ├── layout.tsx              ✅ next/font Be Vietnam Pro
 │   ├── globals.css             ✅ Tailwind v4 @theme, animate-fade-in
-│   ├── (admin)/studio/         ✅
+│   ├── not-found.tsx           ❌ Chưa có — Next.js dùng trang 404 mặc định (C2)
+│   ├── sitemap.ts              ❌ Chưa có — cần cho SEO (C3)
+│   ├── robots.ts               ❌ Chưa có — cần cho SEO (C3)
+│   ├── (admin)/studio/         ✅ NextStudio đầy đủ
 │   ├── (web)/
 │   │   ├── layout.tsx          ✅ CopBubble tích hợp
 │   │   ├── loading.tsx         ✅ Skeleton
-│   │   ├── page.tsx            ⏳ Cần thêm 4 sections (B12)
+│   │   ├── page.tsx            ✅ 8 sections đầy đủ
 │   │   ├── tin-tuc/            ✅
 │   │   ├── van-ban-phap-luat/  ✅
-│   │   ├── thu-tuc-hanh-chinh/ ⏳ Cần thêm biểu mẫu tải về (B10)
+│   │   ├── thu-tuc-hanh-chinh/ ✅ có biểu mẫu tải về + ⚠️ cần print CSS (C4)
 │   │   ├── gioi-thieu/         ✅
-│   │   ├── phan-anh/           ✅
-│   │   ├── hoi-dap/            ✅
+│   │   ├── phan-anh/           ✅ ⚠️ cần feedback rõ hơn sau submit (C5)
+│   │   ├── hoi-dap/            ✅ ⚠️ cần feedback rõ hơn sau submit (C5)
 │   │   ├── thu-vien-anh/       ✅
 │   │   ├── video/              ✅
 │   │   ├── chinh-sach-phap-luat/ ✅
 │   │   ├── truy-na/            ✅
 │   │   ├── so-do-trang/        ✅
-│   │   └── lich-tiep-cong-dan/ ❌ Chưa có (B9)
+│   │   └── lich-tiep-cong-dan/ ✅
 │   └── api/
 │       ├── feedback/route.ts   ✅ Zod + escapeHtml
 │       └── qna/route.ts        ✅
@@ -104,7 +107,7 @@ Xây dựng cổng thông tin điện tử chính thức cho Công an phường 
 
 ---
 
-## II. CÔNG NGHỆ
+## III. CÔNG NGHỆ
 
 | Hạng mục | Công nghệ | Ghi chú |
 |---|---|---|
@@ -117,7 +120,7 @@ Xây dựng cổng thông tin điện tử chính thức cho Công an phường 
 
 ---
 
-## III. PHẠM VI CHỨC NĂNG
+## IV. PHẠM VI CHỨC NĂNG
 
 ### Giai đoạn 1 — Nền tảng cốt lõi ✅ HOÀN THÀNH
 
@@ -127,50 +130,41 @@ Xây dựng cổng thông tin điện tử chính thức cho Công an phường 
 | 2 | Giới thiệu đơn vị, ban lãnh đạo | ✅ |
 | 3 | Tin tức — đăng, tìm kiếm, lọc danh mục | ✅ |
 | 4 | Văn bản pháp luật — tra cứu, tải về | ✅ |
-| 5 | Thủ tục hành chính — hướng dẫn chi tiết | ✅ |
+| 5 | Thủ tục hành chính — hướng dẫn chi tiết + biểu mẫu tải về | ✅ |
 | 6 | Form phản ánh trực tuyến (gửi qua email) | ✅ |
 | 7 | Bảo mật: Basic Auth, security headers OWASP | ✅ |
 | 8 | Tối ưu: CDN, font, loading skeleton | ✅ |
 
-### Giai đoạn 2 — Mở rộng tính năng 🔄 ĐANG THỰC HIỆN
+### Giai đoạn 2 — Mở rộng tính năng ✅ HOÀN THÀNH
 
 | Mã | Tính năng | Trạng thái |
 |---|---|---|
 | B5 | GROQ queries đầy đủ (19 queries) | ✅ |
-| B6 | Thư viện carousel (embla) | ✅ cài, cần `npm install` |
+| B6 | Thư viện carousel (embla) | ✅ |
 | B7 | 12 components mới | ✅ |
 | B8 | Cập nhật Header, Footer, MobileMenu, QuickLinks | ✅ |
-| B9 | 8/9 trang Giai đoạn 2 | ✅ thiếu `/lich-tiep-cong-dan` |
-| B10 | Biểu mẫu tải về trong trang thủ tục | ⏳ |
+| B9 | Trang `/lich-tiep-cong-dan` | ✅ |
+| B10 | Biểu mẫu tải về trong trang thủ tục | ✅ |
 | B11 | API `POST /api/qna` | ✅ |
-| B12 | Cập nhật trang chủ (4 sections mới) | ⏳ |
-| B13 | Cập nhật navigation (4 mục mới) | ⏳ |
+| B12 | Cập nhật trang chủ (4 sections mới) | ✅ |
+| B13 | Cập nhật navigation (4 mục mới) | ✅ |
 
-### Còn lại cần làm (lập trình viên)
+### Giai đoạn 3 — Hoàn thiện UX & SEO 🔄 KẾ HOẠCH
 
-**1. Trang `/lich-tiep-cong-dan`**
-- Dùng `getScheduleByMonth(startDate, endDate)` → `CitizenSchedule[]`
-- `searchParams ?month=YYYY-MM`, mặc định tháng hiện tại
-- Hiển thị bảng theo ngày, thông tin cán bộ trực
-
-**2. Biểu mẫu tải về (B10)**
-- Thêm section vào `app/(web)/thu-tuc-hanh-chinh/[slug]/page.tsx`
-- Field: `proc.forms?: { title: string, fileUrl: string }[]`
-- Đặt sau block `steps`
-
-**3. Cập nhật trang chủ (B12)**
-- `app/(web)/page.tsx` — thêm theo thứ tự:
-  1. `<NewsCarousel />` — sau HeroSection
-  2. `<NguoiTotViecTot />` — sau LatestNews
-  3. `<PhotoAlbumPreview />` — sau NguoiTotViecTot
-  4. `<VideoPreview />` — trước ContactInfo
-
-**4. Cập nhật navigation (B13)**
-- `constants/nav.ts` — thêm: Hỏi đáp, Thư viện (Ảnh/Video), Chính sách PL, Lịch tiếp dân
+| Mã | Tính năng | Ưu tiên | Mô tả |
+|---|---|---|---|
+| C1 | Tìm kiếm toàn site | 🔴 Cao | `HeroSearch` hiện chỉ là UI — cần route `/search?q=` và GROQ full-text search |
+| C2 | Trang 404 tùy chỉnh | 🔴 Cao | Tạo `app/not-found.tsx` — hiện Next.js hiển thị trang trắng mặc định |
+| C3 | Sitemap + robots.txt | 🔴 Cao | `app/sitemap.ts` + `app/robots.ts` — cần để Google index đúng khi deploy |
+| C4 | CSS in ấn thủ tục | 🟡 Trung bình | `@media print` cho trang thủ tục — người dân hay in mang theo |
+| C5 | Feedback sau submit form | 🟡 Trung bình | Toast/banner thành công rõ ràng sau khi gửi phản ánh và hỏi đáp |
+| C6 | Nút gọi khẩn trên mobile | 🟡 Trung bình | Nút 113 cố định trên mobile — tương tự CopBubble nhưng cho khẩn cấp |
+| C7 | YouTube lazy-load | 🟢 Thấp | Click-to-play thay iframe load ngay — giảm ~500KB script |
+| C8 | OpenGraph image động | 🟢 Thấp | `app/opengraph-image.tsx` — đẹp khi share lên Zalo/Facebook |
 
 ---
 
-## IV. PHÂN CÔNG ĐƠN VỊ
+## V. PHÂN CÔNG ĐƠN VỊ
 
 | Mã | Nội dung | Trạng thái |
 |---|---|---|
@@ -178,18 +172,18 @@ Xây dựng cổng thông tin điện tử chính thức cho Công an phường 
 | A2 | Tạo tài khoản Resend → lấy API key | ⏳ |
 | A3 | Nhập nội dung mẫu vào Sanity Studio | ⏳ Cần A1 |
 | A4 | Upload logo chính thức vào `public/logo/` | ⏳ |
-| A5 | Xác nhận địa chỉ, SĐT, email trong `constants/site.ts` | ⏳ |
+| A5 | Xác nhận Facebook/YouTube URL thật trong `constants/site.ts` | ⏳ |
 | A6 | Deploy Vercel + điền env vars | ⏳ Cần A1+A2 |
 | A7 | Chạy `npm install` sau khi pull code mới nhất | ⏳ |
 
 ---
 
-## V. TIẾN ĐỘ ĐỀ XUẤT
+## VI. TIẾN ĐỘ ĐỀ XUẤT
 
 ```
-Tuần 3 (19–25/05):  B10 + B12 + B13 + trang /lich-tiep-cong-dan
-Tuần 4 (26–01/06):  Tích hợp nội dung thật từ đơn vị (A3–A5)
-Tuần 5 (02–08/06):  Kiểm thử tổng thể + tối ưu
+Tuần 3 (20–25/05):  Giai đoạn 3 — C1, C2, C3 (ưu tiên cao)
+Tuần 4 (26–01/06):  Giai đoạn 3 — C4, C5, C6 + đơn vị cung cấp nội dung (A1–A5)
+Tuần 5 (02–08/06):  Kiểm thử tổng thể + tối ưu + C7, C8 nếu còn thời gian
 Tuần 6 (09–15/06):  Deploy chính thức (A6)
 
 Song song: Đơn vị thực hiện A1 → A2 → A3 → A4 → A5
@@ -197,7 +191,7 @@ Song song: Đơn vị thực hiện A1 → A2 → A3 → A4 → A5
 
 ---
 
-## VI. CHI PHÍ HẠ TẦNG
+## VII. CHI PHÍ HẠ TẦNG
 
 | Dịch vụ | Gói | Chi phí |
 |---|---|---|
@@ -208,4 +202,4 @@ Song song: Đơn vị thực hiện A1 → A2 → A3 → A4 → A5
 
 ---
 
-*Cổng thông tin Công an phường Bình Dương — Cập nhật 19/05/2026*
+*Cổng thông tin Công an phường Bình Dương — Cập nhật 20/05/2026*
