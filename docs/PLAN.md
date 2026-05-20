@@ -17,6 +17,9 @@
 ├── eslint.config.mjs           ✅ eslint-plugin-security
 ├── .env.local                  ⚠️  Chưa có — cần đơn vị điền thật
 │
+├── lib/
+│   └── rate-limit.ts           ✅ Rate limiter in-memory cho API routes
+│
 ├── constants/
 │   ├── site.ts                 ⚠️  Facebook/YouTube URL cần URL thật (A5)
 │   └── nav.ts                  ✅ 9 mục đầy đủ
@@ -28,6 +31,7 @@
 │   ├── schemas/                ✅ 11 schemas
 │   └── lib/
 │       ├── client.ts           ✅ CDN bật
+│       ├── image.ts            ✅ urlFor — build URL ảnh từ CDN Sanity
 │       └── queries.ts          ✅ 19 queries với safeFetch + revalidate
 │
 ├── components/
@@ -39,7 +43,7 @@
 │   │   └── NewsTicker.tsx      ✅
 │   ├── sections/
 │   │   ├── HeroSection.tsx     ✅ blur-xl (đã tối ưu GPU)
-│   │   ├── HeroSearch.tsx      ⚠️  UI có sẵn nhưng chưa có logic tìm kiếm (C1)
+│   │   ├── HeroSearch.tsx      ✅ Tìm kiếm điều hướng /search?q= (C1)
 │   │   ├── NewsCarousel.tsx    ✅
 │   │   ├── NguoiTotViecTot.tsx ✅
 │   │   ├── PhotoAlbumPreview.tsx ✅
@@ -67,9 +71,9 @@
 ├── app/
 │   ├── layout.tsx              ✅ next/font Be Vietnam Pro
 │   ├── globals.css             ✅ Tailwind v4 @theme, animate-fade-in
-│   ├── not-found.tsx           ❌ Chưa có — Next.js dùng trang 404 mặc định (C2)
-│   ├── sitemap.ts              ❌ Chưa có — cần cho SEO (C3)
-│   ├── robots.ts               ❌ Chưa có — cần cho SEO (C3)
+│   ├── not-found.tsx           ✅ Trang 404 tùy chỉnh (C2)
+│   ├── sitemap.ts              ✅ Sitemap động từ Sanity (C3)
+│   ├── robots.ts               ✅ Chặn /studio và /api (C3)
 │   ├── (admin)/studio/         ✅ NextStudio đầy đủ
 │   ├── (web)/
 │   │   ├── layout.tsx          ✅ CopBubble tích hợp
@@ -77,10 +81,10 @@
 │   │   ├── page.tsx            ✅ 8 sections đầy đủ
 │   │   ├── tin-tuc/            ✅
 │   │   ├── van-ban-phap-luat/  ✅
-│   │   ├── thu-tuc-hanh-chinh/ ✅ có biểu mẫu tải về + ⚠️ cần print CSS (C4)
+│   │   ├── thu-tuc-hanh-chinh/ ✅ biểu mẫu tải về + print CSS (C4)
 │   │   ├── gioi-thieu/         ✅
-│   │   ├── phan-anh/           ✅ ⚠️ cần feedback rõ hơn sau submit (C5)
-│   │   ├── hoi-dap/            ✅ ⚠️ cần feedback rõ hơn sau submit (C5)
+│   │   ├── phan-anh/           ✅ success state sau submit (C5)
+│   │   ├── hoi-dap/            ✅ success state sau submit (C5)
 │   │   ├── thu-vien-anh/       ✅
 │   │   ├── video/              ✅
 │   │   ├── chinh-sach-phap-luat/ ✅
@@ -88,8 +92,8 @@
 │   │   ├── so-do-trang/        ✅
 │   │   └── lich-tiep-cong-dan/ ✅
 │   └── api/
-│       ├── feedback/route.ts   ✅ Zod + escapeHtml
-│       └── qna/route.ts        ✅
+│       ├── feedback/route.ts   ✅ Zod + escapeHtml + rate limiting
+│       └── qna/route.ts        ✅ Zod + rate limiting
 │
 └── public/
     └── logo/                   ⚠️  Chỉ có .gitkeep — cần logo thật (A4)
@@ -149,18 +153,20 @@ Xây dựng cổng thông tin điện tử chính thức cho Công an phường 
 | B12 | Cập nhật trang chủ (4 sections mới) | ✅ |
 | B13 | Cập nhật navigation (4 mục mới) | ✅ |
 
-### Giai đoạn 3 — Hoàn thiện UX & SEO 🔄 KẾ HOẠCH
+### Giai đoạn 3 — Hoàn thiện UX & SEO 🔄 C1–C6 HOÀN THÀNH
 
-| Mã | Tính năng | Ưu tiên | Mô tả |
+| Mã | Tính năng | Trạng thái | Mô tả |
 |---|---|---|---|
-| C1 | Tìm kiếm toàn site | 🔴 Cao | `HeroSearch` hiện chỉ là UI — cần route `/search?q=` và GROQ full-text search |
-| C2 | Trang 404 tùy chỉnh | 🔴 Cao | Tạo `app/not-found.tsx` — hiện Next.js hiển thị trang trắng mặc định |
-| C3 | Sitemap + robots.txt | 🔴 Cao | `app/sitemap.ts` + `app/robots.ts` — cần để Google index đúng khi deploy |
-| C4 | CSS in ấn thủ tục | 🟡 Trung bình | `@media print` cho trang thủ tục — người dân hay in mang theo |
-| C5 | Feedback sau submit form | 🟡 Trung bình | Toast/banner thành công rõ ràng sau khi gửi phản ánh và hỏi đáp |
-| C6 | Nút gọi khẩn trên mobile | 🟡 Trung bình | Nút 113 cố định trên mobile — tương tự CopBubble nhưng cho khẩn cấp |
+| C1 | Tìm kiếm toàn site | ✅ | `HeroSearch` điều hướng `/search?q=`, GROQ full-text trên 3 content types |
+| C2 | Trang 404 tùy chỉnh | ✅ | `app/not-found.tsx` — quick links, nút gọi 113 |
+| C3 | Sitemap + robots.txt | ✅ | `app/sitemap.ts` + `app/robots.ts` — sitemap động, chặn `/studio` và `/api` |
+| C4 | CSS in ấn thủ tục | ✅ | `@media print` trong `globals.css` cho trang thủ tục |
+| C5 | Feedback sau submit form | ✅ | Success state rõ ràng sau khi gửi phản ánh và hỏi đáp |
+| C6 | Nút gọi khẩn trên mobile | ✅ | `EmergencyButton` — thanh 113 cố định đáy mobile |
 | C7 | YouTube lazy-load | 🟢 Thấp | Click-to-play thay iframe load ngay — giảm ~500KB script |
 | C8 | OpenGraph image động | 🟢 Thấp | `app/opengraph-image.tsx` — đẹp khi share lên Zalo/Facebook |
+
+> Ngoài C1–C8: đã bổ sung **rate limiting** cho `/api/feedback` & `/api/qna` (bảo mật) và sửa 2 lỗi build có sẵn — `npm run build` pass sạch.
 
 ---
 
