@@ -31,7 +31,7 @@ export const qnaSchema = defineType({
   ],
   preview: {
     select: { title: "question", subtitle: "askerName" },
-    prepare: ({ title, subtitle }: { title: string; subtitle?: string }) => ({
+    prepare: ({ title, subtitle }) => ({
       title: title?.slice(0, 80),
       subtitle: subtitle ?? "Ẩn danh",
     }),

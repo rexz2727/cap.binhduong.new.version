@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 function escapeHtml(str: string) {
   return str
@@ -20,6 +21,13 @@ const feedbackSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  if (!checkRateLimit(getClientIp(request))) {
+    return NextResponse.json(
+      { error: "Bạn đã gửi quá nhiều lần. Vui lòng thử lại sau ít phút." },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();

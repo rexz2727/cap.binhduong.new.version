@@ -18,7 +18,7 @@ export const citizenScheduleSchema = defineType({
   ],
   preview: {
     select: { title: "date", subtitle: "timeSlot", officer: "officer.fullName" },
-    prepare: ({ title, subtitle, officer }: { title: string; subtitle: string; officer?: string }) => ({
+    prepare: ({ title, subtitle, officer }) => ({
       title: `${title} — ${officer ?? "Chưa phân công"}`,
       subtitle,
     }),

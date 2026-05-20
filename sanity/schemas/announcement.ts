@@ -13,7 +13,7 @@ export const announcementSchema = defineType({
   ],
   preview: {
     select: { title: "text", subtitle: "isActive" },
-    prepare: ({ title, subtitle }: { title: string; subtitle: boolean }) => ({
+    prepare: ({ title, subtitle }) => ({
       title,
       subtitle: subtitle ? "Đang hiển thị" : "Đã ẩn",
     }),
