@@ -90,3 +90,19 @@
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+
+@media print {
+  header, footer, nav,
+  [data-print="hide"],
+  .animate-ticker { display: none !important; }
+
+  body { font-size: 12pt; color: #000; background: #fff; }
+
+  main { padding: 0 !important; }
+
+  a { color: inherit; text-decoration: none; }
+
+  h1, h2, h3 { page-break-after: avoid; }
+
+  .prose { max-width: 100% !important; }
+}

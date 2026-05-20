@@ -28,7 +28,7 @@ export default function CopBubble() {
   const tel = `tel:${SITE.phone.replace(/\s/g, "")}`;
 
   return (
-    <div ref={ref} className="fixed bottom-7 right-6 z-50 animate-fade-up">
+    <div ref={ref} data-print="hide" className="fixed bottom-7 right-6 z-50 animate-fade-up">
       {/* Dropdown menu */}
       {menuOpen && (
         <div className="absolute bottom-full right-0 mb-3 bg-white border border-blue-100 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 min-w-[260px] animate-fade-up">
