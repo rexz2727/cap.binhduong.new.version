@@ -1,8 +1,8 @@
 # TIẾN ĐỘ DỰ ÁN
 
 **Dự án:** Cổng thông tin Công an phường Bình Dương  
-**Cập nhật lần cuối:** 19/05/2026  
-**Tiến độ tổng thể: ~85%** — Giai đoạn 1 hoàn tất, Giai đoạn 2 còn 4 việc nhỏ
+**Cập nhật lần cuối:** 20/05/2026  
+**Tiến độ tổng thể: ~95%** — Giai đoạn 1 & 2 hoàn tất, còn chờ đơn vị cung cấp nội dung & deploy
 
 ---
 
@@ -10,7 +10,7 @@
 
 | Hạng mục | Tổng | Hoàn thành | Còn lại |
 |---|---|---|---|
-| Trang web (pages) | 19 | 18 | 1 |
+| Trang web (pages) | 19 | 19 | 0 |
 | Sanity schemas | 11 | 11 | 0 |
 | TypeScript types | 11 | 11 | 0 |
 | GROQ queries | 19 | 19 | 0 |
@@ -27,7 +27,9 @@
 - [x] Sanity CMS v5 tích hợp
 - [x] Resend email tích hợp
 - [x] Security headers OWASP đầy đủ (HSTS, CSP, X-Frame-Options...)
+- [x] CSP `frame-src` cho phép YouTube — VideoPlayer hoạt động đúng
 - [x] Basic Auth bảo vệ `/studio`
+- [x] Sanity Studio nhúng đầy đủ bằng `NextStudio` — không còn placeholder
 - [x] Zod validation tại API routes
 - [x] HTML injection prevention (`escapeHtml`)
 - [x] Vá 2 lỗ hổng Dependabot (postcss, js-yaml) — `npm audit` = 0
@@ -74,12 +76,12 @@
 - [x] `components/forms/QnaForm.tsx`
 - [x] `components/ui/Badge.tsx`, `Button.tsx`, `PageHeader.tsx`, `NewsCard.tsx`, `LegalDocCard.tsx`
 
-### Trang (18/19)
-- [x] `/` — Trang chủ *(cần thêm 4 sections — xem B12)*
+### Trang (19/19)
+- [x] `/` — Trang chủ — đủ 8 sections: Hero, NewsCarousel, QuickLinks, LatestNews, NguoiTotViecTot, PhotoAlbumPreview, VideoPreview, ContactInfo
 - [x] `/gioi-thieu`
 - [x] `/tin-tuc` + `/tin-tuc/[slug]`
 - [x] `/van-ban-phap-luat` + `/van-ban-phap-luat/[slug]`
-- [x] `/thu-tuc-hanh-chinh` + `/thu-tuc-hanh-chinh/[slug]`
+- [x] `/thu-tuc-hanh-chinh` + `/thu-tuc-hanh-chinh/[slug]` — có section biểu mẫu tải về
 - [x] `/phan-anh`
 - [x] `/hoi-dap` + `/hoi-dap/gui-cau-hoi`
 - [x] `/thu-vien-anh` + `/thu-vien-anh/[slug]`
@@ -87,10 +89,14 @@
 - [x] `/chinh-sach-phap-luat`
 - [x] `/truy-na`
 - [x] `/so-do-trang`
+- [x] `/lich-tiep-cong-dan` — điều hướng tháng, nhóm lịch theo ngày, thông tin cán bộ trực
 
 ### API Routes (2/2)
 - [x] `POST /api/feedback` — nhận phản ánh, validate Zod, gửi email Resend
 - [x] `POST /api/qna` — nhận câu hỏi, gửi email thông báo
+
+### Navigation
+- [x] `constants/nav.ts` — đủ 9 mục: Trang chủ, Giới thiệu, Tin tức, Văn bản PL, Thủ tục HC, Hỏi đáp, Thư viện (Ảnh/Video), Chính sách PL, Lịch tiếp dân
 
 ### Tối ưu hiệu năng
 - [x] Sanity CDN bật — giảm thời gian phản hồi
@@ -98,38 +104,29 @@
 - [x] Font tối ưu — không chớp trắng khi load
 - [x] Loading skeleton — không màn hình trắng
 - [x] ISR revalidation đúng mức cho từng loại nội dung
+- [x] `Promise.all` fetch song song trên trang chủ
 
 ---
 
-## ⏳ CÒN LẠI — LẬP TRÌNH VIÊN (4 việc)
+## ⏳ CÒN LẠI — LẬP TRÌNH VIÊN (tuỳ chọn, ưu tiên thấp)
 
-### B9 — Trang `/lich-tiep-cong-dan`
-- [ ] Dùng `getScheduleByMonth(startDate, endDate)` → `CitizenSchedule[]`
-- [ ] `searchParams ?month=YYYY-MM`, mặc định tháng hiện tại
-- [ ] Bảng hiển thị theo ngày, thông tin cán bộ trực
+### C1 — Sitemap & robots.txt
+- [ ] Tạo `app/sitemap.ts` và `app/robots.ts` — giúp Google index đúng
 
-### B10 — Biểu mẫu tải về
-- [ ] Thêm section "Biểu mẫu" vào `app/(web)/thu-tuc-hanh-chinh/[slug]/page.tsx`
-- [ ] Field `proc.forms?: { title: string, fileUrl: string }[]`, nút tải cho từng form
-
-### B12 — Cập nhật trang chủ
-- [ ] `app/(web)/page.tsx` — thêm 4 sections: NewsCarousel, NguoiTotViecTot, PhotoAlbumPreview, VideoPreview
-- [ ] Import: `getFeaturedNews`, `getNguoiTotViecTot`, `getPhotoAlbums(4)`, `getVideos("all", 4)`
-
-### B13 — Cập nhật navigation
-- [ ] `constants/nav.ts` — thêm: Hỏi đáp, Thư viện (Ảnh/Video), Chính sách PL, Lịch tiếp dân
+### C2 — YouTube lazy-load
+- [ ] Đổi `VideoPlayer` từ iframe tải ngay sang click-to-play — giảm ~500KB script thừa
 
 ---
 
-## ⏳ CÒN LẠI — ĐƠN VỊ THỰC HIỆN
+## ⏳ CÒN LẠI — ĐƠN VỊ THỰC HIỆN (chặn deploy)
 
-- [ ] **A1** — Tạo tài khoản Sanity → lấy Project ID + Read Token → điền `.env.local`
+- [ ] **A1** — Tạo tài khoản Sanity → lấy Project ID + Token → điền `.env.local`
 - [ ] **A2** — Tạo tài khoản Resend → lấy API key → điền `.env.local`
 - [ ] **A3** — Nhập nội dung mẫu vào Sanity Studio *(cần A1 xong trước)*
 - [ ] **A4** — Upload logo chính thức vào `public/logo/`
-- [ ] **A5** — Xác nhận địa chỉ, SĐT, email trong `constants/site.ts`
-- [ ] **A6** — Deploy lên Vercel *(cần A1+A2 xong)*
-- [ ] **A7** — Chạy `npm install` sau khi pull code mới nhất (embla-carousel)
+- [ ] **A5** — Xác nhận Facebook/YouTube URL thật trong `constants/site.ts`
+- [ ] **A6** — Deploy lên Vercel + điền env vars *(cần A1+A2 xong)*
+- [ ] **A7** — Chạy `npm install` sau khi pull code mới nhất
 
 ---
 
@@ -140,7 +137,8 @@
 | 15/05/2026 | Khởi tạo Giai đoạn 1: hạ tầng, 4 schemas, 10 trang, API feedback |
 | 18/05/2026 | Giai đoạn 2: 7 schemas mới, 19 queries, 12+ components, 8 trang mới, vá bảo mật |
 | 19/05/2026 | CLAUDE.md + AGENTS.md, chuẩn hoá tài liệu dự án |
+| 20/05/2026 | Hoàn thiện Giai đoạn 2: B9/B10/B12/B13 + sửa bug CSP YouTube + Studio page |
 
 ---
 
-*Cổng thông tin Công an phường Bình Dương — Cập nhật 19/05/2026*
+*Cổng thông tin Công an phường Bình Dương — Cập nhật 20/05/2026*
