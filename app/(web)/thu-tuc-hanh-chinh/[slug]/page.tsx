@@ -63,6 +63,27 @@ export default async function ProcedureDetailPage({ params }: Props) {
             </div>
           </div>
         )}
+
+        {proc.forms && proc.forms.length > 0 && (
+          <div>
+            <h2 className="text-lg font-bold text-police-navy mb-3">Biểu mẫu tải về</h2>
+            <div className="space-y-2">
+              {proc.forms.map((form, i) => (
+                <a
+                  key={i}
+                  href={form.fileUrl}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg border border-gray-200 hover:border-police-navy hover:bg-blue-50 transition-colors text-sm"
+                >
+                  <span className="text-xl">📥</span>
+                  <span className="text-police-navy font-medium">{form.title}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

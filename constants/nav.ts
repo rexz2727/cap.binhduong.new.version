@@ -18,4 +18,15 @@ export const NAV_ITEMS: NavItem[] = [
   },
   { label: "Văn bản pháp luật", href: "/van-ban-phap-luat" },
   { label: "Thủ tục hành chính", href: "/thu-tuc-hanh-chinh" },
+  { label: "Hỏi đáp", href: "/hoi-dap" },
+  {
+    label: "Thư viện",
+    href: "/thu-vien-anh",
+    children: [
+      { label: "Thư viện ảnh", href: "/thu-vien-anh" },
+      { label: "Video", href: "/video" },
+    ],
+  },
+  { label: "Chính sách pháp luật", href: "/chinh-sach-phap-luat" },
+  { label: "Lịch tiếp dân", href: "/lich-tiep-cong-dan" },
 ];
