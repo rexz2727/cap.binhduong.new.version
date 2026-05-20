@@ -2,7 +2,7 @@
 
 **Dự án:** Cổng thông tin Công an phường Bình Dương  
 **Cập nhật lần cuối:** 20/05/2026  
-**Tiến độ tổng thể: ~95%** — Giai đoạn 1 & 2 hoàn tất, còn chờ đơn vị cung cấp nội dung & deploy
+**Tiến độ tổng thể: ~99%** — Giai đoạn 1, 2 & 3 hoàn tất, còn chờ đơn vị cung cấp nội dung & deploy
 
 ---
 
@@ -106,32 +106,21 @@
 - [x] ISR revalidation đúng mức cho từng loại nội dung
 - [x] `Promise.all` fetch song song trên trang chủ
 
----
+### Giai đoạn 3 — UX & SEO ✅ HOÀN THÀNH
 
-## ⏳ CÒN LẠI — GIAI ĐOẠN 3 (UX & SEO)
+- [x] **C1** — Tìm kiếm toàn site: `HeroSearch` điều hướng `/search?q=`, GROQ full-text trên 3 content types
+- [x] **C2** — Trang 404 tùy chỉnh `app/not-found.tsx` — quick links, nút gọi 113
+- [x] **C3** — `app/sitemap.ts` + `app/robots.ts` — sitemap động từ Sanity, robots chặn `/studio/` và `/api/`
+- [x] **C4** — `@media print` trong `globals.css` — ẩn header/footer/nav/fixed elements khi in
+- [x] **C5** — Form feedback: `phan-anh` và `QnaForm` đều có success state rõ ràng (đã có từ trước)
+- [x] **C6** — `EmergencyButton` — thanh "GỌI KHẨN CẤP 113" cố định đáy mobile (`sm:hidden`)
 
-### Ưu tiên cao
+### Còn lại (tuỳ chọn, ưu tiên thấp)
 
-| Mã | File | Nội dung |
-|---|---|---|
-| C1 | `app/(web)/search/page.tsx` + `HeroSearch.tsx` | Tìm kiếm toàn site thật — route `/search?q=`, GROQ full-text trên newsPost + procedure + legalDocument |
-| C2 | `app/not-found.tsx` | Trang 404 tùy chỉnh — có logo, điều hướng, số 113 |
-| C3 | `app/sitemap.ts` + `app/robots.ts` | SEO — Google index đúng các trang công khai, loại `/studio` |
-
-### Ưu tiên trung bình
-
-| Mã | File | Nội dung |
-|---|---|---|
-| C4 | `app/globals.css` | CSS `@media print` cho trang thủ tục — ẩn header/footer/nav khi in |
-| C5 | `app/(web)/phan-anh/page.tsx`, `forms/QnaForm.tsx` | Toast/banner thành công rõ ràng sau khi gửi form |
-| C6 | `components/ui/EmergencyButton.tsx` | Nút gọi 113 cố định trên mobile — chỉ hiện trên màn hình nhỏ |
-
-### Ưu tiên thấp
-
-| Mã | File | Nội dung |
-|---|---|---|
-| C7 | `components/ui/VideoPlayer.tsx` | Click-to-play thay iframe YouTube tải ngay — giảm ~500KB script |
-| C8 | `app/opengraph-image.tsx` | OG image động cho từng bài tin — đẹp khi share Zalo/Facebook |
+| Mã | Nội dung |
+|---|---|
+| C7 | YouTube click-to-play thay iframe tải ngay — giảm ~500KB script |
+| C8 | OpenGraph image động cho từng bài tin — đẹp khi share Zalo/Facebook |
 
 ---
 
@@ -155,6 +144,7 @@
 | 18/05/2026 | Giai đoạn 2: 7 schemas mới, 19 queries, 12+ components, 8 trang mới, vá bảo mật |
 | 19/05/2026 | CLAUDE.md + AGENTS.md, chuẩn hoá tài liệu dự án |
 | 20/05/2026 | Hoàn thiện Giai đoạn 2: B9/B10/B12/B13 + sửa bug CSP YouTube + Studio page |
+| 20/05/2026 | Giai đoạn 3: C1 tìm kiếm, C2 trang 404, C3 sitemap/robots, C4 print CSS, C6 nút 113 mobile |
 
 ---
 
