@@ -288,6 +288,75 @@ export async function getScheduleByMonth(startDate: string, endDate: string): Pr
   );
 }
 
+// ─── Search ───────────────────────────────────────────────────────────────────
+
+export interface SearchResult {
+  _id: string;
+  _type: "newsPost" | "procedure" | "legalDocument";
+  title: string;
+  slug: { current: string };
+  excerpt: string;
+}
+
+export async function searchAll(q: string): Promise<SearchResult[]> {
+  if (!q.trim()) return [];
+  return safeFetch(
+    () => client.fetch(
+      groq`*[
+        (_type == "newsPost" && (title match $q || excerpt match $q)) ||
+        (_type == "procedure" && title match $q) ||
+        (_type == "legalDocument" && (title match $q || documentNumber match $q))
+      ] | order(_score desc) [0...20] {
+        _id, _type, title, slug,
+        "excerpt": select(
+          _type == "newsPost" => excerpt,
+          _type == "procedure" => "Thủ tục hành chính",
+          _type == "legalDocument" => documentNumber
+        )
+      }`,
+      { q: q.trim() + "*" },
+      { next: { revalidate: 60 } }
+    ),
+    []
+  );
+}
+
+// ─── Sitemap slugs ────────────────────────────────────────────────────────────
+
+export async function getAllSlugsForSitemap() {
+  return safeFetch(
+    () => Promise.all([
+      client.fetch<{ slug: string; date: string }[]>(
+        groq`*[_type == "newsPost"] { "slug": slug.current, "date": publishedAt }`,
+        {}, { next: { revalidate: 3600 } }
+      ),
+      client.fetch<{ slug: string }[]>(
+        groq`*[_type == "procedure"] { "slug": slug.current }`,
+        {}, { next: { revalidate: 3600 } }
+      ),
+      client.fetch<{ slug: string; date: string }[]>(
+        groq`*[_type == "legalDocument"] { "slug": slug.current, "date": issuedDate }`,
+        {}, { next: { revalidate: 3600 } }
+      ),
+      client.fetch<{ slug: string }[]>(
+        groq`*[_type == "photoAlbum"] { "slug": slug.current }`,
+        {}, { next: { revalidate: 3600 } }
+      ),
+      client.fetch<{ slug: string }[]>(
+        groq`*[_type == "video"] { "slug": slug.current }`,
+        {}, { next: { revalidate: 3600 } }
+      ),
+    ]),
+    [[], [], [], [], []] as [
+      { slug: string; date: string }[],
+      { slug: string }[],
+      { slug: string; date: string }[],
+      { slug: string }[],
+      { slug: string }[],
+    ]
+  );
+}
+
 // ─── Legal Docs Filtered ──────────────────────────────────────────────────────
 
 export async function getLegalDocsFiltered(
