@@ -2,7 +2,7 @@
 
 **Dự án:** Cổng thông tin Công an phường Bình Dương  
 **Chuẩn tham chiếu:** OWASP Top 10, Next.js Security Best Practices  
-**Cập nhật:** 19/05/2026
+**Cập nhật:** 20/05/2026
 
 ---
 
@@ -25,9 +25,9 @@
 |---|---|---|---|
 | **Spoofing** — giả mạo request đến API feedback | `POST /api/feedback` không có auth | 🔴 Cao | ✅ Zod validation + escapeHtml |
 | **Tampering** — chỉnh sửa nội dung CMS qua Sanity API | Token Sanity lộ ra client | 🟡 Trung bình | ✅ Token server-only |
-| **Repudiation** — spam feedback không có audit trail | Không có server-side logging | 🟡 Trung bình | ⏳ Chưa có rate limiting |
+| **Repudiation** — spam feedback không có audit trail | Không có server-side logging | 🟡 Trung bình | ⏳ Chưa có audit log (đã có rate limiting) |
 | **Information Disclosure** — lộ env vars ra browser | `NEXT_PUBLIC_` prefix dùng sai | 🔴 Cao | ✅ Phân tách đúng |
-| **Denial of Service** — spam form → vét quota Resend | Không có rate limiting | 🔴 Cao | ⏳ Chưa triển khai |
+| **Denial of Service** — spam form → vét quota Resend | Không có rate limiting | 🔴 Cao | ✅ Rate limiting in-memory (5 req/phút/IP) |
 | **Elevation of Privilege** — truy cập `/studio` trái phép | Không có auth middleware | 🟡 Trung bình | ✅ Basic Auth middleware |
 
 ---
@@ -109,6 +109,12 @@ function escapeHtml(str: string) {
 
 Trạng thái hiện tại: `npm audit` → **0 vulnerabilities**
 
+### 8. Rate Limiting API Routes (`lib/rate-limit.ts`)
+
+Limiter in-memory dạng sliding window — **5 request/phút/IP** cho `POST /api/feedback` và `POST /api/qna`. Vượt giới hạn trả `429` kèm header `Retry-After: 60`. Kiểm tra chạy ở đầu handler, trước cả khi parse JSON, để từ chối spam sớm.
+
+> ⚠️ Bộ đếm nằm trong RAM mỗi instance serverless — reset khi cold-start, không chia sẻ giữa các instance. Đủ chặn phần lớn spam ở quy mô phường; nâng cấp Upstash Redis nếu cần chính xác tuyệt đối.
+
 ---
 
 ## II. GROQ INJECTION PREVENTION
@@ -140,7 +146,7 @@ client.fetch(groq`*[_type == "newsPost" && slug.current == "${slug}"][0]`)
 | Rủi ro | Mức độ | Lý do chưa xử lý | Kế hoạch |
 |---|---|---|---|
 | `unsafe-inline` trong CSP | Trung bình | Sanity Studio yêu cầu | Cân nhắc tách Studio sang subdomain sau khi ra mắt |
-| Rate limiting API routes | Trung bình | Chưa triển khai | Thêm Vercel Edge rate limit hoặc Upstash Redis |
+| Rate limiting không chia sẻ giữa instance | Thấp | Limiter in-memory — đủ quy mô phường, reset khi cold-start | Nâng cấp Upstash Redis nếu cần chính xác tuyệt đối |
 | Không có CAPTCHA form phản ánh | Thấp | Quy mô hiện tại chưa cần | Thêm nếu spam xảy ra |
 | Audit log hành động admin | Thấp | Ngoài phạm vi Giai đoạn 2 | Xem xét Giai đoạn 3 |
 
@@ -154,7 +160,8 @@ client.fetch(groq`*[_type == "newsPost" && slug.current == "${slug}"][0]`)
 4. Mọi dữ liệu user nhúng vào HTML phải qua `escapeHtml()`
 5. Chạy `npm audit` trước mỗi lần deploy
 6. GROQ params luôn truyền qua object `{ param }`, không nối chuỗi
+7. Mọi API route nhận dữ liệu user nên có rate limiting (`lib/rate-limit.ts`)
 
 ---
 
-*Cổng thông tin Công an phường Bình Dương — Cập nhật 19/05/2026*
+*Cổng thông tin Công an phường Bình Dương — Cập nhật 20/05/2026*
