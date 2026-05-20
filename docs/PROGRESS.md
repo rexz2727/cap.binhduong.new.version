@@ -33,6 +33,8 @@
 - [x] Zod validation tại API routes
 - [x] HTML injection prevention (`escapeHtml`)
 - [x] Vá 2 lỗ hổng Dependabot (postcss, js-yaml) — `npm audit` = 0
+- [x] Rate limiting API routes — `/api/feedback` & `/api/qna`, 5 request/phút/IP, trả `429` — chống spam vét quota Resend
+- [x] Sửa 2 lỗi build có sẵn (thiếu `sanity/lib/image.ts`, lỗi type 3 schema) — `npm run build` pass sạch
 - [x] CLAUDE.md và AGENTS.md — hướng dẫn AI agent đầy đủ
 
 ### Dữ liệu (11/11 schemas + 19 queries)
@@ -145,6 +147,7 @@
 | 19/05/2026 | CLAUDE.md + AGENTS.md, chuẩn hoá tài liệu dự án |
 | 20/05/2026 | Hoàn thiện Giai đoạn 2: B9/B10/B12/B13 + sửa bug CSP YouTube + Studio page |
 | 20/05/2026 | Giai đoạn 3: C1 tìm kiếm, C2 trang 404, C3 sitemap/robots, C4 print CSS, C6 nút 113 mobile |
+| 20/05/2026 | Rate limiting `/api/feedback` & `/api/qna` (5 req/phút/IP); sửa 2 lỗi build có sẵn (`sanity/lib/image.ts`, lỗi type 3 schema) |
 
 ---
 
