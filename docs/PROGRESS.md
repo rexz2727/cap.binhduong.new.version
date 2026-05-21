@@ -2,7 +2,7 @@
 
 **Dự án:** Cổng thông tin Công an phường Bình Dương  
 **Cập nhật lần cuối:** 21/05/2026  
-**Tiến độ tổng thể: ~99%** — Giai đoạn 1, 2 & 3 hoàn tất; Giai đoạn 4 (đồng bộ giao diện thiết kế v4) — 6/6 section trang chủ đã đồng bộ JSX, còn restyle PhotoAlbumPreview + VideoPreview
+**Tiến độ tổng thể: ~99%** — Giai đoạn 1, 2, 3 & 4 hoàn tất; Giao diện trang chủ đã đồng bộ v4 hoàn chỉnh
 
 ---
 
@@ -163,7 +163,7 @@ Hero → Emergency → Values → QuickLinks → LatestNews → NguoiTotViecTot 
 - [x] Cập nhật `app/(web)/page.tsx` — bỏ import/usage `NewsCarousel` + `ContactInfo`, thêm `<ValuesStrip />`
 - [x] Thêm key i18n `section.honor.sub` (VI + EN) cho section NguoiTotViecTot
 - [x] `npm run build` — pass sạch (`Compiled successfully`)
-- [ ] Restyle `PhotoAlbumPreview` + `VideoPreview` theo design tokens
+- [x] Restyle `PhotoAlbumPreview` + `VideoPreview` theo design tokens
 
 > `NewsCarousel.tsx` và `ContactInfo.tsx` vẫn giữ trong repo (không xóa) — chỉ gỡ khỏi trang chủ.
 
@@ -174,9 +174,9 @@ Hero → Emergency → Values → QuickLinks → LatestNews → NguoiTotViecTot 
 - [x] **A1** — Tạo tài khoản Sanity → lấy Project ID + Token → điền `.env.local`
 - [x] **A2** — Tạo tài khoản Resend → lấy API key → điền `.env.local`
 - [x] **A3** — Nhập nội dung mẫu vào Sanity Studio
-- [ ] **A4** — Upload logo chính thức vào `public/logo/`
-- [ ] **A5** — Xác nhận Facebook/YouTube URL thật trong `constants/site.ts`
-- [ ] **A6** — Deploy lên Vercel + điền env vars *(cần A1+A2 xong)*
+- [x] **A4** — Upload logo chính thức vào `public/logo/`
+- [x] **A5** — Xác nhận Facebook/YouTube URL thật trong `constants/site.ts`
+- [/] **A6** — Deploy lên Vercel + điền env vars *(cần A1+A2 xong)*
 - [x] **A7** — Chạy `npm install` sau khi pull code mới nhất
 
 ---
@@ -194,6 +194,7 @@ Hero → Emergency → Values → QuickLinks → LatestNews → NguoiTotViecTot 
 | 21/05/2026 | Sửa 5 lỗi build do phiên design v4 (`i18n.tsx`, `MobileMenu`, i18n keys, cast `I18nKey`, `use client`); Giai đoạn 4 — đồng bộ HeroSection + HeroSearch + EmergencyRow với thiết kế v4 (2/6 section trang chủ) |
 | 21/05/2026 | Giai đoạn 4 — đồng bộ JSX QuickLinks, LatestNews, NguoiTotViecTot, tạo `ValuesStrip`; cập nhật `page.tsx` (bỏ NewsCarousel/ContactInfo, thứ tự section v4); thêm key i18n `section.honor.sub`; build pass (6/6 section trang chủ) |
 | 21/05/2026 | Đơn vị hoàn thành A1 (Sanity), A2 (Resend), A3 (nhập nội dung mẫu), A7 (`npm install`) — còn lại A4 logo, A5 URL mạng xã hội, A6 deploy Vercel |
+| 21/05/2026 | Hoàn thành Giai đoạn 4 — restyle PhotoAlbumPreview + VideoPreview theo đúng thiết kế v4 và thêm các key dịch i18n; build biên dịch thành công 100%. |
 
 ---
 

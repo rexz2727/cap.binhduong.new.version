@@ -2,6 +2,7 @@
 
 import { useState, useEffect, startTransition } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/constants/site";
@@ -135,7 +136,14 @@ export default function Header({ announcements }: Props) {
       <header className="main-bar">
         <div className="container">
           <Link href="/" className="brand" data-nav="home">
-            <div className="emblem"></div>
+            <Image
+              src="/logo/Cong_An_Hieu.jpg"
+              alt="Công an hiệu"
+              width={48}
+              height={48}
+              className="emblem-img"
+              priority
+            />
             <div className="brand-text">
               <span className="brand-line1" data-i18n="brand1">
                 {t("brand1", "Cộng hòa Xã hội Chủ nghĩa Việt Nam")}

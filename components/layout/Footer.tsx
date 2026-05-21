@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { SITE } from "@/constants/site";
 import { NAV_ITEMS } from "@/constants/nav";
 
@@ -16,7 +17,13 @@ export default function Footer() {
       <div className="container site-footer-main">
         <div>
           <div className="footer-brand">
-            <div className="emblem"></div>
+            <Image
+              src="/logo/Cong_An_Hieu.jpg"
+              alt="Công an hiệu"
+              width={48}
+              height={48}
+              className="emblem-img"
+            />
             <div className="brand-text">
               <span className="brand-line1" style={{ color: "var(--gold)" }}>Cổng thông tin chính thống</span>
               <span className="brand-line2">{SITE.name}</span>

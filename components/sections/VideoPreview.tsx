@@ -15,9 +15,8 @@ export default function VideoPreview({ videos }: Props) {
 
   if (!videos.length) return null;
 
-  const [featured, ...rest] = videos;
-
   const formattedDate = (dateString: string) => {
+    if (!dateString) return "";
     return new Date(dateString).toLocaleDateString("vi-VN", {
       day: "2-digit",
       month: "2-digit",
@@ -25,86 +24,77 @@ export default function VideoPreview({ videos }: Props) {
     });
   };
 
+  const getCategoryLabel = (category?: string) => {
+    if (!category) return "";
+    if (category === "hoat-dong") return "Hoạt động";
+    if (category === "an-ninh") return "An ninh";
+    if (category === "cong-dong") return "Cộng đồng";
+    return category;
+  };
+
   return (
-    <section className="video-grid">
+    <section className="block alt">
       <div className="container">
-        <hgroup className="section-h">
-          <p className="eyebrow">Thư viện</p>
-          <h2>Video</h2>
-          <Link href="/video" className="read-more">
-            Xem tất cả
-            <svg width="1em" height="1em"><use href="#i-arrow" /></svg>
+        <div className="section-head">
+          <div>
+            <div className="section-eyebrow" data-i18n="section.video.eye">
+              {t("section.video.eye", "Thư viện video")}
+            </div>
+            <h2 className="section-title" data-i18n="section.video.title">
+              {t("section.video.title", "Video hoạt động nổi bật")}
+            </h2>
+          </div>
+          <Link href="/video" className="section-link">
+            {t("section.video.link", "Xem tất cả video")}
+            <svg className="arrow" width="16" height="16">
+              <use href="#i-arrow" />
+            </svg>
           </Link>
-        </hgroup>
-        <div className="grid">
-          {featured && (
-            <Link href={`/video/${featured.slug.current}`} className="main-video">
-              <figure>
-                {featured.thumbnail ? (
+        </div>
+
+        <div className="video-grid">
+          {videos.slice(0, 3).map((video) => (
+            <Link
+              href={`/video/${video.slug.current}`}
+              key={video._id}
+              className="video-card"
+            >
+              <div className="thumb">
+                {video.thumbnail ? (
                   <Image
-                    src={urlFor(featured.thumbnail).width(800).height(450).url()!}
-                    alt={featured.title}
+                    src={urlFor(video.thumbnail).width(480).height(270).url()!}
+                    alt={video.title}
                     fill
                     style={{ objectFit: "cover" }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 ) : (
-                  // Fallback for YouTube videos without Sanity thumbnail
-                  <div
-                    style={{
-                      backgroundImage: `url(https://img.youtube.com/vi/${featured.youtubeId}/maxresdefault.jpg)`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      width: '100%',
-                      height: '100%'
-                    }}
+                  <Image
+                    src={`https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`}
+                    alt={video.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 )}
-                <div className="play-overlay">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <div className="play" />
+              </div>
+              <div className="body">
+                <h4>{video.title}</h4>
+                <div className="meta">
+                  {video.category && (
+                    <span className="cat-pill">
+                      {getCategoryLabel(video.category)}
+                    </span>
+                  )}
+                  <span>{formattedDate(video.date)}</span>
                 </div>
-              </figure>
-              <div className="main-video-text">
-                <h3>{featured.title}</h3>
               </div>
             </Link>
-          )}
-
-          <div className="video-list-side">
-            {rest.slice(0, 3).map((video) => (
-              <Link href={`/video/${video.slug.current}`} key={video._id} className="video-list-item">
-                <figure>
-                  {video.thumbnail ? (
-                    <Image
-                      src={urlFor(video.thumbnail).width(200).height(140).url()!}
-                      alt={video.title}
-                      fill
-                      style={{ objectFit: "cover" }}
-                    />
-                  ) : (
-                    // Fallback for YouTube videos without Sanity thumbnail
-                    <div
-                      style={{
-                        backgroundImage: `url(https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg)`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        width: '100%',
-                        height: '100%'
-                      }}
-                    />
-                  )}
-                  <div className="play-overlay-small">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </div>
-                </figure>
-                <div className="video-list-item-text">
-                  <h3>{video.title}</h3>
-                  <time>{formattedDate(video.date)}</time>
-                </div>
-              </Link>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+

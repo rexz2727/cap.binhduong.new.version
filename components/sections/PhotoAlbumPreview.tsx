@@ -15,35 +15,59 @@ export default function PhotoAlbumPreview({ albums }: Props) {
 
   if (!albums.length) return null;
 
+  const formattedDate = (dateString: string) => {
+    if (!dateString) return "";
+    return new Date(dateString).toLocaleDateString("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
   return (
-    <section className="photo-album-grid">
+    <section className="block">
       <div className="container">
-        <hgroup className="section-h">
-          <p className="eyebrow">Thư viện</p>
-          <h2>Thư viện ảnh</h2>
-          <Link href="/thu-vien-anh" className="read-more">
-            Xem tất cả
-            <svg width="1em" height="1em"><use href="#i-arrow" /></svg>
+        <div className="section-head">
+          <div>
+            <div className="section-eyebrow" data-i18n="section.gallery.eye">
+              {t("section.gallery.eye", "Thư viện ảnh")}
+            </div>
+            <h2 className="section-title" data-i18n="section.gallery.title">
+              {t("section.gallery.title", "Hình ảnh hoạt động của đơn vị")}
+            </h2>
+          </div>
+          <Link href="/thu-vien-anh" className="section-link">
+            {t("section.gallery.link", "Xem tất cả album")}
+            <svg className="arrow" width="16" height="16">
+              <use href="#i-arrow" />
+            </svg>
           </Link>
-        </hgroup>
-        <div className="grid">
+        </div>
+
+        <div className="gallery-grid">
           {albums.slice(0, 4).map((album) => (
-            <Link href={`/thu-vien-anh/${album.slug.current}`} key={album._id} className="album-card">
-              <figure>
+            <Link
+              href={`/thu-vien-anh/${album.slug.current}`}
+              key={album._id}
+              className="album-card"
+            >
+              <div className="cover">
                 {album.coverImage && (
                   <Image
-                    src={urlFor(album.coverImage).width(400).height(400).url()!}
+                    src={urlFor(album.coverImage).width(400).height(300).url()!}
                     alt={album.title}
                     fill
                     style={{ objectFit: "cover" }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   />
                 )}
-              </figure>
-              <div className="album-card-text">
-                <h3>{album.title}</h3>
                 {album.photoCount !== undefined && (
-                  <p className="sub">{album.photoCount} ảnh</p>
+                  <span className="badge">{album.photoCount} ảnh</span>
                 )}
+              </div>
+              <div className="body">
+                <h4>{album.title}</h4>
+                <div className="date">{formattedDate(album.date)}</div>
               </div>
             </Link>
           ))}
@@ -52,3 +76,4 @@ export default function PhotoAlbumPreview({ albums }: Props) {
     </section>
   );
 }
+
