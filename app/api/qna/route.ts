@@ -66,7 +66,7 @@ export async function POST(request: Request) {
     const resend = new Resend(resendKey);
     await resend.emails.send({
       from: "Hỏi đáp pháp luật <onboarding@resend.dev>",
-      to: contactEmail,
+      to: contactEmail.split(",").map((e) => e.trim()),
       subject: `[Câu hỏi] ${categoryLabel} — ${new Date().toLocaleDateString("vi-VN")}`,
       html: `
         <h2>Câu hỏi mới từ cổng thông tin Công an phường Bình Dương</h2>
