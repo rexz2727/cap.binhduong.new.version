@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const user = process.env.STUDIO_BASIC_USER;
   const pass = process.env.STUDIO_BASIC_PASS;
 
