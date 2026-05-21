@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kế hoạch — Cổng thông tin Công an phường Bình Dương</title>
+<style>
+  :root{--primary:#c0392b;--gold:#f39c12;--navy:#1a2332;--bg:#f4f6f9;--white:#fff;--text:#2c3e50;--muted:#7f8c8d;--border:#dde2e8;--green:#27ae60;--orange:#e67e22;--shadow:0 2px 8px rgba(0,0,0,.10);--r:8px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+  .hd{background:var(--navy);color:#fff;padding:0 24px;display:flex;align-items:center;height:60px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+  .bb{background:var(--primary);color:#fff;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600}
+  nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav a{display:flex;align-items:center;gap:5px;padding:12px 13px;font-size:13px;color:var(--muted);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap}
+  nav a:hover,nav a.on{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 24px}
+  .pg-title{font-size:28px;font-weight:800;color:var(--navy);margin-bottom:8px}
+  .pg-meta{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+  .meta-item strong{color:var(--text)}
+  h2{font-size:18px;font-weight:700;color:var(--navy);margin:36px 0 14px;padding-left:12px;border-left:4px solid var(--primary)}
+  p{margin-bottom:12px;font-size:14px}
+  ul{padding-left:20px;margin-bottom:14px}
+  li{margin-bottom:5px;font-size:14px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px;box-shadow:var(--shadow);border-radius:var(--r);overflow:hidden}
+  th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+  td{padding:9px 14px;border-bottom:1px solid var(--border);background:var(--white)}
+  tr:nth-child(even) td{background:#f8f9fa}
+  tr:last-child td{border-bottom:none}
+  code{background:#f0f3f7;padding:2px 5px;border-radius:3px;font-size:12px;font-family:monospace}
+  .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700}
+  .b-green{background:#d5f5e3;color:#1e8449}
+  .b-orange{background:#fdebd0;color:#a04000}
+  .b-gray{background:#eaecee;color:#5d6d7e}
+  .phase-block{background:var(--white);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .phase-header{padding:14px 20px;font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px}
+  .phase-header.done{background:#eafaf1;color:#1e8449;border-left:5px solid var(--green)}
+  .phase-header.low{background:#f8f9fa;color:var(--muted);border-left:5px solid var(--border)}
+  .timeline{display:flex;flex-direction:column;gap:4px;padding:4px 0 12px}
+  .tl-item{display:flex;gap:12px;padding:8px 16px;font-size:13px;border-bottom:1px solid var(--border)}
+  .tl-item:last-child{border-bottom:none}
+  .tl-week{font-weight:600;color:var(--navy);min-width:150px;white-space:nowrap}
+  .cost-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+  .cost-card{background:var(--white);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);text-align:center;border-top:4px solid var(--green)}
+  .cost-price{font-size:22px;font-weight:800;color:var(--green)}
+  .cost-label{font-size:12px;color:var(--muted);margin-top:4px}
+  .cost-note{font-size:11px;color:var(--muted);margin-top:2px}
+  footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:20px;font-size:12px;margin-top:60px}
+  footer strong{color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<header class="hd"><div class="brand"><span class="bb">🚔 CA.BD</span><span>Cổng thông tin Công an phường Bình Dương</span></div></header>
+<nav>
+  <a href="index.html">📊 Dashboard</a><a href="PROGRESS.html">🔄 Tiến độ</a><a href="PLAN.html" class="on">📋 Kế hoạch</a>
+  <a href="AGENTS.html">🤖 Agents</a><a href="SECURITY.html">🔒 Bảo mật</a>
+  <a href="PERFORMANCE_OPTIMIZE.html">⚡ Hiệu năng</a><a href="README.html">📖 README</a><a href="REPORT.html">📑 Báo cáo</a>
+</nav>
+<main class="wrap">
+  <h1 class="pg-title">📋 Kế hoạch Dự án</h1>
+  <div class="pg-meta">
+    <span class="meta-item"><strong>Người thực hiện:</strong> Rex Nguyen</span>
+    <span class="meta-item"><strong>Ngày lập:</strong> 18/05/2026</span>
+    <span class="meta-item"><strong>Cập nhật:</strong> 20/05/2026</span>
+    <span class="meta-item"><strong>Mục tiêu hoàn thành:</strong> Quý III/2026</span>
+  </div>
+
+  <h2>I. Mục tiêu</h2>
+  <ul>
+    <li>Công khai minh bạch thông tin, thủ tục hành chính cho người dân</li>
+    <li>Tiếp nhận phản ánh, kiến nghị trực tuyến 24/7</li>
+    <li>Đăng tải tin tức, văn bản pháp luật kịp thời</li>
+    <li>Xây dựng kênh tương tác hiện đại giữa đơn vị và nhân dân</li>
+  </ul>
+
+  <h2>II. Công nghệ</h2>
+  <table>
+    <thead><tr><th>Hạng mục</th><th>Công nghệ</th><th>Ghi chú</th></tr></thead>
+    <tbody>
+      <tr><td>Nền tảng</td><td>Next.js 16, App Router</td><td>Breaking changes — đọc docs trước khi code</td></tr>
+      <tr><td>Giao diện</td><td>React 19, Tailwind CSS v4</td><td>v4 khác hoàn toàn v3</td></tr>
+      <tr><td>CMS</td><td>Sanity v5</td><td>Không có database khác</td></tr>
+      <tr><td>Email</td><td>Resend v6</td><td>100 email/ngày miễn phí</td></tr>
+      <tr><td>Validation</td><td>Zod v4</td><td>v4 có breaking changes</td></tr>
+      <tr><td>Deploy</td><td>Vercel</td><td>Free tier, CDN toàn cầu</td></tr>
+    </tbody>
+  </table>
+
+  <h2>III. Phạm vi chức năng</h2>
+
+  <div class="phase-block">
+    <div class="phase-header done">✅ Giai đoạn 1 — Nền tảng cốt lõi — HOÀN THÀNH</div>
+    <table>
+      <thead><tr><th>#</th><th>Tính năng</th><th>Trạng thái</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Trang chủ với thông tin tổng quan</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>2</td><td>Giới thiệu đơn vị, ban lãnh đạo</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>3</td><td>Tin tức — đăng, tìm kiếm, lọc danh mục</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>4</td><td>Văn bản pháp luật — tra cứu, tải về</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>5</td><td>Thủ tục hành chính — hướng dẫn chi tiết + biểu mẫu tải về</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>6</td><td>Form phản ánh trực tuyến (gửi qua email)</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>7</td><td>Bảo mật: Basic Auth, security headers OWASP</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>8</td><td>Tối ưu: CDN, font, loading skeleton</td><td><span class="badge b-green">✅</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-header done">✅ Giai đoạn 2 — Mở rộng tính năng — HOÀN THÀNH</div>
+    <table>
+      <thead><tr><th>Mã</th><th>Tính năng</th><th>Trạng thái</th></tr></thead>
+      <tbody>
+        <tr><td>B5</td><td>GROQ queries đầy đủ (19 queries)</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>B6</td><td>Thư viện carousel (embla)</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>B7</td><td>12 components mới</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>B8</td><td>Cập nhật Header, Footer, MobileMenu, QuickLinks</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>B9</td><td>Trang /lich-tiep-cong-dan</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>B10</td><td>Biểu mẫu tải về trong trang thủ tục</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>B11</td><td>API POST /api/qna</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>B12</td><td>Cập nhật trang chủ (4 sections mới)</td><td><span class="badge b-green">✅</span></td></tr>
+        <tr><td>B13</td><td>Cập nhật navigation (4 mục mới)</td><td><span class="badge b-green">✅</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-header done">✅ Giai đoạn 3 — UX &amp; SEO — C1–C6 HOÀN THÀNH</div>
+    <table>
+      <thead><tr><th>Mã</th><th>Tính năng</th><th>Trạng thái</th><th>Mô tả</th></tr></thead>
+      <tbody>
+        <tr><td>C1</td><td>Tìm kiếm toàn site</td><td><span class="badge b-green">✅</span></td><td>HeroSearch → /search?q=, GROQ full-text 3 content types</td></tr>
+        <tr><td>C2</td><td>Trang 404 tùy chỉnh</td><td><span class="badge b-green">✅</span></td><td>app/not-found.tsx — quick links, nút gọi 113</td></tr>
+        <tr><td>C3</td><td>Sitemap + robots.txt</td><td><span class="badge b-green">✅</span></td><td>app/sitemap.ts + robots.ts — sitemap động</td></tr>
+        <tr><td>C4</td><td>CSS in ấn thủ tục</td><td><span class="badge b-green">✅</span></td><td>@media print trong globals.css</td></tr>
+        <tr><td>C5</td><td>Feedback sau submit form</td><td><span class="badge b-green">✅</span></td><td>Success state sau khi gửi phản ánh và hỏi đáp</td></tr>
+        <tr><td>C6</td><td>Nút gọi khẩn trên mobile</td><td><span class="badge b-green">✅</span></td><td>EmergencyButton — thanh 113 cố định đáy mobile</td></tr>
+        <tr><td>C7</td><td>YouTube lazy-load</td><td><span class="badge b-gray">🟢 Thấp</span></td><td>Click-to-play thay iframe — giảm ~500KB script</td></tr>
+        <tr><td>C8</td><td>OpenGraph image động</td><td><span class="badge b-gray">🟢 Thấp</span></td><td>app/opengraph-image.tsx — share Zalo/Facebook đẹp</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>IV. Phân công đơn vị</h2>
+  <table>
+    <thead><tr><th>Mã</th><th>Nội dung</th><th>Trạng thái</th></tr></thead>
+    <tbody>
+      <tr><td>A1</td><td>Tạo tài khoản Sanity → lấy Project ID + Token</td><td><span class="badge b-green">✅ Xong</span></td></tr>
+      <tr><td>A2</td><td>Tạo tài khoản Resend → lấy API key</td><td><span class="badge b-green">✅ Xong</span></td></tr>
+      <tr><td>A3</td><td>Nhập nội dung mẫu vào Sanity Studio</td><td><span class="badge b-green">✅ Xong</span></td></tr>
+      <tr><td>A4</td><td>Upload logo chính thức vào public/logo/</td><td><span class="badge b-green">✅ Xong</span></td></tr>
+      <tr><td>A5</td><td>Xác nhận Facebook/YouTube URL thật</td><td><span class="badge b-green">✅ Xong</span></td></tr>
+      <tr><td>A6</td><td>Deploy Vercel + điền env vars</td><td><span class="badge b-orange">⏳ Còn lại</span></td></tr>
+      <tr><td>A7</td><td>Chạy npm install sau khi pull code mới nhất</td><td><span class="badge b-green">✅ Xong</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>V. Tiến độ đề xuất</h2>
+  <div class="phase-block">
+    <div class="timeline">
+      <div class="tl-item"><span class="tl-week">Tuần 3 (20–25/05):</span><span>Giai đoạn 3 — C1, C2, C3 (ưu tiên cao)</span></div>
+      <div class="tl-item"><span class="tl-week">Tuần 4 (26–01/06):</span><span>Giai đoạn 3 — C4, C5, C6 + đơn vị cung cấp nội dung (A1–A5)</span></div>
+      <div class="tl-item"><span class="tl-week">Tuần 5 (02–08/06):</span><span>Kiểm thử tổng thể + tối ưu + C7, C8 nếu còn thời gian</span></div>
+      <div class="tl-item"><span class="tl-week">Tuần 6 (09–15/06):</span><span>Deploy chính thức (A6)</span></div>
+    </div>
+  </div>
+
+  <h2>VI. Chi phí hạ tầng</h2>
+  <div class="cost-grid">
+    <div class="cost-card"><div class="cost-price">0 đ</div><div class="cost-label">Sanity CMS</div><div class="cost-note">Free — đủ cho quy mô phường</div></div>
+    <div class="cost-card"><div class="cost-price">0 đ</div><div class="cost-label">Resend email</div><div class="cost-note">Free — 100 email/ngày</div></div>
+    <div class="cost-card"><div class="cost-price">0 đ</div><div class="cost-label">Vercel hosting</div><div class="cost-note">Free — 1 project</div></div>
+    <div class="cost-card" style="border-top-color:var(--gold)"><div class="cost-price" style="color:var(--gold)">~300k</div><div class="cost-label">Tên miền (tuỳ chọn)</div><div class="cost-note">.vn hoặc .gov.vn/năm</div></div>
+  </div>
+</main>
+<footer><strong>Cổng thông tin Công an phường Bình Dương</strong> — Cập nhật 20/05/2026</footer>
+</body>
+</html>

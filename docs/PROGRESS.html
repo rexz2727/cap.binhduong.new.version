@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiến độ — Cổng thông tin Công an phường Bình Dương</title>
+<style>
+  :root { --primary:#c0392b;--gold:#f39c12;--navy:#1a2332;--bg:#f4f6f9;--white:#fff;--text:#2c3e50;--muted:#7f8c8d;--border:#dde2e8;--green:#27ae60;--shadow:0 2px 8px rgba(0,0,0,.10);--r:8px; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+  .hd{background:var(--navy);color:#fff;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+  .hd .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+  .bb{background:var(--primary);color:#fff;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600}
+  nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav a{display:flex;align-items:center;gap:5px;padding:12px 13px;font-size:13px;color:var(--muted);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap}
+  nav a:hover,nav a.on{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 24px}
+  .pg-title{font-size:28px;font-weight:800;color:var(--navy);margin-bottom:8px}
+  .pg-sub{font-size:13px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+  h2{font-size:18px;font-weight:700;color:var(--navy);margin:32px 0 12px;padding-left:12px;border-left:4px solid var(--primary)}
+  p{margin-bottom:12px;font-size:14px}
+  ul{padding-left:20px;margin-bottom:16px}
+  li{margin-bottom:6px;font-size:14px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px;box-shadow:var(--shadow);border-radius:var(--r);overflow:hidden}
+  th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+  td{padding:9px 14px;border-bottom:1px solid var(--border);background:var(--white)}
+  tr:nth-child(even) td{background:#f8f9fa}
+  tr:last-child td{border-bottom:none}
+  .hero{background:linear-gradient(135deg,var(--navy) 0%,#243a55 100%);color:#fff;padding:40px 24px;margin-bottom:32px}
+  .hero-inner{max-width:960px;margin:0 auto}
+  .hero h1{font-size:26px;font-weight:800;margin-bottom:8px}
+  .hero .sub{font-size:14px;opacity:.8;margin-bottom:24px}
+  .progress-bar-wrap{background:rgba(255,255,255,.15);border-radius:999px;height:20px;margin-bottom:8px;overflow:hidden}
+  .progress-bar{background:linear-gradient(90deg,var(--gold),#f5c842);height:100%;border-radius:999px;transition:width .6s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:10px}
+  .progress-bar span{font-size:12px;font-weight:700;color:#1a1a1a}
+  .progress-label{font-size:13px;opacity:.9}
+  .stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-top:24px}
+  .stat-box{background:rgba(255,255,255,.1);border-radius:var(--r);padding:14px;text-align:center}
+  .stat-box .num{font-size:24px;font-weight:800;color:var(--gold)}
+  .stat-box .lbl{font-size:12px;opacity:.8;margin-top:2px}
+  .section-card{background:var(--white);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .section-card .card-head{background:var(--navy);color:#fff;padding:12px 20px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+  .section-card .card-body{padding:16px 20px}
+  .check-list{list-style:none;padding:0}
+  .check-list li{padding:5px 0;font-size:13px;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid var(--border)}
+  .check-list li:last-child{border-bottom:none}
+  .check-list li::before{content:'✅';flex-shrink:0;margin-top:2px}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+  .badge.done{background:#d4edda;color:#155724}
+  .badge.in-progress{background:#fff3cd;color:#856404}
+  .badge.pending{background:#f8d7da;color:#721c24}
+  .phase-block{background:var(--white);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;margin-bottom:16px;border-left:5px solid var(--green)}
+  .phase-block.partial{border-left-color:var(--gold)}
+  .phase-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .phase-title{font-weight:700;font-size:16px;color:var(--navy)}
+  footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:20px 24px;font-size:12px;margin-top:60px}
+  footer strong{color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<header class="hd">
+  <div class="brand"><span class="bb">🚔 CA.BD</span><span>Cổng thông tin Công an phường Bình Dương</span></div>
+</header>
+<nav>
+  <a href="index.html">📊 Dashboard</a>
+  <a href="PROGRESS.html" class="on">🔄 Tiến độ</a>
+  <a href="PLAN.html">📋 Kế hoạch</a>
+  <a href="AGENTS.html">🤖 Agents</a>
+  <a href="SECURITY.html">🔒 Bảo mật</a>
+  <a href="PERFORMANCE_OPTIMIZE.html">⚡ Hiệu năng</a>
+  <a href="README.html">📖 README</a>
+  <a href="REPORT.html">📑 Báo cáo</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>🔄 Tiến độ dự án</h1>
+    <p class="sub">Cập nhật lần cuối: 21/05/2026 — Giai đoạn 1, 2, 3 &amp; 4 hoàn tất</p>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" style="width:99%"><span>99%</span></div>
+    </div>
+    <p class="progress-label">Tiến độ tổng thể: <strong>~99%</strong> hoàn thành</p>
+    <div class="stats-row">
+      <div class="stat-box"><div class="num">19</div><div class="lbl">Trang web</div></div>
+      <div class="stat-box"><div class="num">11</div><div class="lbl">Sanity schemas</div></div>
+      <div class="stat-box"><div class="num">19</div><div class="lbl">GROQ queries</div></div>
+      <div class="stat-box"><div class="num">27+</div><div class="lbl">Components</div></div>
+      <div class="stat-box"><div class="num">2</div><div class="lbl">API Routes</div></div>
+      <div class="stat-box"><div class="num">11</div><div class="lbl">TypeScript types</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <h2>Tổng quan hạng mục</h2>
+  <table>
+    <thead><tr><th>Hạng mục</th><th>Tổng</th><th>Hoàn thành</th><th>Còn lại</th></tr></thead>
+    <tbody>
+      <tr><td>Trang web (pages)</td><td>19</td><td>19</td><td>0</td></tr>
+      <tr><td>Sanity schemas</td><td>11</td><td>11</td><td>0</td></tr>
+      <tr><td>TypeScript types</td><td>11</td><td>11</td><td>0</td></tr>
+      <tr><td>GROQ queries</td><td>19</td><td>19</td><td>0</td></tr>
+      <tr><td>Components</td><td>27+</td><td>27+</td><td>0</td></tr>
+      <tr><td>API Routes</td><td>2</td><td>2</td><td>0</td></tr>
+      <tr><td>Tài liệu (CLAUDE.md, AGENTS.md)</td><td>2</td><td>2</td><td>0</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Hạ tầng &amp; Bảo mật</h2>
+  <div class="section-card">
+    <div class="card-head">✅ Hoàn thành</div>
+    <div class="card-body">
+      <ul class="check-list">
+        <li>Next.js 16, TypeScript, Tailwind CSS v4</li>
+        <li>Sanity CMS v5 tích hợp</li>
+        <li>Resend email tích hợp</li>
+        <li>Security headers OWASP đầy đủ (HSTS, CSP, X-Frame-Options...)</li>
+        <li>CSP <code>frame-src</code> cho phép YouTube — VideoPlayer hoạt động đúng</li>
+        <li>Basic Auth bảo vệ <code>/studio</code></li>
+        <li>Sanity Studio nhúng đầy đủ bằng NextStudio — không còn placeholder</li>
+        <li>Zod validation tại API routes</li>
+        <li>HTML injection prevention (<code>escapeHtml</code>)</li>
+        <li>Vá 2 lỗ hổng Dependabot (postcss, js-yaml) — <code>npm audit</code> = 0</li>
+        <li>Rate limiting API routes — <code>/api/feedback</code> &amp; <code>/api/qna</code>, 5 req/phút/IP, trả 429</li>
+        <li>Sửa 2 lỗi build (thiếu <code>sanity/lib/image.ts</code>, lỗi type 3 schema)</li>
+        <li>CLAUDE.md và AGENTS.md — hướng dẫn AI agent đầy đủ</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Dữ liệu — 11/11 schemas + 19 queries</h2>
+  <table>
+    <thead><tr><th>Schema</th><th>Mô tả</th></tr></thead>
+    <tbody>
+      <tr><td><code>newsPost</code></td><td>Tin tức, isFeatured, isNguoiTotViecTot</td></tr>
+      <tr><td><code>legalDocument</code></td><td>Số hiệu, ngày ban hành, file đính kèm</td></tr>
+      <tr><td><code>personnel</code></td><td>Cấp bậc, chức vụ, ảnh</td></tr>
+      <tr><td><code>procedure</code></td><td>Thời gian xử lý, phí, các bước</td></tr>
+      <tr><td><code>photoAlbum</code></td><td>Gallery theo sự kiện</td></tr>
+      <tr><td><code>video</code></td><td>YouTube tích hợp</td></tr>
+      <tr><td><code>qna</code></td><td>Câu hỏi người dân, trả lời cán bộ</td></tr>
+      <tr><td><code>announcement</code></td><td>Ticker có thời hạn, ưu tiên</td></tr>
+      <tr><td><code>draftDocument</code></td><td>Văn bản dự thảo, thời hạn góp ý</td></tr>
+      <tr><td><code>wantedPerson</code></td><td>Đối tượng truy nã, ảnh, tội danh</td></tr>
+      <tr><td><code>citizenSchedule</code></td><td>Lịch tiếp công dân, cán bộ trực</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Trang (19/19)</h2>
+  <div class="section-card">
+    <div class="card-head">✅ Tất cả hoàn thành</div>
+    <div class="card-body">
+      <ul class="check-list">
+        <li><code>/</code> — Trang chủ — 8 sections: Hero, Emergency, Values, QuickLinks, LatestNews, NguoiTotViecTot, PhotoAlbum, VideoPreview</li>
+        <li><code>/gioi-thieu</code></li>
+        <li><code>/tin-tuc</code> + <code>/tin-tuc/[slug]</code></li>
+        <li><code>/van-ban-phap-luat</code> + <code>/van-ban-phap-luat/[slug]</code></li>
+        <li><code>/thu-tuc-hanh-chinh</code> + <code>/thu-tuc-hanh-chinh/[slug]</code> — có section biểu mẫu tải về</li>
+        <li><code>/phan-anh</code></li>
+        <li><code>/hoi-dap</code> + <code>/hoi-dap/gui-cau-hoi</code></li>
+        <li><code>/thu-vien-anh</code> + <code>/thu-vien-anh/[slug]</code></li>
+        <li><code>/video</code> + <code>/video/[slug]</code></li>
+        <li><code>/chinh-sach-phap-luat</code></li>
+        <li><code>/truy-na</code></li>
+        <li><code>/so-do-trang</code></li>
+        <li><code>/lich-tiep-cong-dan</code> — điều hướng tháng, nhóm lịch theo ngày, thông tin cán bộ trực</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Giai đoạn 1, 2, 3 &amp; 4</h2>
+
+  <div class="phase-block">
+    <div class="phase-head">
+      <span class="phase-title">Giai đoạn 1 — Nền tảng cốt lõi</span>
+      <span class="badge done">✅ Hoàn thành</span>
+    </div>
+    <p style="font-size:13px;margin:0">Hạ tầng Next.js, Sanity, Resend, security headers OWASP, 4 schemas cơ bản, 10 trang, API feedback, loading skeleton, font tối ưu.</p>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-head">
+      <span class="phase-title">Giai đoạn 2 — Mở rộng tính năng</span>
+      <span class="badge done">✅ Hoàn thành</span>
+    </div>
+    <p style="font-size:13px;margin:0">7 schemas mới, 19 GROQ queries, 12+ components mới, rate limiting, vá bảo mật Dependabot, 8 trang mới, API qna, lịch tiếp công dân.</p>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-head">
+      <span class="phase-title">Giai đoạn 3 — UX &amp; SEO</span>
+      <span class="badge done">✅ Hoàn thành (C1–C6)</span>
+    </div>
+    <table style="margin-top:12px">
+      <thead><tr><th>Mã</th><th>Tính năng</th></tr></thead>
+      <tbody>
+        <tr><td>C1</td><td>Tìm kiếm toàn site — HeroSearch → /search?q=</td></tr>
+        <tr><td>C2</td><td>Trang 404 tùy chỉnh — quick links, nút 113</td></tr>
+        <tr><td>C3</td><td>Sitemap động + robots.txt từ Sanity</td></tr>
+        <tr><td>C4</td><td>@media print trong globals.css</td></tr>
+        <tr><td>C5</td><td>Success state rõ ràng sau submit form</td></tr>
+        <tr><td>C6</td><td>EmergencyButton — thanh 113 cố định đáy mobile</td></tr>
+        <tr><td>C7</td><td>YouTube lazy-load (ưu tiên thấp)</td></tr>
+        <tr><td>C8</td><td>OpenGraph image động (ưu tiên thấp)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-head">
+      <span class="phase-title">Giai đoạn 4 — Đồng bộ thiết kế v4</span>
+      <span class="badge done">✅ Hoàn thành</span>
+    </div>
+    <table style="margin-top:12px">
+      <thead><tr><th>#</th><th>Section</th><th>Class design</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>HeroSection + HeroSearch</td><td><code>section.hero / hero-inner / hero-stats</code></td></tr>
+        <tr><td>2</td><td>EmergencyRow</td><td><code>emergency-strip / e-title / e-num</code></td></tr>
+        <tr><td>3</td><td>QuickLinks</td><td><code>section.block / service-grid / service-cell</code></td></tr>
+        <tr><td>4</td><td>LatestNews</td><td><code>section.block.alt / news-grid / news-feature</code></td></tr>
+        <tr><td>5</td><td>NguoiTotViecTot</td><td><code>section.block.honor-strip / honor-grid</code></td></tr>
+        <tr><td>6</td><td>ValuesStrip (tạo mới)</td><td><code>section.values-strip / values-grid / value-cell</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Đơn vị thực hiện</h2>
+  <table>
+    <thead><tr><th>Mã</th><th>Nội dung</th><th>Trạng thái</th></tr></thead>
+    <tbody>
+      <tr><td>A1</td><td>Tạo tài khoản Sanity → lấy Project ID + Token</td><td><span class="badge done">✅ Xong</span></td></tr>
+      <tr><td>A2</td><td>Tạo tài khoản Resend → lấy API key</td><td><span class="badge done">✅ Xong</span></td></tr>
+      <tr><td>A3</td><td>Nhập nội dung mẫu vào Sanity Studio</td><td><span class="badge done">✅ Xong</span></td></tr>
+      <tr><td>A4</td><td>Upload logo chính thức vào <code>public/logo/</code></td><td><span class="badge done">✅ Xong</span></td></tr>
+      <tr><td>A5</td><td>Xác nhận Facebook/YouTube URL thật trong <code>constants/site.ts</code></td><td><span class="badge done">✅ Xong</span></td></tr>
+      <tr><td>A6</td><td>Deploy lên Vercel + điền env vars</td><td><span class="badge in-progress">🔄 Đang làm</span></td></tr>
+      <tr><td>A7</td><td>Chạy <code>npm install</code> sau khi pull code mới nhất</td><td><span class="badge done">✅ Xong</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Lịch sử cập nhật</h2>
+  <table>
+    <thead><tr><th>Ngày</th><th>Nội dung</th></tr></thead>
+    <tbody>
+      <tr><td>15/05/2026</td><td>Khởi tạo Giai đoạn 1: hạ tầng, 4 schemas, 10 trang, API feedback</td></tr>
+      <tr><td>18/05/2026</td><td>Giai đoạn 2: 7 schemas mới, 19 queries, 12+ components, 8 trang mới, vá bảo mật</td></tr>
+      <tr><td>19/05/2026</td><td>CLAUDE.md + AGENTS.md, chuẩn hoá tài liệu dự án</td></tr>
+      <tr><td>20/05/2026</td><td>Hoàn thiện Giai đoạn 2: B9/B10/B12/B13 + sửa bug CSP YouTube + Studio page</td></tr>
+      <tr><td>20/05/2026</td><td>Giai đoạn 3: C1 tìm kiếm, C2 trang 404, C3 sitemap/robots, C4 print CSS, C6 nút 113 mobile</td></tr>
+      <tr><td>20/05/2026</td><td>Rate limiting /api/feedback &amp; /api/qna (5 req/phút/IP); sửa 2 lỗi build</td></tr>
+      <tr><td>21/05/2026</td><td>Sửa 5 lỗi build do phiên design v4; đồng bộ HeroSection + HeroSearch + EmergencyRow</td></tr>
+      <tr><td>21/05/2026</td><td>Giai đoạn 4 — đồng bộ JSX QuickLinks, LatestNews, NguoiTotViecTot, tạo ValuesStrip; build pass</td></tr>
+      <tr><td>21/05/2026</td><td>Đơn vị hoàn thành A1–A3, A7; Restyle PhotoAlbumPreview + VideoPreview</td></tr>
+    </tbody>
+  </table>
+
+</main>
+<footer><strong>Cổng thông tin Công an phường Bình Dương</strong> — Cập nhật 21/05/2026</footer>
+</body>
+</html>

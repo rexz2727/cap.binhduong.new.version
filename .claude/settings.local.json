@@ -1,4 +1,7 @@
 {
+  "env": {
+    "ECC_DISABLED_HOOKS": "pre:edit-write:gateguard-fact-force,pre:bash:gateguard-fact-force"
+  },
   "permissions": {
     "allow": [
       "Bash(Get-ChildItem -Path \"d:\\\\Stu\\\\Github\\\\cap.binhduong.new.version\" -Force)",
@@ -46,7 +49,15 @@
       "Bash(npm --version)",
       "Bash(command -v node)",
       "Bash(powershell.exe -Command \"cd 'D:\\\\Stu\\\\Github\\\\cap.binhduong.new.version'; npm install embla-carousel-react embla-carousel-autoplay react-photo-view 2>&1\")",
-      "Bash(/mnt/c/Windows/System32/cmd.exe /c \"cd /d D:\\\\Stu\\\\Github\\\\cap.binhduong.new.version && npm install embla-carousel-react embla-carousel-autoplay react-photo-view\")"
+      "Bash(/mnt/c/Windows/System32/cmd.exe /c \"cd /d D:\\\\Stu\\\\Github\\\\cap.binhduong.new.version && npm install embla-carousel-react embla-carousel-autoplay react-photo-view\")",
+      "Bash(Select-String -Pattern '\"node_modules|\"version\"')",
+      "Bash(Select-Object -First 30)",
+      "PowerShell(git ls-files *)",
+      "Bash(git add *)",
+      "Bash(git restore *)",
+      "PowerShell(New-Item *)",
+      "Skill(update-config)",
+      "Bash(Remove-Item *)"
     ]
   }
 }

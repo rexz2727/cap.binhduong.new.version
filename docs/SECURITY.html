@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bảo mật — Cổng thông tin Công an phường Bình Dương</title>
+<style>
+  :root { --primary:#c0392b;--gold:#f39c12;--navy:#1a2332;--bg:#f4f6f9;--white:#fff;--text:#2c3e50;--muted:#7f8c8d;--border:#dde2e8;--green:#27ae60;--red:#e74c3c;--orange:#e67e22;--shadow:0 2px 8px rgba(0,0,0,.10);--r:8px; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+  .hd{background:var(--navy);color:#fff;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+  .hd .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+  .bb{background:var(--primary);color:#fff;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600}
+  nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav a{display:flex;align-items:center;gap:5px;padding:12px 13px;font-size:13px;color:var(--muted);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap}
+  nav a:hover,nav a.on{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 24px}
+  .pg-title{font-size:28px;font-weight:800;color:var(--navy);margin-bottom:8px}
+  .pg-sub{font-size:13px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+  h2{font-size:18px;font-weight:700;color:var(--navy);margin:32px 0 12px;padding-left:12px;border-left:4px solid var(--primary)}
+  h3{font-size:15px;font-weight:700;color:var(--navy);margin:20px 0 8px}
+  p{margin-bottom:12px;font-size:14px}
+  ul{padding-left:20px;margin-bottom:16px}
+  li{margin-bottom:6px;font-size:14px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px;box-shadow:var(--shadow);border-radius:var(--r);overflow:hidden}
+  th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+  td{padding:9px 14px;border-bottom:1px solid var(--border);background:var(--white)}
+  tr:nth-child(even) td{background:#f8f9fa}
+  tr:last-child td{border-bottom:none}
+  pre{background:#1e2a38;color:#e8f0fe;padding:20px;border-radius:var(--r);overflow-x:auto;margin-bottom:16px;font-size:13px;line-height:1.6}
+  code{background:#f0f3f7;padding:2px 6px;border-radius:3px;font-size:12px;font-family:monospace}
+  pre code{background:transparent;padding:0;color:inherit}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+  .badge.high{background:#f8d7da;color:#721c24}
+  .badge.med{background:#fff3cd;color:#856404}
+  .badge.low{background:#d4edda;color:#155724}
+  .badge.done{background:#d4edda;color:#155724}
+  .badge.pending{background:#f8d7da;color:#721c24}
+  .threat-table td:nth-child(3){text-align:center}
+  .warn{background:#fff3cd;border-left:4px solid var(--gold);padding:14px 18px;border-radius:0 var(--r) var(--r) 0;margin-bottom:16px;font-size:13px}
+  .info{background:#eaf4fb;border-left:4px solid var(--navy);padding:14px 18px;border-radius:0 var(--r) var(--r) 0;margin-bottom:16px;font-size:13px}
+  .section-card{background:var(--white);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .section-card .card-head{background:var(--navy);color:#fff;padding:12px 20px;font-weight:700;font-size:14px}
+  .section-card .card-body{padding:16px 20px}
+  .rule-list{list-style:none;padding:0;counter-reset:rule}
+  .rule-list li{padding:10px 0;font-size:13px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px;counter-increment:rule}
+  .rule-list li:last-child{border-bottom:none}
+  .rule-list li::before{content:counter(rule);background:var(--primary);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px}
+  footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:20px 24px;font-size:12px;margin-top:60px}
+  footer strong{color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<header class="hd">
+  <div class="brand"><span class="bb">🚔 CA.BD</span><span>Cổng thông tin Công an phường Bình Dương</span></div>
+</header>
+<nav>
+  <a href="index.html">📊 Dashboard</a>
+  <a href="PROGRESS.html">🔄 Tiến độ</a>
+  <a href="PLAN.html">📋 Kế hoạch</a>
+  <a href="AGENTS.html">🤖 Agents</a>
+  <a href="SECURITY.html" class="on">🔒 Bảo mật</a>
+  <a href="PERFORMANCE_OPTIMIZE.html">⚡ Hiệu năng</a>
+  <a href="README.html">📖 README</a>
+  <a href="REPORT.html">📑 Báo cáo</a>
+</nav>
+<main class="wrap">
+  <h1 class="pg-title">🔒 Bảo mật hệ thống</h1>
+  <p class="pg-sub">Chuẩn tham chiếu: OWASP Top 10, Next.js Security Best Practices — Cập nhật 20/05/2026</p>
+
+  <h2>I. Threat Model</h2>
+
+  <h3>Tài sản cần bảo vệ</h3>
+  <table>
+    <thead><tr><th>Tài sản</th><th>Mức độ nhạy cảm</th><th>Rủi ro nếu bị xâm phạm</th></tr></thead>
+    <tbody>
+      <tr><td>Thông tin người dân gửi phản ánh (tên, SĐT, nội dung)</td><td><span class="badge high">🔴 Cao</span></td><td>Lộ danh tính người tố giác tội phạm</td></tr>
+      <tr><td><code>RESEND_API_KEY</code></td><td><span class="badge high">🔴 Cao</span></td><td>Spam email hàng loạt, tốn chi phí</td></tr>
+      <tr><td><code>STUDIO_BASIC_PASS</code> + tài khoản admin</td><td><span class="badge high">🔴 Cao</span></td><td>Chỉnh sửa nội dung chính thống của đơn vị</td></tr>
+      <tr><td><code>SANITY_API_TOKEN</code></td><td><span class="badge med">🟡 Trung bình</span></td><td>Đọc/ghi nội dung CMS không qua Studio</td></tr>
+      <tr><td><code>CONTACT_EMAIL</code></td><td><span class="badge med">🟡 Trung bình</span></td><td>Spam, phishing nhắm vào đơn vị</td></tr>
+      <tr><td>Nội dung trang web (tin tức, văn bản)</td><td><span class="badge med">🟡 Trung bình</span></td><td>Defacement, phát tán tin giả</td></tr>
+    </tbody>
+  </table>
+
+  <h3>STRIDE Analysis</h3>
+  <table class="threat-table">
+    <thead><tr><th>Mối đe dọa</th><th>Điểm tấn công</th><th>Mức độ</th><th>Trạng thái</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Spoofing</strong> — giả mạo request đến API feedback</td><td><code>POST /api/feedback</code></td><td><span class="badge high">🔴 Cao</span></td><td><span class="badge done">✅ Zod + escapeHtml</span></td></tr>
+      <tr><td><strong>Tampering</strong> — chỉnh sửa nội dung CMS qua Sanity API</td><td>Token Sanity lộ ra client</td><td><span class="badge med">🟡 Trung bình</span></td><td><span class="badge done">✅ Token server-only</span></td></tr>
+      <tr><td><strong>Repudiation</strong> — spam feedback không có audit trail</td><td>Không có server-side logging</td><td><span class="badge med">🟡 Trung bình</span></td><td><span class="badge med">⏳ Chưa (đã có rate limiting)</span></td></tr>
+      <tr><td><strong>Information Disclosure</strong> — lộ env vars ra browser</td><td><code>NEXT_PUBLIC_</code> prefix dùng sai</td><td><span class="badge high">🔴 Cao</span></td><td><span class="badge done">✅ Phân tách đúng</span></td></tr>
+      <tr><td><strong>Denial of Service</strong> — spam form vét quota Resend</td><td>Không có rate limiting</td><td><span class="badge high">🔴 Cao</span></td><td><span class="badge done">✅ 5 req/phút/IP</span></td></tr>
+      <tr><td><strong>Elevation of Privilege</strong> — truy cập /studio trái phép</td><td>Không có auth middleware</td><td><span class="badge med">🟡 Trung bình</span></td><td><span class="badge done">✅ Basic Auth middleware</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>II. Các lớp bảo mật đã triển khai</h2>
+
+  <h3>1. Security Headers (<code>next.config.ts</code>)</h3>
+  <table>
+    <thead><tr><th>Header</th><th>Giá trị</th><th>Mục đích</th></tr></thead>
+    <tbody>
+      <tr><td><code>Strict-Transport-Security</code></td><td>max-age=63072000; includeSubDomains; preload</td><td>Bắt buộc HTTPS</td></tr>
+      <tr><td><code>X-Frame-Options</code></td><td>DENY</td><td>Chặn Clickjacking</td></tr>
+      <tr><td><code>X-Content-Type-Options</code></td><td>nosniff</td><td>Chặn MIME sniffing</td></tr>
+      <tr><td><code>Referrer-Policy</code></td><td>strict-origin-when-cross-origin</td><td>Kiểm soát Referer header</td></tr>
+      <tr><td><code>Permissions-Policy</code></td><td>camera=(), microphone=(), geolocation=()</td><td>Chặn truy cập thiết bị</td></tr>
+      <tr><td><code>X-DNS-Prefetch-Control</code></td><td>on</td><td>Tối ưu DNS</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2. Content Security Policy (CSP)</h3>
+  <pre><code>default-src 'self'
+script-src  'self' 'unsafe-eval' 'unsafe-inline'
+style-src   'self' 'unsafe-inline' https://fonts.googleapis.com
+font-src    'self' https://fonts.gstatic.com
+img-src     'self' data: blob: https://cdn.sanity.io
+connect-src 'self' https://*.sanity.io https://api.sanity.io wss://*.sanity.io
+frame-src   'none'
+object-src  'none'
+base-uri    'self'
+form-action 'self'
+upgrade-insecure-requests</code></pre>
+  <div class="warn">⚠️ <code>unsafe-eval</code> và <code>unsafe-inline</code> trong <code>script-src</code> là yêu cầu của Sanity Studio. Không được xóa khi Studio còn tại <code>/studio</code>.</div>
+
+  <h3>3. Bảo vệ Sanity Studio (<code>middleware.ts</code>)</h3>
+  <p>HTTP Basic Auth áp dụng cho <code>/studio/:path*</code>. Khi không có env thì bỏ qua (dev mode). <strong>Bắt buộc</strong> thiết lập khi deploy production.</p>
+  <pre><code>STUDIO_BASIC_USER=&lt;tên đăng nhập&gt;
+STUDIO_BASIC_PASS=&lt;mật khẩu mạnh&gt;</code></pre>
+
+  <h3>4. Input Validation — Zod (<code>app/api/</code>)</h3>
+  <p>Mọi dữ liệu từ user được validate bằng Zod trước khi xử lý. Trả <code>422</code> với thông báo cụ thể khi không hợp lệ.</p>
+  <p>Schema feedback: <code>fullName</code> (2–100 ký tự), <code>phone</code> (regex VN <code>^(0|\+84)[0-9]{8,9}$</code>), <code>subject</code> (5–200), <code>content</code> (20–5000).</p>
+
+  <h3>5. HTML Injection Prevention</h3>
+  <pre><code>function escapeHtml(str: string) {
+  return str
+    .replace(/&amp;/g, "&amp;amp;").replace(/&lt;/g, "&amp;lt;").replace(/&gt;/g, "&amp;gt;")
+    .replace(/"/g, "&amp;quot;").replace(/'/g, "&amp;#039;");
+}</code></pre>
+
+  <h3>6. Phân tách Server/Client Secret</h3>
+  <table>
+    <thead><tr><th>Biến</th><th>Vị trí</th><th>Lý do</th></tr></thead>
+    <tbody>
+      <tr><td><code>SANITY_API_TOKEN</code></td><td>Server-only</td><td>Token ghi — không được lộ ra browser</td></tr>
+      <tr><td><code>RESEND_API_KEY</code></td><td>Server-only</td><td>API key email</td></tr>
+      <tr><td><code>STUDIO_BASIC_PASS</code></td><td>Server-only</td><td>Mật khẩu admin</td></tr>
+      <tr><td><code>NEXT_PUBLIC_SANITY_PROJECT_ID</code></td><td>Public</td><td>Chỉ là project ID đọc</td></tr>
+      <tr><td><code>NEXT_PUBLIC_SANITY_DATASET</code></td><td>Public</td><td>Tên dataset</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7. Dependency Vulnerabilities — Đã vá (18/05/2026)</h3>
+  <table>
+    <thead><tr><th>Lỗ hổng</th><th>Package gốc</th><th>CVE</th><th>Cách vá</th></tr></thead>
+    <tbody>
+      <tr><td>XSS via &lt;/style&gt;</td><td><code>postcss &lt; 8.5.10</code></td><td>GHSA-qx2v-qp2m-jg93</td><td>Override <code>postcss ^8.5.10</code></td></tr>
+      <tr><td>Prototype pollution</td><td><code>js-yaml &lt; 3.14.2</code></td><td>GHSA-mh29-5h37-fv8m</td><td>Override <code>js-yaml ^3.14.2</code></td></tr>
+    </tbody>
+  </table>
+  <div class="info">Trạng thái hiện tại: <code>npm audit</code> → <strong>0 vulnerabilities</strong></div>
+
+  <h3>8. Rate Limiting API Routes (<code>lib/rate-limit.ts</code>)</h3>
+  <p>Limiter in-memory dạng sliding window — <strong>5 request/phút/IP</strong> cho <code>POST /api/feedback</code> và <code>POST /api/qna</code>. Vượt giới hạn trả <code>429</code> kèm header <code>Retry-After: 60</code>.</p>
+  <div class="warn">⚠️ Bộ đếm nằm trong RAM mỗi instance serverless — reset khi cold-start. Đủ chặn phần lớn spam ở quy mô phường; nâng cấp Upstash Redis nếu cần chính xác tuyệt đối.</div>
+
+  <h2>III. GROQ Injection Prevention</h2>
+  <pre><code>// ✅ Đúng — truyền qua object params
+client.fetch(groq`*[_type == "newsPost" &amp;&amp; slug.current == $slug][0]`, { slug })
+
+// ❌ Sai — có thể bị GROQ injection
+client.fetch(groq`*[_type == "newsPost" &amp;&amp; slug.current == "${slug}"][0]`)</code></pre>
+
+  <h2>IV. Checklist trước khi deploy</h2>
+  <table>
+    <thead><tr><th>Hạng mục</th><th>Trạng thái</th></tr></thead>
+    <tbody>
+      <tr><td><code>STUDIO_BASIC_USER</code> và <code>STUDIO_BASIC_PASS</code> đã đặt trên Vercel</td><td><span class="badge pending">⏳ Chờ deploy</span></td></tr>
+      <tr><td><code>SANITY_API_TOKEN</code> và <code>RESEND_API_KEY</code> không có prefix <code>NEXT_PUBLIC_</code></td><td><span class="badge done">✅ Đúng</span></td></tr>
+      <tr><td><code>npm audit</code> → 0 vulnerabilities</td><td><span class="badge done">✅ Sạch</span></td></tr>
+      <tr><td>CSP không có domain lạ ngoài <code>sanity.io</code>, <code>fonts.google*</code></td><td><span class="badge done">✅ Đúng</span></td></tr>
+      <tr><td>Không có <code>console.log</code> chứa dữ liệu nhạy cảm</td><td><span class="badge done">✅ Đúng</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>V. Rủi ro còn tồn tại</h2>
+  <table>
+    <thead><tr><th>Rủi ro</th><th>Mức độ</th><th>Lý do chưa xử lý</th><th>Kế hoạch</th></tr></thead>
+    <tbody>
+      <tr><td><code>unsafe-inline</code> trong CSP</td><td><span class="badge med">🟡 Trung bình</span></td><td>Sanity Studio yêu cầu</td><td>Cân nhắc tách Studio sang subdomain</td></tr>
+      <tr><td>Rate limiting không chia sẻ giữa instance</td><td><span class="badge low">🟢 Thấp</span></td><td>Limiter in-memory, đủ quy mô phường</td><td>Nâng cấp Upstash Redis nếu cần</td></tr>
+      <tr><td>Không có CAPTCHA form phản ánh</td><td><span class="badge low">🟢 Thấp</span></td><td>Quy mô hiện tại chưa cần</td><td>Thêm nếu spam xảy ra</td></tr>
+      <tr><td>Audit log hành động admin</td><td><span class="badge low">🟢 Thấp</span></td><td>Ngoài phạm vi Giai đoạn 2</td><td>Xem xét Giai đoạn 3</td></tr>
+    </tbody>
+  </table>
+
+  <h2>VI. Quy tắc cho lập trình viên</h2>
+  <div class="section-card">
+    <div class="card-head">🛡️ 7 quy tắc bất biến</div>
+    <div class="card-body">
+      <ol class="rule-list">
+        <li>Không nới CSP nếu không có lý do cụ thể — đây là cổng thông tin chính quyền</li>
+        <li>Không thêm <code>NEXT_PUBLIC_</code> cho bất kỳ secret nào</li>
+        <li>Mọi API route mới phải có Zod schema validation</li>
+        <li>Mọi dữ liệu user nhúng vào HTML phải qua <code>escapeHtml()</code></li>
+        <li>Chạy <code>npm audit</code> trước mỗi lần deploy</li>
+        <li>GROQ params luôn truyền qua object <code>{ param }</code>, không nối chuỗi</li>
+        <li>Mọi API route nhận dữ liệu user nên có rate limiting (<code>lib/rate-limit.ts</code>)</li>
+      </ol>
+    </div>
+  </div>
+
+</main>
+<footer><strong>Cổng thông tin Công an phường Bình Dương</strong> — Cập nhật 20/05/2026</footer>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo cáo — Cổng thông tin Công an phường Bình Dương</title>
+<style>
+  :root { --primary:#c0392b;--gold:#f39c12;--navy:#1a2332;--bg:#f4f6f9;--white:#fff;--text:#2c3e50;--muted:#7f8c8d;--border:#dde2e8;--green:#27ae60;--shadow:0 2px 8px rgba(0,0,0,.10);--r:8px; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+  .hd{background:var(--navy);color:#fff;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+  .hd .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+  .bb{background:var(--primary);color:#fff;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600}
+  nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav a{display:flex;align-items:center;gap:5px;padding:12px 13px;font-size:13px;color:var(--muted);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap}
+  nav a:hover,nav a.on{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 24px}
+  .pg-title{font-size:28px;font-weight:800;color:var(--navy);margin-bottom:8px}
+  .pg-sub{font-size:13px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+  h2{font-size:18px;font-weight:700;color:var(--navy);margin:32px 0 12px;padding-left:12px;border-left:4px solid var(--primary)}
+  h3{font-size:15px;font-weight:700;color:var(--navy);margin:20px 0 8px}
+  p{margin-bottom:12px;font-size:14px}
+  ul{padding-left:20px;margin-bottom:16px}
+  li{margin-bottom:6px;font-size:14px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px;box-shadow:var(--shadow);border-radius:var(--r);overflow:hidden}
+  th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+  td{padding:9px 14px;border-bottom:1px solid var(--border);background:var(--white)}
+  tr:nth-child(even) td{background:#f8f9fa}
+  tr:last-child td{border-bottom:none}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+  .badge.done{background:#d4edda;color:#155724}
+  .badge.in-progress{background:#fff3cd;color:#856404}
+  .badge.high{background:#f8d7da;color:#721c24}
+  .badge.med{background:#fff3cd;color:#856404}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:24px}
+  .kpi{background:var(--white);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;text-align:center;border-top:4px solid var(--primary)}
+  .kpi .num{font-size:26px;font-weight:800;color:var(--navy);margin-bottom:4px}
+  .kpi .lbl{font-size:12px;color:var(--muted)}
+  .session-block{background:var(--white);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .session-block .s-head{background:var(--navy);color:#fff;padding:12px 20px;font-weight:700;font-size:14px}
+  .session-block .s-body{padding:16px 20px}
+  .bug-table td:nth-child(2){font-weight:600}
+  .recommend-list{list-style:none;padding:0;counter-reset:rec}
+  .recommend-list li{padding:10px 0;font-size:13px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start;counter-increment:rec}
+  .recommend-list li:last-child{border-bottom:none}
+  .recommend-list li::before{content:counter(rec);background:var(--gold);color:#1a1a1a;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:2px}
+  footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:20px 24px;font-size:12px;margin-top:60px}
+  footer strong{color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<header class="hd">
+  <div class="brand"><span class="bb">🚔 CA.BD</span><span>Cổng thông tin Công an phường Bình Dương</span></div>
+</header>
+<nav>
+  <a href="index.html">📊 Dashboard</a>
+  <a href="PROGRESS.html">🔄 Tiến độ</a>
+  <a href="PLAN.html">📋 Kế hoạch</a>
+  <a href="AGENTS.html">🤖 Agents</a>
+  <a href="SECURITY.html">🔒 Bảo mật</a>
+  <a href="PERFORMANCE_OPTIMIZE.html">⚡ Hiệu năng</a>
+  <a href="README.html">📖 README</a>
+  <a href="REPORT.html" class="on">📑 Báo cáo</a>
+</nav>
+<main class="wrap">
+  <h1 class="pg-title">📑 Báo cáo tổng hợp dự án</h1>
+  <p class="pg-sub">Người thực hiện: Rex Nguyen — Giai đoạn: 15/05/2026 → 21/05/2026 — Trạng thái: ~99% hoàn thành</p>
+
+  <h2>I. Tổng quan</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="num">7</div><div class="lbl">Ngày phát triển</div></div>
+    <div class="kpi"><div class="num">19</div><div class="lbl">Trang hoàn thành</div></div>
+    <div class="kpi"><div class="num">11</div><div class="lbl">Sanity schemas</div></div>
+    <div class="kpi"><div class="num">19</div><div class="lbl">GROQ queries</div></div>
+    <div class="kpi"><div class="num">27+</div><div class="lbl">Components</div></div>
+    <div class="kpi"><div class="num">2</div><div class="lbl">API routes</div></div>
+    <div class="kpi"><div class="num">0</div><div class="lbl">Lỗ hổng bảo mật</div></div>
+    <div class="kpi"><div class="num">✅</div><div class="lbl">Build pass</div></div>
+  </div>
+
+  <h2>II. Lịch sử phát triển theo phiên</h2>
+
+  <div class="session-block">
+    <div class="s-head">Phiên 15/05/2026 — Khởi tạo Giai đoạn 1</div>
+    <div class="s-body">
+      <p>Khởi tạo toàn bộ hạ tầng: Next.js 16, TypeScript, Tailwind CSS v4, Sanity v5, Resend.</p>
+      <ul>
+        <li>4 Sanity schemas: <code>newsPost</code>, <code>legalDocument</code>, <code>personnel</code>, <code>procedure</code></li>
+        <li>9 components layout và UI cơ bản (Header, Footer, MobileMenu, Badge, Button...)</li>
+        <li>10 trang: trang chủ, giới thiệu, tin tức, văn bản pháp luật, thủ tục hành chính, phản ánh + API feedback</li>
+        <li>Color palette chuẩn Công an nhân dân, font Be Vietnam Pro</li>
+        <li>GROQ queries có <code>safeFetch</code> fallback — không crash khi chưa có Sanity</li>
+      </ul>
+      <p style="font-size:13px;color:var(--green)">✅ TypeScript: 0 lỗi | ESLint: 0 lỗi | Build: thành công — 12 routes</p>
+    </div>
+  </div>
+
+  <div class="session-block">
+    <div class="s-head">Phiên 18/05/2026 — Giai đoạn 2 + Bảo mật + Tối ưu</div>
+    <div class="s-body">
+      <h3>Tính năng mới tích hợp</h3>
+      <table>
+        <thead><tr><th>File</th><th>Nội dung</th></tr></thead>
+        <tbody>
+          <tr><td><code>constants/site.ts</code></td><td>Cập nhật đầy đủ địa chỉ, SĐT, email, giờ làm việc</td></tr>
+          <tr><td><code>components/ui/CopBubble.tsx</code></td><td>Nút phản ánh nổi góc phải — dropdown Zalo/Facebook/Email</td></tr>
+          <tr><td><code>components/sections/HeroSearch.tsx</code></td><td>Thanh tìm kiếm thủ tục ngay tại Hero</td></tr>
+          <tr><td><code>components/sections/ContactInfo.tsx</code></td><td>Thêm thống kê và số khẩn cấp 113/114/115</td></tr>
+          <tr><td><code>components/sections/GioiThieuTabs.tsx</code></td><td>3 tab: Chức năng nhiệm vụ, Sơ đồ tổ chức, Lịch tiếp dân</td></tr>
+          <tr><td><code>app/api/feedback/route.ts</code></td><td>API nhận phản ánh, Zod validation, gửi email Resend</td></tr>
+        </tbody>
+      </table>
+
+      <h3>3 lỗi phát hiện và sửa</h3>
+      <table class="bug-table">
+        <thead><tr><th>#</th><th>Mức độ</th><th>File</th><th>Lỗi</th><th>Cách xử lý</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><span class="badge high">HIGH — ESLint</span></td><td><code>CopBubble.tsx:12</code></td><td><code>setState</code> trong <code>useEffect</code> gây cascading render</td><td>Bọc <code>startTransition()</code></td></tr>
+          <tr><td>2</td><td><span class="badge high">SECURITY HIGH</span></td><td><code>api/feedback/route.ts:38</code></td><td>User input nhúng thẳng vào HTML email</td><td>Thêm <code>escapeHtml()</code></td></tr>
+          <tr><td>3</td><td><span class="badge med">LOW</span></td><td><code>middleware.ts:6</code></td><td>Tham số khai báo nhưng không dùng</td><td>Xóa tham số thừa</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Tối ưu hiệu năng</h3>
+      <table>
+        <thead><tr><th>Tối ưu</th><th>Kết quả</th></tr></thead>
+        <tbody>
+          <tr><td>Bỏ <code>framer-motion</code> (~100KB)</td><td>Bundle nhỏ hơn, tải nhanh hơn</td></tr>
+          <tr><td>Bật Sanity CDN</td><td>Giảm thời gian phản hồi dữ liệu</td></tr>
+          <tr><td>Font qua <code>next/font</code></td><td>Không còn chớp trắng FOUT</td></tr>
+          <tr><td>Loading skeleton</td><td>Không màn hình trắng khi fetch</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Vá 2 lỗ hổng bảo mật (Dependabot)</h3>
+      <table>
+        <thead><tr><th>CVE</th><th>Package</th><th>Cách vá</th></tr></thead>
+        <tbody>
+          <tr><td>GHSA-qx2v-qp2m-jg93</td><td><code>postcss &lt; 8.5.10</code> — XSS</td><td>Override <code>postcss ^8.5.10</code></td></tr>
+          <tr><td>GHSA-mh29-5h37-fv8m</td><td><code>js-yaml &lt; 3.14.2</code> — Prototype pollution</td><td>Override <code>js-yaml ^3.14.2</code></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:var(--green)">✅ <code>npm audit</code> → 0 vulnerabilities</p>
+    </div>
+  </div>
+
+  <div class="session-block">
+    <div class="s-head">Phiên 19/05/2026 — Tài liệu &amp; Chuẩn hoá</div>
+    <div class="s-body">
+      <table>
+        <thead><tr><th>File</th><th>Nội dung</th></tr></thead>
+        <tbody>
+          <tr><td><code>CLAUDE.md</code></td><td>Tech stack thực tế, kiến trúc, ISR, env vars, 6 nguyên tắc hành vi (A–F)</td></tr>
+          <tr><td><code>AGENTS.md</code></td><td>3 agent (Developer, Reviewer, Content Architect), workflow, bảng breaking changes</td></tr>
+          <tr><td><code>docs/PLAN.md</code></td><td>Kế hoạch chi tiết thay thế ke-hoach.md</td></tr>
+          <tr><td><code>docs/SECURITY.md</code></td><td>Tài liệu bảo mật — headers, CSP, checklist deploy</td></tr>
+          <tr><td><code>docs/PROGRESS.md</code></td><td>Tiến độ cập nhật</td></tr>
+          <tr><td><code>docs/PERFORMANCE_OPTIMIZE.md</code></td><td>Tối ưu đã làm và cơ hội tiếp theo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="session-block">
+    <div class="s-head">Phiên 20/05/2026 — Giai đoạn 3 (UX &amp; SEO)</div>
+    <div class="s-body">
+      <table>
+        <thead><tr><th>Mã</th><th>Tính năng</th></tr></thead>
+        <tbody>
+          <tr><td>C1</td><td>Tìm kiếm toàn site — HeroSearch điều hướng /search?q=</td></tr>
+          <tr><td>C2</td><td>Trang 404 tùy chỉnh — quick links, nút gọi 113</td></tr>
+          <tr><td>C3</td><td>Sitemap động + robots.txt từ Sanity</td></tr>
+          <tr><td>C4</td><td>@media print trong globals.css</td></tr>
+          <tr><td>C6</td><td>EmergencyButton — thanh 113 cố định đáy mobile</td></tr>
+          <tr><td>—</td><td>Rate limiting /api/feedback &amp; /api/qna (5 req/phút/IP); sửa 2 lỗi build</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="session-block">
+    <div class="s-head">Phiên 21/05/2026 — Giai đoạn 4 (Đồng bộ thiết kế v4)</div>
+    <div class="s-body">
+      <p>Sửa 5 lỗi build do phiên design v4 (<code>i18n.tsx</code>, <code>MobileMenu</code>, i18n keys, cast <code>I18nKey</code>, <code>use client</code>).</p>
+      <p>Đồng bộ toàn bộ 6 sections trang chủ với thiết kế v4: HeroSection, HeroSearch, EmergencyRow, QuickLinks, LatestNews, NguoiTotViecTot, tạo ValuesStrip mới.</p>
+      <p>Restyle PhotoAlbumPreview + VideoPreview theo design tokens. Build pass 100%.</p>
+      <p>Đơn vị hoàn thành A1 (Sanity), A2 (Resend), A3 (nội dung mẫu), A4 (logo), A5 (URL mạng xã hội), A7 (npm install).</p>
+    </div>
+  </div>
+
+  <h2>III. Commits theo thời gian</h2>
+  <table>
+    <thead><tr><th>Commit</th><th>Ngày</th><th>Nội dung</th></tr></thead>
+    <tbody>
+      <tr><td><code>d31ee3b</code></td><td>15/05</td><td>feat: scaffold Next.js 14 project với Sanity.io CMS</td></tr>
+      <tr><td><code>19621df</code></td><td>18/05</td><td>feat: tích hợp tính năng mới và sửa lỗi bảo mật</td></tr>
+      <tr><td><code>5c0da54</code></td><td>18/05</td><td>fix: vá 2 lỗ hổng bảo mật Dependabot</td></tr>
+      <tr><td><code>badc9f9</code></td><td>18/05</td><td>chore: dọn repo — xóa file nội bộ</td></tr>
+      <tr><td><code>fde6275</code></td><td>18/05</td><td>docs: viết lại README.md</td></tr>
+      <tr><td><code>ea77f06</code></td><td>19/05</td><td>docs: viết lại CLAUDE.md và AGENTS.md</td></tr>
+      <tr><td><code>d0b738f</code></td><td>19/05</td><td>docs: thêm 4 tài liệu dự án chuẩn hoá</td></tr>
+      <tr><td><code>9256d75</code></td><td>21/05</td><td>fix: correct Sanity token env var name</td></tr>
+      <tr><td><code>385475e</code></td><td>21/05</td><td>fix: remove all ISR cache for instant content updates</td></tr>
+      <tr><td><code>ece4084</code></td><td>21/05</td><td>fix: disable Sanity CDN to serve fresh content immediately</td></tr>
+      <tr><td><code>a180241</code></td><td>21/05</td><td>feat: add Sanity webhook revalidation endpoint and multi-email support</td></tr>
+      <tr><td><code>0d7180f</code></td><td>21/05</td><td>chore: migrate middleware to proxy for Next.js 16 compatibility</td></tr>
+    </tbody>
+  </table>
+
+  <h2>IV. Trạng thái hiện tại</h2>
+  <table>
+    <thead><tr><th>Kiểm tra</th><th>Trạng thái</th></tr></thead>
+    <tbody>
+      <tr><td><code>npm run build</code></td><td><span class="badge done">✅ Pass</span></td></tr>
+      <tr><td><code>npm run lint</code></td><td><span class="badge done">✅ 0 error, 0 warning</span></td></tr>
+      <tr><td><code>npm audit</code></td><td><span class="badge done">✅ 0 vulnerabilities</span></td></tr>
+      <tr><td>TypeScript</td><td><span class="badge done">✅ 0 lỗi</span></td></tr>
+      <tr><td>Deploy production</td><td><span class="badge in-progress">🔄 Đang tiến hành (A6)</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>V. Kiến nghị</h2>
+  <ol class="recommend-list">
+    <li>Ưu tiên ngay: Hoàn thành A6 (deploy Vercel) — mọi điều kiện kỹ thuật đã sẵn sàng</li>
+    <li>Đặt tên miền sớm: <code>.gov.vn</code> yêu cầu thủ tục xác minh đơn vị nhà nước — cần bắt đầu sớm nếu muốn domain chính thức</li>
+    <li>Kiểm thử mobile: Toàn bộ trang Giai đoạn 2 chưa được kiểm tra responsive thực tế trên thiết bị</li>
+    <li>Sau deploy: Thêm CAPTCHA form phản ánh nếu spam xảy ra; xem xét nâng Resend lên gói trả phí nếu nhu cầu email tăng</li>
+  </ol>
+
+</main>
+<footer><strong>Cổng thông tin Công an phường Bình Dương</strong> — Báo cáo tổng hợp 21/05/2026</footer>
+</body>
+</html>

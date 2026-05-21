@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Cổng thông tin Công an phường Bình Dương</title>
+<style>
+  :root {
+    --primary: #c0392b;
+    --primary-dark: #96281b;
+    --gold: #f39c12;
+    --navy: #1a2332;
+    --navy-light: #243447;
+    --bg: #f4f6f9;
+    --white: #ffffff;
+    --text: #2c3e50;
+    --text-muted: #7f8c8d;
+    --border: #dde2e8;
+    --green: #27ae60;
+    --orange: #e67e22;
+    --red: #e74c3c;
+    --shadow: 0 2px 8px rgba(0,0,0,0.10);
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .site-header .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+  .site-header .brand-badge {
+    background: var(--primary);
+    color: white;
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .site-header .update-time { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  .doc-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .doc-nav::-webkit-scrollbar { display: none; }
+  .doc-nav a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .doc-nav a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+  .doc-nav a.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+
+  .main-content { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+  .hero-title { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .hero-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--border);
+    text-align: center;
+  }
+  .stat-card.c-primary { border-top-color: var(--primary); }
+  .stat-card.c-gold { border-top-color: var(--gold); }
+  .stat-card.c-navy { border-top-color: var(--navy); }
+  .stat-card.c-green { border-top-color: var(--green); }
+  .stat-number { font-size: 32px; font-weight: 800; color: var(--text); }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  .progress-section {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 32px;
+  }
+  .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .progress-title { font-size: 16px; font-weight: 600; color: var(--navy); }
+  .progress-pct { font-size: 28px; font-weight: 800; color: var(--primary); }
+  .progress-bar-bg { height: 14px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 16px; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--gold)); border-radius: 99px; }
+  .phase-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+  .phase-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 6px; background: var(--bg); font-size: 13px; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 16px; margin-top: 32px; }
+
+  .docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .doc-link-card {
+    display: block;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--white);
+    box-shadow: var(--shadow);
+    transition: all 0.15s;
+    border-left: 4px solid var(--border);
+  }
+  .doc-link-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+  .doc-link-card.c-red { border-left-color: var(--primary); }
+  .doc-link-card.c-navy { border-left-color: var(--navy); }
+  .doc-link-card.c-gold { border-left-color: var(--gold); }
+  .doc-link-card.c-green { border-left-color: var(--green); }
+  .doc-link-card.c-orange { border-left-color: var(--orange); }
+  .doc-link-card .doc-icon { font-size: 26px; margin-bottom: 10px; }
+  .doc-link-card .doc-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .doc-link-card .doc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+  .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .card-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .card-header.h-red { background: var(--primary); }
+  .card-header.h-gold { background: var(--gold); color: var(--navy); }
+  .card-body { padding: 20px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--bg); padding: 8px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafbfc; }
+  code { background: #f0f3f7; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+
+  .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+  .b-green { background: #d5f5e3; color: #1e8449; }
+  .b-blue { background: #d6eaf8; color: #1a5276; }
+  .b-orange { background: #fdebd0; color: #a04000; }
+
+  .checklist { list-style: none; font-size: 13px; }
+  .checklist li { padding: 7px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; }
+  .checklist li:last-child { border-bottom: none; }
+
+  .links-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+  @media (max-width: 600px) { .links-grid { grid-template-columns: 1fr; } }
+  .link-card {
+    display: block;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--white);
+    transition: all 0.15s;
+  }
+  .link-card:hover { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(192,57,43,0.08); transform: translateY(-1px); }
+  .link-card .link-icon { font-size: 22px; margin-bottom: 6px; }
+  .link-card .link-title { font-size: 13px; font-weight: 600; color: var(--navy); }
+  .link-card .link-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  .site-footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 20px 24px;
+    font-size: 12px;
+    margin-top: 40px;
+  }
+  .site-footer strong { color: rgba(255,255,255,0.8); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <span class="brand-badge">🚔 CA.BD</span>
+    <span>Cổng thông tin Công an phường Bình Dương</span>
+  </div>
+  <span class="update-time">Cập nhật: 21/05/2026</span>
+</header>
+
+<nav class="doc-nav">
+  <a href="index.html" class="active">📊 Dashboard</a>
+  <a href="PROGRESS.html">🔄 Tiến độ</a>
+  <a href="PLAN.html">📋 Kế hoạch</a>
+  <a href="AGENTS.html">🤖 Agents</a>
+  <a href="SECURITY.html">🔒 Bảo mật</a>
+  <a href="PERFORMANCE_OPTIMIZE.html">⚡ Hiệu năng</a>
+  <a href="README.html">📖 README</a>
+  <a href="REPORT.html">📑 Báo cáo</a>
+</nav>
+
+<main class="main-content">
+
+  <h1 class="hero-title">Dashboard Dự án</h1>
+  <p class="hero-sub">Cổng thông tin Công an phường Bình Dương — Rex Nguyen — Mục tiêu hoàn thành: Quý III/2026</p>
+
+  <div class="stats-grid">
+    <div class="stat-card c-primary"><div class="stat-number">19</div><div class="stat-label">Trang web hoàn thành</div></div>
+    <div class="stat-card c-gold"><div class="stat-number">11</div><div class="stat-label">Sanity Schemas</div></div>
+    <div class="stat-card c-navy"><div class="stat-number">19</div><div class="stat-label">GROQ Queries</div></div>
+    <div class="stat-card c-green"><div class="stat-number">27+</div><div class="stat-label">Components</div></div>
+    <div class="stat-card c-primary"><div class="stat-number">2</div><div class="stat-label">API Routes</div></div>
+    <div class="stat-card c-green"><div class="stat-number">0</div><div class="stat-label">Lỗ hổng bảo mật</div></div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title">Tiến độ tổng thể — Giai đoạn 1, 2, 3 &amp; 4 hoàn tất</span>
+      <span class="progress-pct">99%</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:99%"></div></div>
+    <div class="phase-list">
+      <div class="phase-item">✅ Giai đoạn 1 — Nền tảng cốt lõi</div>
+      <div class="phase-item">✅ Giai đoạn 2 — Mở rộng tính năng</div>
+      <div class="phase-item">✅ Giai đoạn 3 — UX &amp; SEO (C1–C6)</div>
+      <div class="phase-item">✅ Giai đoạn 4 — Đồng bộ thiết kế v4</div>
+      <div class="phase-item">⏳ A6 — Deploy Vercel (còn lại)</div>
+      <div class="phase-item">🟢 C7, C8 — Tuỳ chọn ưu tiên thấp</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Tài liệu dự án</h2>
+  <div class="docs-grid">
+    <a class="doc-link-card c-red" href="PROGRESS.html">
+      <div class="doc-icon">🔄</div>
+      <div class="doc-title">Tiến độ</div>
+      <div class="doc-desc">Trạng thái từng hạng mục, lịch sử cập nhật, việc còn lại</div>
+    </a>
+    <a class="doc-link-card c-navy" href="PLAN.html">
+      <div class="doc-icon">📋</div>
+      <div class="doc-title">Kế hoạch</div>
+      <div class="doc-desc">Bản đồ file, phạm vi chức năng, phân công đơn vị, chi phí hạ tầng</div>
+    </a>
+    <a class="doc-link-card c-gold" href="AGENTS.html">
+      <div class="doc-icon">🤖</div>
+      <div class="doc-title">AI Agents</div>
+      <div class="doc-desc">Quy tắc cho Developer, Security Reviewer, Content Architect</div>
+    </a>
+    <a class="doc-link-card c-red" href="SECURITY.html">
+      <div class="doc-icon">🔒</div>
+      <div class="doc-title">Bảo mật</div>
+      <div class="doc-desc">Threat model, CSP, rate limiting, checklist trước deploy</div>
+    </a>
+    <a class="doc-link-card c-orange" href="PERFORMANCE_OPTIMIZE.html">
+      <div class="doc-icon">⚡</div>
+      <div class="doc-title">Hiệu năng</div>
+      <div class="doc-desc">Core Web Vitals, ISR, bundle size, tối ưu đã thực hiện</div>
+    </a>
+    <a class="doc-link-card c-navy" href="README.html">
+      <div class="doc-icon">📖</div>
+      <div class="doc-title">README</div>
+      <div class="doc-desc">Tổng quan dự án, cài đặt, cấu trúc thư mục, liên hệ</div>
+    </a>
+    <a class="doc-link-card c-green" href="REPORT.html">
+      <div class="doc-icon">📑</div>
+      <div class="doc-title">Báo cáo</div>
+      <div class="doc-desc">Lịch sử phát triển, commits, trạng thái kỹ thuật, kiến nghị</div>
+    </a>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header h-red">✅ Trạng thái kỹ thuật</div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Kiểm tra</th><th>Kết quả</th></tr></thead>
+          <tbody>
+            <tr><td>npm run build</td><td><span class="badge b-green">✅ Pass</span></td></tr>
+            <tr><td>npm run lint</td><td><span class="badge b-green">✅ 0 lỗi</span></td></tr>
+            <tr><td>npm audit</td><td><span class="badge b-green">✅ 0 CVE</span></td></tr>
+            <tr><td>TypeScript</td><td><span class="badge b-green">✅ 0 lỗi</span></td></tr>
+            <tr><td>Rate limiting</td><td><span class="badge b-green">✅ 5 req/phút/IP</span></td></tr>
+            <tr><td>Security headers</td><td><span class="badge b-green">✅ OWASP đầy đủ</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">📋 Phân công đơn vị</div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li>✅ A1 — Tạo Sanity → Project ID + Token</li>
+          <li>✅ A2 — Tạo Resend → API key</li>
+          <li>✅ A3 — Nhập nội dung mẫu vào Studio</li>
+          <li>✅ A4 — Upload logo vào public/logo/</li>
+          <li>✅ A5 — Xác nhận URL Facebook/YouTube</li>
+          <li>⏳ A6 — Deploy Vercel + điền env vars</li>
+          <li>✅ A7 — npm install sau khi pull code</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header h-gold">🗄️ Sanity Schemas (11/11)</div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Schema</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><code>newsPost</code></td><td>Tin tức, isFeatured, isNguoiTotViecTot</td></tr>
+            <tr><td><code>legalDocument</code></td><td>Văn bản pháp luật, file đính kèm</td></tr>
+            <tr><td><code>personnel</code></td><td>Cán bộ, cấp bậc, chức vụ, ảnh</td></tr>
+            <tr><td><code>procedure</code></td><td>Thủ tục hành chính, các bước, phí</td></tr>
+            <tr><td><code>photoAlbum</code></td><td>Thư viện ảnh theo sự kiện</td></tr>
+            <tr><td><code>video</code></td><td>Video YouTube tích hợp</td></tr>
+            <tr><td><code>qna</code></td><td>Hỏi đáp người dân — cán bộ</td></tr>
+            <tr><td><code>announcement</code></td><td>Thông báo ticker có thời hạn</td></tr>
+            <tr><td><code>draftDocument</code></td><td>Văn bản dự thảo, thời hạn góp ý</td></tr>
+            <tr><td><code>wantedPerson</code></td><td>Đối tượng truy nã, ảnh, tội danh</td></tr>
+            <tr><td><code>citizenSchedule</code></td><td>Lịch tiếp công dân, cán bộ trực</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">⚙️ Tech Stack</div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Thành phần</th><th>Phiên bản</th><th>Ghi chú</th></tr></thead>
+          <tbody>
+            <tr><td>Next.js</td><td><span class="badge b-blue">16.2.6</span></td><td>App Router</td></tr>
+            <tr><td>React</td><td><span class="badge b-blue">19.2.4</span></td><td></td></tr>
+            <tr><td>Tailwind CSS</td><td><span class="badge b-blue">v4</span></td><td>Không tailwind.config.js</td></tr>
+            <tr><td>Sanity</td><td><span class="badge b-blue">v5</span></td><td>Headless CMS duy nhất</td></tr>
+            <tr><td>Zod</td><td><span class="badge b-blue">v4</span></td><td>Breaking changes so v3</td></tr>
+            <tr><td>Resend</td><td><span class="badge b-blue">v6</span></td><td>100 email/ngày free</td></tr>
+            <tr><td>Vercel</td><td><span class="badge b-green">Free</span></td><td>CDN toàn cầu</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Link nhanh</h2>
+  <div class="links-grid">
+    <a class="link-card" href="http://localhost:3000" target="_blank">
+      <div class="link-icon">🌐</div>
+      <div class="link-title">Dev Server</div>
+      <div class="link-desc">localhost:3000</div>
+    </a>
+    <a class="link-card" href="http://localhost:3000/studio" target="_blank">
+      <div class="link-icon">🎛️</div>
+      <div class="link-title">Sanity Studio</div>
+      <div class="link-desc">localhost:3000/studio</div>
+    </a>
+    <a class="link-card" href="https://cap-binhduong.vercel.app" target="_blank">
+      <div class="link-icon">🚀</div>
+      <div class="link-title">Vercel Production</div>
+      <div class="link-desc">cap-binhduong.vercel.app</div>
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📅 Lịch sử cập nhật</div>
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Ngày</th><th>Nội dung</th></tr></thead>
+        <tbody>
+          <tr><td>21/05/2026</td><td>Hoàn thành Giai đoạn 4 — restyle PhotoAlbumPreview + VideoPreview; build 100%</td></tr>
+          <tr><td>21/05/2026</td><td>Giai đoạn 4 — đồng bộ QuickLinks, LatestNews, NguoiTotViecTot, ValuesStrip; page.tsx v4</td></tr>
+          <tr><td>21/05/2026</td><td>Đơn vị hoàn thành A1, A2, A3, A7; sửa 5 lỗi build design v4</td></tr>
+          <tr><td>20/05/2026</td><td>Rate limiting API; Giai đoạn 3: C1–C6 hoàn thành (tìm kiếm, 404, sitemap, print, 113)</td></tr>
+          <tr><td>20/05/2026</td><td>Hoàn thiện Giai đoạn 2: B9/B10/B12/B13; sửa bug CSP YouTube + Studio page</td></tr>
+          <tr><td>19/05/2026</td><td>CLAUDE.md + AGENTS.md; chuẩn hoá 4 tài liệu dự án</td></tr>
+          <tr><td>18/05/2026</td><td>Giai đoạn 2: 7 schemas, 19 queries, 12+ components, bảo mật, vá 2 CVE</td></tr>
+          <tr><td>15/05/2026</td><td>Khởi tạo Giai đoạn 1: hạ tầng, 4 schemas, 10 trang, API feedback</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <strong>Cổng thông tin Công an phường Bình Dương</strong> — Rex Nguyen — Cập nhật 21/05/2026<br>
+  Số 01, Đường D27, KP. Hòa Phú 1, Phường Bình Dương, TP. Hồ Chí Minh — ☎ 0274 3515 097 | 🚨 <strong>113</strong>
+</footer>
+
+</body>
+</html>
