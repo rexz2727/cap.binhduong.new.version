@@ -29,7 +29,9 @@ export default function Header({ announcements }: Props) {
   useEffect(() => {
     const savedTheme = (localStorage.getItem("theme") as "light" | "dark") || 
       (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    setTheme(savedTheme);
+    setTimeout(() => {
+      setTheme(savedTheme);
+    }, 0);
     document.documentElement.setAttribute("data-theme", savedTheme);
   }, []);
 

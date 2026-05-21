@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
-import imageUrlBuilder from "@sanity/image-url";
-import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import { getNewsBySlug } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
 import Badge from "@/components/ui/Badge";
-
-const builder = imageUrlBuilder(client);
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -27,7 +24,7 @@ export default async function NewsDetailPage({ params }: Props) {
   if (!post) notFound();
 
   const imgUrl = post.mainImage
-    ? builder.image(post.mainImage).width(900).height(500).url()
+    ? urlFor(post.mainImage).width(900).height(500).url()
     : null;
 
   const formattedDate = new Date(post.publishedAt).toLocaleDateString("vi-VN", {

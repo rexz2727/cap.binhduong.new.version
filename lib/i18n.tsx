@@ -144,7 +144,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const savedLang = localStorage.getItem("lang") as Lang;
     if (savedLang === "vi" || savedLang === "en") {
-      setLang(savedLang);
+      setTimeout(() => {
+        setLang(savedLang);
+      }, 0);
       document.documentElement.lang = savedLang;
     }
   }, []);

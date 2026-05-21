@@ -1,15 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import imageUrlBuilder from "@sanity/image-url";
-import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import type { NewsPostPreview } from "@/types/news";
 import Badge from "./Badge";
 
-const builder = imageUrlBuilder(client);
-
 export default function NewsCard({ post }: { post: NewsPostPreview }) {
   const imgUrl = post.mainImage
-    ? builder.image(post.mainImage).width(400).height(250).url()
+    ? urlFor(post.mainImage).width(400).height(250).url()
     : null;
 
   const formattedDate = new Date(post.publishedAt).toLocaleDateString("vi-VN", {

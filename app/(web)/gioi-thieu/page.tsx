@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import imageUrlBuilder from "@sanity/image-url";
-import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import { getPersonnel } from "@/sanity/lib/queries";
 import { SITE } from "@/constants/site";
 import PageHeader from "@/components/ui/PageHeader";
@@ -11,8 +10,6 @@ export const metadata: Metadata = {
   title: "Giới thiệu",
   description: "Giới thiệu về Công an phường Bình Dương và ban lãnh đạo đơn vị",
 };
-
-const builder = imageUrlBuilder(client);
 
 export default async function AboutPage() {
   const personnel = await getPersonnel();
@@ -58,7 +55,7 @@ export default async function AboutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {personnel.map((person) => {
                 const photoUrl = person.photo
-                  ? builder.image(person.photo).width(300).height(400).url()
+                  ? urlFor(person.photo).width(300).height(400).url()
                   : null;
                 return (
                   <div key={person._id} className="text-center">
