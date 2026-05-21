@@ -171,13 +171,13 @@ Hero → Emergency → Values → QuickLinks → LatestNews → NguoiTotViecTot 
 
 ## ⏳ CÒN LẠI — ĐƠN VỊ THỰC HIỆN (chặn deploy)
 
-- [ ] **A1** — Tạo tài khoản Sanity → lấy Project ID + Token → điền `.env.local`
-- [ ] **A2** — Tạo tài khoản Resend → lấy API key → điền `.env.local`
-- [ ] **A3** — Nhập nội dung mẫu vào Sanity Studio *(cần A1 xong trước)*
+- [x] **A1** — Tạo tài khoản Sanity → lấy Project ID + Token → điền `.env.local`
+- [x] **A2** — Tạo tài khoản Resend → lấy API key → điền `.env.local`
+- [x] **A3** — Nhập nội dung mẫu vào Sanity Studio
 - [ ] **A4** — Upload logo chính thức vào `public/logo/`
 - [ ] **A5** — Xác nhận Facebook/YouTube URL thật trong `constants/site.ts`
 - [ ] **A6** — Deploy lên Vercel + điền env vars *(cần A1+A2 xong)*
-- [ ] **A7** — Chạy `npm install` sau khi pull code mới nhất
+- [x] **A7** — Chạy `npm install` sau khi pull code mới nhất
 
 ---
 
@@ -193,6 +193,7 @@ Hero → Emergency → Values → QuickLinks → LatestNews → NguoiTotViecTot 
 | 20/05/2026 | Rate limiting `/api/feedback` & `/api/qna` (5 req/phút/IP); sửa 2 lỗi build có sẵn (`sanity/lib/image.ts`, lỗi type 3 schema) |
 | 21/05/2026 | Sửa 5 lỗi build do phiên design v4 (`i18n.tsx`, `MobileMenu`, i18n keys, cast `I18nKey`, `use client`); Giai đoạn 4 — đồng bộ HeroSection + HeroSearch + EmergencyRow với thiết kế v4 (2/6 section trang chủ) |
 | 21/05/2026 | Giai đoạn 4 — đồng bộ JSX QuickLinks, LatestNews, NguoiTotViecTot, tạo `ValuesStrip`; cập nhật `page.tsx` (bỏ NewsCarousel/ContactInfo, thứ tự section v4); thêm key i18n `section.honor.sub`; build pass (6/6 section trang chủ) |
+| 21/05/2026 | Đơn vị hoàn thành A1 (Sanity), A2 (Resend), A3 (nhập nội dung mẫu), A7 (`npm install`) — còn lại A4 logo, A5 URL mạng xã hội, A6 deploy Vercel |
 
 ---
 
