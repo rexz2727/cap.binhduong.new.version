@@ -1,53 +1,115 @@
 "use client";
 
-import { useState } from "react";
+import { useState, startTransition } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useI18n } from "@/lib/i18n";
+import { SITE } from "@/constants/site";
 import { NAV_ITEMS } from "@/constants/nav";
 
-export default function MobileMenu() {
-  const [open, setOpen] = useState(false);
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function MobileMenu({ isOpen, onClose }: Props) {
+  const [newsOpen, setNewsOpen] = useState(false);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const pathname = usePathname();
+  const { t } = useI18n();
+
+  const handleLinkClick = () => {
+    startTransition(() => {
+      onClose();
+    });
+  };
+
+  const isActive = (href: string) => {
+    if (href === "/" && pathname === "/") return true;
+    if (href !== "/" && pathname.startsWith(href)) return true;
+    return false;
+  };
 
   return (
-    <div className="lg:hidden">
-      <button
-        onClick={() => setOpen(!open)}
-        className="p-2 rounded hover:bg-police-red-dark transition-colors"
-        aria-label={open ? "Đóng menu" : "Mở menu"}
-        aria-expanded={open}
-      >
-        {open ? (
-          <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          <div className="space-y-1">
-            <div className="w-5 h-0.5 bg-white" />
-            <div className="w-5 h-0.5 bg-white" />
-            <div className="w-5 h-0.5 bg-white" />
-          </div>
-        )}
-      </button>
+    <>
+      {/* Mobile drawer backdrop */}
+      <div
+        className={`mobile-drawer-backdrop ${isOpen ? "open" : ""}`}
+        onClick={handleLinkClick}
+      />
 
-      {open && (
-        <>
-          <div
-            className="fixed inset-0 bg-black/40 z-40"
-            onClick={() => setOpen(false)}
-          />
-          <div className="absolute top-full left-0 right-0 bg-police-red shadow-xl z-50 max-h-[80vh] overflow-y-auto">
-            {NAV_ITEMS.map((item) => (
+      {/* Mobile drawer */}
+      <aside className={`mobile-drawer ${isOpen ? "open" : ""}`}>
+        <div className="drawer-head">
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <div className="emblem" style={{ width: "36px", height: "36px" }}></div>
+            <div className="brand-text">
+              <div className="brand-line2">{t("brand2", "Công an phường Bình Dương")}</div>
+              <div style={{ fontSize: "11px", opacity: 0.65 }}>{t("brand3", "TP. Hồ Chí Minh")}</div>
+            </div>
+          </div>
+          <button className="drawer-close" onClick={handleLinkClick} aria-label="Đóng menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="drawer-nav">
+          {NAV_ITEMS.map(item => {
+            if (item.children) {
+              const isOpen = item.href === '/tin-tuc' ? newsOpen : galleryOpen;
+              const setIsOpen = item.href === '/tin-tuc' ? setNewsOpen : setGalleryOpen;
+              const isParentActive = item.children.some(child => isActive(child.href)) || isActive(item.href);
+
+              return (
+                <div key={item.href}>
+                  <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className={`drawer-nav-item ${isParentActive ? "active" : ""}`}
+                  >
+                    {item.label}
+                    <svg className="chev" style={{ transform: isOpen ? 'rotate(180deg)' : ''}}><use href="#i-chev-down" /></svg>
+                  </button>
+                  {isOpen && (
+                    <div className="drawer-sub">
+                      {item.children.map(child => (
+                        <Link href={child.href} key={child.href} onClick={handleLinkClick}>
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            }
+            return (
               <Link
-                key={item.href}
                 href={item.href}
-                onClick={() => setOpen(false)}
-                className="block px-6 py-3.5 text-white hover:bg-police-red-dark border-b border-white/10 transition-colors text-sm font-medium"
+                key={item.href}
+                onClick={handleLinkClick}
+                className={`drawer-nav-item ${isActive(item.href) ? "active" : ""}`}
               >
                 {item.label}
               </Link>
-            ))}
+            )
+          })}
+        </nav>
+
+        <Link href="/phan-anh" onClick={handleLinkClick} className="drawer-cta">
+          <svg width="16" height="16"><use href="#i-megaphone"/></svg>
+          {t("nav.cta", "Gửi phản ánh ngay")}
+        </Link>
+
+        <div className="drawer-foot">
+          Đường dây nóng 24/7
+          <div className="hotline-big">
+            <span>Khẩn cấp</span>
+            <b>{SITE.hotline}</b>
           </div>
-        </>
-      )}
-    </div>
+        </div>
+      </aside>
+    </>
   );
 }

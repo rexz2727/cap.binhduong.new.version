@@ -1,8 +1,8 @@
 # TIẾN ĐỘ DỰ ÁN
 
 **Dự án:** Cổng thông tin Công an phường Bình Dương  
-**Cập nhật lần cuối:** 20/05/2026  
-**Tiến độ tổng thể: ~99%** — Giai đoạn 1, 2 & 3 hoàn tất, còn chờ đơn vị cung cấp nội dung & deploy
+**Cập nhật lần cuối:** 21/05/2026  
+**Tiến độ tổng thể: ~99%** — Giai đoạn 1, 2 & 3 hoàn tất; Giai đoạn 4 (đồng bộ giao diện thiết kế v4) — 6/6 section trang chủ đã đồng bộ JSX, còn restyle PhotoAlbumPreview + VideoPreview
 
 ---
 
@@ -126,6 +126,49 @@
 
 ---
 
+## 🔄 GIAI ĐOẠN 4 — ĐỒNG BỘ GIAO DIỆN THIẾT KẾ v4 (ĐANG LÀM)
+
+Nguồn thiết kế chuẩn: `design-reference/index-v4.html` (phần `<main id="page-home">`, dòng ~276–512) + `design-reference/styles-v4.css`. Quy ước khóa thiết kế: `DESIGN_LOCK.md`. CSS đã port đầy đủ vào `app/globals.css`; việc còn lại là đồng bộ JSX component về đúng tên class của design.
+
+### Lỗi build do phiên design trước để lại — đã sửa
+
+- [x] Đổi tên `lib/i18n.ts` → `lib/i18n.tsx` (file chứa JSX)
+- [x] `MobileMenu.tsx` — thay `item.id` (không tồn tại trên `NavItem`) bằng `item.href`
+- [x] `lib/i18n.tsx` — thêm 4 key `contact.address/phone/email/hours.label` (VI + EN)
+- [x] `ContactInfo.tsx`, `QuickLinks.tsx` — import + cast `I18nKey` cho hàm `t()`
+- [x] `ContactInfo.tsx` — thêm directive `"use client"`
+
+### Đồng bộ section trang chủ với design v4
+
+| # | Section | Class design | Trạng thái |
+|---|---|---|---|
+| 1 | HeroSection + HeroSearch | `section.hero` / `hero-inner` / `hero-stats` | ✅ Xong |
+| 2 | EmergencyRow | `emergency-strip` / `e-title` / `e-num` | ✅ Xong |
+| 3 | QuickLinks | `section.block` / `service-grid` / `service-cell` / `service-ic` / `.more` | ✅ Xong |
+| 4 | LatestNews | `section.block.alt` / `news-grid` / `news-feature` / `news-side` / `news-item-side` | ✅ Xong |
+| 5 | NguoiTotViecTot | `section.block.honor-strip` / `honor-grid` / `honor-card` | ✅ Xong |
+| 6 | ValuesStrip (tạo mới) | `section.values-strip` / `values-grid` / `value-cell` (4 ô value props) | ✅ Xong |
+
+### Quyết định phạm vi trang chủ
+
+Giữ `PhotoAlbumPreview` + `VideoPreview` (restyle theo design tokens), **bỏ** `NewsCarousel` + `ContactInfo` (ContactInfo đã có trong Footer). Thứ tự section mới trong `app/(web)/page.tsx`:
+
+```
+Hero → Emergency → Values → QuickLinks → LatestNews → NguoiTotViecTot → PhotoAlbumPreview → VideoPreview
+```
+
+### Còn lại của Giai đoạn 4
+
+- [x] Đồng bộ JSX section 3–6 (QuickLinks, LatestNews, NguoiTotViecTot, tạo ValuesStrip)
+- [x] Cập nhật `app/(web)/page.tsx` — bỏ import/usage `NewsCarousel` + `ContactInfo`, thêm `<ValuesStrip />`
+- [x] Thêm key i18n `section.honor.sub` (VI + EN) cho section NguoiTotViecTot
+- [x] `npm run build` — pass sạch (`Compiled successfully`)
+- [ ] Restyle `PhotoAlbumPreview` + `VideoPreview` theo design tokens
+
+> `NewsCarousel.tsx` và `ContactInfo.tsx` vẫn giữ trong repo (không xóa) — chỉ gỡ khỏi trang chủ.
+
+---
+
 ## ⏳ CÒN LẠI — ĐƠN VỊ THỰC HIỆN (chặn deploy)
 
 - [ ] **A1** — Tạo tài khoản Sanity → lấy Project ID + Token → điền `.env.local`
@@ -148,7 +191,9 @@
 | 20/05/2026 | Hoàn thiện Giai đoạn 2: B9/B10/B12/B13 + sửa bug CSP YouTube + Studio page |
 | 20/05/2026 | Giai đoạn 3: C1 tìm kiếm, C2 trang 404, C3 sitemap/robots, C4 print CSS, C6 nút 113 mobile |
 | 20/05/2026 | Rate limiting `/api/feedback` & `/api/qna` (5 req/phút/IP); sửa 2 lỗi build có sẵn (`sanity/lib/image.ts`, lỗi type 3 schema) |
+| 21/05/2026 | Sửa 5 lỗi build do phiên design v4 (`i18n.tsx`, `MobileMenu`, i18n keys, cast `I18nKey`, `use client`); Giai đoạn 4 — đồng bộ HeroSection + HeroSearch + EmergencyRow với thiết kế v4 (2/6 section trang chủ) |
+| 21/05/2026 | Giai đoạn 4 — đồng bộ JSX QuickLinks, LatestNews, NguoiTotViecTot, tạo `ValuesStrip`; cập nhật `page.tsx` (bỏ NewsCarousel/ContactInfo, thứ tự section v4); thêm key i18n `section.honor.sub`; build pass (6/6 section trang chủ) |
 
 ---
 
-*Cổng thông tin Công an phường Bình Dương — Cập nhật 20/05/2026*
+*Cổng thông tin Công an phường Bình Dương — Cập nhật 21/05/2026*

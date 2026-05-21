@@ -1,10 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
 
 export default function HeroSearch() {
   const [query, setQuery] = useState("");
   const router = useRouter();
+  const { t } = useI18n();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -14,23 +17,33 @@ export default function HeroSearch() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <form onSubmit={handleSubmit} className="flex gap-2">
+    <>
+      <form onSubmit={handleSubmit} className="hero-search">
+        <svg
+          width="18"
+          height="18"
+          style={{ marginLeft: "14px", color: "var(--subtle)" }}
+        >
+          <use href="#i-search" />
+        </svg>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Tìm thủ tục hoặc nội dung an ninh..."
-          className="flex-1 min-w-0 bg-white/90 text-police-navy placeholder-police-navy/50 rounded-xl px-5 py-3.5 text-sm font-medium outline-none focus:bg-white focus:ring-2 focus:ring-police-gold shadow-md transition-all"
-          aria-label="Tìm kiếm"
+          placeholder={t("hero.search.placeholder", "Tìm thủ tục, văn bản, tin tức…")}
+          data-i18n-placeholder="hero.search.placeholder"
         />
-        <button
-          type="submit"
-          className="bg-police-gold hover:bg-yellow-400 text-police-navy font-bold text-sm px-6 py-3.5 rounded-xl shadow-md transition-all hover:-translate-y-0.5 whitespace-nowrap"
-        >
-          🔍 Tìm kiếm
+        <button type="submit" className="btn btn-primary" data-i18n="hero.search.btn">
+          {t("hero.search.btn", "Tra cứu")}
         </button>
       </form>
-    </div>
+      <div className="hero-quick-tags">
+        <span data-i18n="hero.quicktags">{t("hero.quicktags", "Tra cứu nhanh:")}</span>
+        <Link href="/search?q=CCCD">Cấp CCCD</Link>
+        <Link href="/search?q=tạm trú">Đăng ký tạm trú</Link>
+        <Link href="/search?q=xe máy điện">Xe máy điện</Link>
+        <Link href="/search?q=hộ chiếu">Hộ chiếu</Link>
+      </div>
+    </>
   );
 }

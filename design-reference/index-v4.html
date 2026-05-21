@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Công an phường Bình Dương — Bản thiết kế lại</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles-v4.css" />
+<style>
+  .variant-switcher {
+    background: #111;
+    color: white;
+    padding: 8px 0;
+    font-size: 12px;
+  }
+  .variant-switcher .container {
+    display: flex; align-items: center; gap: 14px;
+    max-width: 1240px; margin: 0 auto; padding: 0 24px;
+  }
+  .variant-switcher b { color: var(--gold); }
+  .variant-switcher .pills { display: flex; gap: 6px; margin-left: auto; }
+  .variant-switcher a {
+    padding: 4px 10px;
+    border-radius: 99px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 11.5px;
+  }
+  .variant-switcher a:hover { background: rgba(255,255,255,0.1); }
+  .variant-switcher a.current { background: var(--gold); color: #111; border-color: var(--gold); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="variant-switcher">
+  <div class="container">
+    <span><b>So sánh thiết kế:</b> Bạn đang xem Hướng 4 (Kết hợp)</span>
+    <div class="pills">
+      <a href="index.html">Hướng 1 · Trang nghiêm Hiện đại</a>
+      <a href="index-v2.html">Hướng 2 · Hồng kỳ Truyền thống</a>
+      <a href="index-v3.html">Hướng 3 · 4.0 Tối giản</a>
+      <a href="index-v4.html" class="current">Hướng 4 · Kết hợp ★</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     Icons (referenced via <use>)
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+    </symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>
+    </symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.022 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.795-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.928-1.956 1.879v2.256h3.328l-.532 3.49h-2.796v8.437C19.612 23.095 24 18.1 24 12.073z"/></symbol>
+    <symbol id="i-yt" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></symbol>
+    <symbol id="i-chev-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></symbol>
+
+    <!-- Service icons -->
+    <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/>
+    </symbol>
+    <symbol id="i-scroll" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/>
+    </symbol>
+    <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </symbol>
+    <symbol id="i-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+    <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/>
+    </symbol>
+
+    <symbol id="i-check-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/>
+    </symbol>
+    <symbol id="i-news" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/>
+    </symbol>
+    <symbol id="i-clock-fast" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>
+    </symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </symbol>
+
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+    </symbol>
+    <symbol id="i-chev-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></symbol>
+    <symbol id="i-chev-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+    </symbol>
+    <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="11.49"/>
+    </symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
+    </symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </symbol>
+
+  </defs>
+</svg>
+
+<!-- ============================================================
+     HEADER (sticky, used on all pages)
+     ============================================================ -->
+<div class="utility-bar">
+  <div class="container">
+    <div class="utility-left">
+      <span class="hotline"><span data-i18n="hotline">Đường dây nóng:</span> <b>113</b></span>
+      <span class="sep">|</span>
+      <a href="#">0274 3515 097</a>
+    </div>
+    <div class="utility-right">
+      <button class="util-btn" id="langToggle" aria-label="Đổi ngôn ngữ" title="Đổi ngôn ngữ">
+        <svg class="ic-social"><use href="#i-globe"/></svg>
+        <span id="langLabel">VI</span>
+      </button>
+      <button class="util-btn" id="themeToggle" aria-label="Đổi giao diện" title="Sáng / Tối">
+        <svg class="ic-social" id="themeIcon"><use href="#i-moon"/></svg>
+      </button>
+      <span class="sep">|</span>
+      <span class="clock" id="liveClock">--:--:--</span>
+      <span class="sep">|</span>
+      <a href="#" aria-label="Facebook"><svg class="ic-social"><use href="#i-fb"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg class="ic-social"><use href="#i-yt"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<header class="main-bar">
+  <div class="container">
+    <a href="#" class="brand" data-nav="home">
+      <div class="emblem"></div>
+      <div class="brand-text">
+        <span class="brand-line1" data-i18n="brand1">Cộng hòa Xã hội Chủ nghĩa Việt Nam</span>
+        <span class="brand-line2" data-i18n="brand2">Công an phường Bình Dương</span>
+        <span class="brand-line3" data-i18n="brand3">Thành phố Hồ Chí Minh</span>
+      </div>
+    </a>
+    <nav class="nav-primary">
+      <button class="nav-link active" data-nav="home" data-i18n="nav.home">Trang chủ</button>
+      <button class="nav-link" data-nav="about" data-i18n="nav.about">Giới thiệu</button>
+      <div class="nav-item">
+        <button class="nav-link" data-nav="news"><span data-i18n="nav.news">Tin tức</span> <svg class="chev"><use href="#i-chev-down"/></svg></button>
+        <div class="nav-dropdown">
+          <a data-nav="news" data-news-cat="all"><svg class="ic"><use href="#i-news"/></svg>Tất cả tin tức <span class="sub">Mọi danh mục · 1.247 bài</span></a>
+          <a data-nav="news" data-news-cat="thong-bao"><svg class="ic"><use href="#i-doc"/></svg>Thông báo <span class="sub">Thông báo chính thức · 286 bài</span></a>
+          <a data-nav="news" data-news-cat="canh-bao"><svg class="ic"><use href="#i-warn"/></svg>Cảnh báo <span class="sub">An ninh, lừa đảo · 145 bài</span></a>
+          <a data-nav="news" data-news-cat="antt"><svg class="ic"><use href="#i-shield"/></svg>An ninh trật tự <span class="sub">Tin nghiệp vụ · 412 bài</span></a>
+        </div>
+      </div>
+      <button class="nav-link" data-nav="legal" data-i18n="nav.legal">Văn bản</button>
+      <button class="nav-link" data-nav="procedures" data-i18n="nav.procedures">Thủ tục</button>
+      <button class="nav-link" data-nav="qna" data-i18n="nav.qna">Hỏi đáp</button>
+      <div class="nav-item">
+        <button class="nav-link" data-nav="gallery"><span data-i18n="nav.gallery">Thư viện</span> <svg class="chev"><use href="#i-chev-down"/></svg></button>
+        <div class="nav-dropdown">
+          <a data-nav="gallery"><svg class="ic"><use href="#i-image"/></svg>Thư viện ảnh <span class="sub">Album hoạt động · 48 album</span></a>
+          <a data-nav="video-page"><svg class="ic"><use href="#i-news"/></svg>Video <span class="sub">Phim tài liệu · 6 video</span></a>
+        </div>
+      </div>
+      <button class="nav-link" data-nav="schedule" data-i18n="nav.schedule">Lịch tiếp dân</button>
+      <button class="nav-link" data-nav="wanted" data-i18n="nav.wanted">Truy nã</button>
+      <button class="nav-cta-btn" data-nav="feedback" data-i18n="nav.cta">Phản ánh ngay</button>
+      <button class="search-icon-btn" aria-label="Tìm kiếm"><svg width="16" height="16"><use href="#i-search"/></svg></button>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Mở menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div class="mobile-drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-head">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="emblem" style="width:36px;height:36px"></div>
+      <div class="brand-text">
+        <div class="brand-line2">Công an phường Bình Dương</div>
+        <div style="font-size:11px;opacity:0.65">TP. Hồ Chí Minh</div>
+      </div>
+    </div>
+    <button class="drawer-close" id="drawerClose" aria-label="Đóng menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <nav class="drawer-nav">
+    <button class="drawer-nav-item active" data-nav="home">Trang chủ</button>
+    <button class="drawer-nav-item" data-nav="about">Giới thiệu</button>
+    <button class="drawer-nav-item" data-nav="news">Tin tức <svg width="14" height="14"><use href="#i-chev-down"/></svg></button>
+    <div class="drawer-sub">
+      <a data-nav="news" data-news-cat="all">Tất cả tin tức</a>
+      <a data-nav="news" data-news-cat="thong-bao">Thông báo</a>
+      <a data-nav="news" data-news-cat="canh-bao">Cảnh báo</a>
+      <a data-nav="news" data-news-cat="antt">An ninh trật tự</a>
+    </div>
+    <button class="drawer-nav-item" data-nav="legal">Văn bản pháp luật</button>
+    <button class="drawer-nav-item" data-nav="procedures">Thủ tục hành chính</button>
+    <button class="drawer-nav-item" data-nav="qna">Hỏi đáp</button>
+    <button class="drawer-nav-item" data-nav="gallery">Thư viện <svg width="14" height="14"><use href="#i-chev-down"/></svg></button>
+    <div class="drawer-sub">
+      <a data-nav="gallery">Thư viện ảnh</a>
+      <a data-nav="video-page">Video</a>
+    </div>
+    <button class="drawer-nav-item" data-nav="schedule">Lịch tiếp công dân</button>
+    <button class="drawer-nav-item" data-nav="wanted">Truy nã</button>
+  </nav>
+
+  <button class="drawer-cta" data-nav="feedback">
+    <svg width="16" height="16"><use href="#i-megaphone"/></svg>
+    Gửi phản ánh ngay
+  </button>
+
+  <div class="drawer-foot">
+    Đường dây nóng 24/7
+    <div class="hotline-big">
+      <span>Khẩn cấp</span>
+      <b>113</b>
+    </div>
+  </div>
+</aside>
+
+<!-- Ticker (only on home) -->
+<div class="ticker" id="tickerBar">
+  <span class="ticker-label" data-i18n="ticker.label">Khẩn cấp</span>
+  <div class="ticker-viewport">
+    <div class="ticker-track">
+      <span class="ticker-item"><b>[Thông báo]</b> Cấp đổi CCCD lưu động tại UBND phường từ ngày 25–28/05/2026</span>
+      <span class="ticker-item"><b>[Cảnh báo]</b> Xuất hiện chiêu thức lừa đảo giả danh Công an gọi điện yêu cầu chuyển khoản</span>
+      <span class="ticker-item"><b>[Lịch tiếp dân]</b> Trưởng Công an phường tiếp công dân vào thứ Tư hàng tuần</span>
+      <span class="ticker-item"><b>[Thông báo]</b> Cấp đổi CCCD lưu động tại UBND phường từ ngày 25–28/05/2026</span>
+      <span class="ticker-item"><b>[Cảnh báo]</b> Xuất hiện chiêu thức lừa đảo giả danh Công an gọi điện yêu cầu chuyển khoản</span>
+      <span class="ticker-item"><b>[Lịch tiếp dân]</b> Trưởng Công an phường tiếp công dân vào thứ Tư hàng tuần</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE: HOME
+     ============================================================ -->
+<main id="page-home" data-screen-label="01 Home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <div class="hero-eyebrow" data-i18n="hero.eyebrow">Cổng thông tin chính thống</div>
+        <h1><span data-i18n="hero.h1.1">Vì an ninh trật tự —</span> <span class="accent" data-i18n="hero.h1.2">vì nhân dân phục vụ.</span></h1>
+        <p class="hero-lead" data-i18n="hero.lead">
+          Cổng thông tin điện tử của Công an phường Bình Dương, TP. Hồ Chí Minh.
+          Tra cứu thủ tục hành chính, gửi phản ánh trực tuyến, tiếp cận thông tin pháp luật mọi lúc — minh bạch, nhanh chóng, đúng pháp luật.
+        </p>
+        <form class="hero-search" onsubmit="event.preventDefault()">
+          <svg width="18" height="18" style="margin-left:14px;color:var(--subtle)"><use href="#i-search"/></svg>
+          <input type="text" data-i18n-placeholder="hero.search.placeholder" placeholder="Tìm thủ tục, văn bản, tin tức…" />
+          <button type="submit" class="btn btn-primary" data-i18n="hero.search.btn">Tra cứu</button>
+        </form>
+        <div class="hero-quick-tags">
+          <span data-i18n="hero.quicktags">Tra cứu nhanh:</span>
+          <a href="#">Cấp CCCD</a>
+          <a href="#">Đăng ký tạm trú</a>
+          <a href="#">Xe máy điện</a>
+          <a href="#">Hộ chiếu</a>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <svg class="ic"><use href="#i-news"/></svg>
+          <div class="v">1.247</div>
+          <div class="l" data-i18n="stat1">Tin tức &amp; thông báo đã đăng</div>
+        </div>
+        <div class="hero-stat">
+          <svg class="ic"><use href="#i-doc"/></svg>
+          <div class="v">89</div>
+          <div class="l" data-i18n="stat2">Thủ tục hành chính trực tuyến</div>
+        </div>
+        <div class="hero-stat">
+          <svg class="ic"><use href="#i-clock-fast"/></svg>
+          <div class="v">&lt; 24h</div>
+          <div class="l" data-i18n="stat3">Thời gian phản hồi phản ánh</div>
+        </div>
+        <div class="hero-stat">
+          <svg class="ic"><use href="#i-check-shield"/></svg>
+          <div class="v">100%</div>
+          <div class="l" data-i18n="stat4">Quy trình minh bạch, công khai</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Emergency strip -->
+  <div class="emergency-strip">
+    <div class="container">
+      <span class="e-title">
+        <svg width="16" height="16"><use href="#i-warn"/></svg>
+        Trường hợp khẩn cấp gọi ngay
+      </span>
+      <span class="e-num">113 <span>Cảnh sát</span></span>
+      <span class="e-num">114 <span>Cứu hỏa</span></span>
+      <span class="e-num">115 <span>Cấp cứu y tế</span></span>
+      <div class="e-list">
+        <span style="opacity:0.85;font-size:13px">Cổng dịch vụ công Quốc gia →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Value props -->
+  <section class="values-strip">
+    <div class="container">
+      <div class="values-grid">
+        <div class="value-cell">
+          <div class="ic"><svg><use href="#i-shield"/></svg></div>
+          <div><h4>Trang thông tin chính thống</h4><p>Đơn vị trực thuộc Công an TP.HCM — mọi thông tin đều chính xác và có giá trị pháp lý.</p></div>
+        </div>
+        <div class="value-cell">
+          <div class="ic"><svg><use href="#i-check-shield"/></svg></div>
+          <div><h4>Bảo mật &amp; an toàn</h4><p>Dữ liệu phản ánh được mã hóa, bảo vệ danh tính người tố giác theo Luật Tố cáo 2018.</p></div>
+        </div>
+        <div class="value-cell">
+          <div class="ic"><svg><use href="#i-clock-fast"/></svg></div>
+          <div><h4>Phản hồi nhanh</h4><p>Cam kết xử lý phản ánh và tin báo trong vòng 24 giờ làm việc.</p></div>
+        </div>
+        <div class="value-cell">
+          <div class="ic"><svg><use href="#i-users"/></svg></div>
+          <div><h4>Phục vụ 24/7</h4><p>Cổng thông tin và đường dây nóng hoạt động liên tục, hỗ trợ người dân mọi thời điểm.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service grid (Dịch vụ trực tuyến) -->
+  <section class="block">
+    <div class="container">
+      <div class="section-head-center">
+        <div class="section-eyebrow" data-i18n="section.services.eye">Dịch vụ trực tuyến</div>
+        <h2 class="section-title" data-i18n="section.services.title">Truy cập nhanh các dịch vụ công</h2>
+        <p class="section-sub" data-i18n="section.services.sub">Tra cứu thông tin và thực hiện các thủ tục hành chính mọi lúc, không cần đến trực tiếp đơn vị.</p>
+      </div>
+      <div class="service-grid">
+        <button class="service-cell" data-nav="procedures">
+          <div class="service-ic"><svg><use href="#i-doc"/></svg></div>
+          <h3 data-i18n="svc.proc">Thủ tục hành chính</h3></p>
+          <span class="more">Tra cứu thủ tục</span>
+        </button>
+        <button class="service-cell" data-nav="legal">
+          <div class="service-ic"><svg><use href="#i-scroll"/></svg></div>
+          <h3 data-i18n="svc.legal">Văn bản pháp luật</h3></p>
+          <span class="more">Xem văn bản</span>
+        </button>
+        <button class="service-cell" data-nav="qna">
+          <div class="service-ic"><svg><use href="#i-help"/></svg></div>
+          <h3 data-i18n="svc.qna">Hỏi đáp pháp luật</h3></p>
+          <span class="more">Đặt câu hỏi</span>
+        </button>
+        <button class="service-cell" data-nav="schedule">
+          <div class="service-ic"><svg><use href="#i-cal"/></svg></div>
+          <h3 data-i18n="svc.schedule">Lịch tiếp công dân</h3></p>
+          <span class="more">Đặt lịch hẹn</span>
+        </button>
+        <button class="service-cell" data-nav="feedback">
+          <div class="service-ic"><svg><use href="#i-megaphone"/></svg></div>
+          <h3 data-i18n="svc.feedback">Phản ánh trực tuyến</h3></p>
+          <span class="more">Gửi phản ánh</span>
+        </button>
+        <button class="service-cell" data-nav="about">
+          <div class="service-ic"><svg><use href="#i-shield"/></svg></div>
+          <h3 data-i18n="svc.about">Giới thiệu đơn vị</h3></p>
+          <span class="more">Tìm hiểu thêm</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section class="block alt">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow" data-i18n="section.news.eye">Tin tức &amp; Thông báo</div>
+          <h2 class="section-title" data-i18n="section.news.title">Cập nhật tình hình an ninh, trật tự</h2>
+        </div>
+        <a class="section-link" data-nav="news">Xem tất cả tin tức <svg class="arrow" width="16" height="16"><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <div class="news-grid">
+        <article class="news-feature">
+          <div class="thumb"><div class="placeholder-img">FEATURED · Ảnh tin nổi bật</div></div>
+          <div class="body">
+            <div class="news-meta">
+              <span class="cat-pill">An ninh trật tự</span>
+              <span>15/05/2026</span>
+              <span class="dot"></span>
+              <span>1.842 lượt xem</span>
+            </div>
+            <h3>Công an phường Bình Dương ra quân tổng kiểm tra an ninh trật tự dịp lễ 30/4 — 1/5</h3>
+            <p>Lực lượng Công an phường Bình Dương phối hợp các đơn vị nghiệp vụ tổ chức ra quân tổng kiểm tra, đảm bảo an ninh trật tự cho người dân trong dịp lễ lớn của đất nước, đặc biệt tập trung các khu vực công cộng, bến xe, khu vui chơi.</p>
+            <a class="section-link" data-nav="article">Đọc tiếp <svg class="arrow" width="14" height="14"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
+
+        <div class="news-side">
+          <a class="news-item-side" href="#">
+            <div class="thumb"><div class="placeholder-img">img</div></div>
+            <div>
+              <div class="news-meta"><span class="cat-pill info">Thông báo</span><span>14/05</span></div>
+              <h4>Lịch cấp đổi CCCD lưu động tại UBND phường Bình Dương tháng 5/2026</h4>
+            </div>
+          </a>
+          <a class="news-item-side" href="#">
+            <div class="thumb"><div class="placeholder-img">img</div></div>
+            <div>
+              <div class="news-meta"><span class="cat-pill warning">Cảnh báo</span><span>13/05</span></div>
+              <h4>Cảnh giác chiêu trò giả danh Công an gọi điện yêu cầu chuyển tiền</h4>
+            </div>
+          </a>
+          <a class="news-item-side" href="#">
+            <div class="thumb"><div class="placeholder-img">img</div></div>
+            <div>
+              <div class="news-meta"><span class="cat-pill">An ninh trật tự</span><span>12/05</span></div>
+              <h4>Triệt phá đường dây cá độ bóng đá qua mạng quy mô lớn</h4>
+            </div>
+          </a>
+          <a class="news-item-side" href="#">
+            <div class="thumb"><div class="placeholder-img">img</div></div>
+            <div>
+              <div class="news-meta"><span class="cat-pill info">Thông báo</span><span>10/05</span></div>
+              <h4>Tuyên truyền Luật Trật tự an toàn giao thông đường bộ 2024</h4>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Honor strip — Người tốt việc tốt -->
+  <section class="block honor-strip">
+    <div class="container">
+      <div class="section-head-center">
+        <div class="section-eyebrow" style="color:var(--gold)">
+          <span style="--bg:var(--gold)"></span>
+          Người tốt — Việc tốt
+        </div>
+        <h2 class="section-title" style="color:white">Những tấm gương đáng trân trọng</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.7)">Vinh danh cán bộ, chiến sĩ và quần chúng nhân dân có thành tích xuất sắc trong phong trào Toàn dân bảo vệ an ninh Tổ quốc.</p>
+      </div>
+
+      <div class="honor-grid">
+        <div class="honor-card">
+          <div class="avatar"></div>
+          <div class="name">Đại úy Nguyễn Văn A</div>
+          <div class="role">Cảnh sát khu vực</div>
+          <div class="desc">Phát hiện và bắt giữ kẻ trộm cắp tài sản trị giá hơn 200 triệu đồng tại khu phố Hòa Phú 3.</div>
+        </div>
+        <div class="honor-card">
+          <div class="avatar"></div>
+          <div class="name">Trung úy Trần Thị B</div>
+          <div class="role">Đội an ninh</div>
+          <div class="desc">Hỗ trợ người dân tìm lại ví tiền và giấy tờ tùy thân trị giá hàng chục triệu đồng.</div>
+        </div>
+        <div class="honor-card">
+          <div class="avatar"></div>
+          <div class="name">Ông Lê Văn C</div>
+          <div class="role">Người dân</div>
+          <div class="desc">Cung cấp tin báo giúp Công an phường triệt phá tụ điểm tệ nạn xã hội trên địa bàn.</div>
+        </div>
+        <div class="honor-card">
+          <div class="avatar"></div>
+          <div class="name">Bà Phạm Thị D</div>
+          <div class="role">Tổ trưởng tổ dân phố</div>
+          <div class="desc">Tích cực vận động quần chúng tham gia phong trào tự quản về an ninh trật tự suốt 5 năm.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     PAGE: NEWS LIST
+     ============================================================ -->
+<main id="page-news" class="page-hide" data-screen-label="02 News">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <span class="here">Tin tức &amp; Thông báo</span>
+      </div>
+      <h1>Tin tức &amp; Thông báo</h1>
+      <p>Cập nhật tình hình an ninh trật tự và thông báo chính thức từ Công an phường Bình Dương.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container">
+      <div class="filter-row">
+        <button class="chip active" data-cat="all">Tất cả (1.247)</button>
+        <button class="chip" data-cat="antt">An ninh trật tự (412)</button>
+        <button class="chip" data-cat="thong-bao">Thông báo (286)</button>
+        <button class="chip" data-cat="canh-bao">Cảnh báo (145)</button>
+        <button class="chip" data-cat="pctp">Phòng chống tội phạm (208)</button>
+        <button class="chip" data-cat="ntvt">Người tốt việc tốt (196)</button>
+        <div class="search-box">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input type="text" placeholder="Tìm tin tức theo từ khóa…" />
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+        <!-- 9 cards -->
+        <!-- card 1 -->
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill">An ninh trật tự</span><span>15/05/2026</span></div>
+            <h3>Ra quân tổng kiểm tra an ninh trật tự dịp lễ 30/4 — 1/5</h3>
+            <p>Lực lượng Công an phối hợp đơn vị nghiệp vụ tổ chức ra quân, đảm bảo an ninh cho người dân.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill info">Thông báo</span><span>14/05/2026</span></div>
+            <h3>Lịch cấp đổi CCCD lưu động tháng 5/2026</h3>
+            <p>UBND phường Bình Dương phối hợp với Công an triển khai cấp đổi CCCD lưu động cho người cao tuổi.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill warning">Cảnh báo</span><span>13/05/2026</span></div>
+            <h3>Cảnh giác chiêu trò giả danh Công an gọi điện</h3>
+            <p>Xuất hiện thủ đoạn lừa đảo công nghệ cao mạo danh cán bộ Công an yêu cầu chuyển khoản.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill">An ninh trật tự</span><span>12/05/2026</span></div>
+            <h3>Triệt phá đường dây cá độ bóng đá qua mạng</h3>
+            <p>Quy mô lớn, hoạt động xuyên tỉnh, lực lượng nghiệp vụ phát hiện và xử lý theo đúng quy định.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill info">Thông báo</span><span>10/05/2026</span></div>
+            <h3>Tuyên truyền Luật Trật tự an toàn giao thông đường bộ 2024</h3>
+            <p>Công an phường tổ chức buổi tuyên truyền cho các khu phố, hộ kinh doanh và trường học trên địa bàn.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill">Phòng chống tội phạm</span><span>09/05/2026</span></div>
+            <h3>Tổ chức tuần tra đêm liên tục trong tháng 5</h3>
+            <p>Phối hợp lực lượng tự quản tổ dân phố, đảm bảo an ninh các khu vực dân cư.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill warning">Cảnh báo</span><span>07/05/2026</span></div>
+            <h3>Cảnh báo lừa đảo qua tin nhắn ngân hàng</h3>
+            <p>Thủ đoạn mới: giả mạo SMS từ ngân hàng yêu cầu nhấp link xác thực, đánh cắp thông tin.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill">Người tốt việc tốt</span><span>05/05/2026</span></div>
+            <h3>Người dân nhặt được 50 triệu, trao trả người đánh rơi</h3>
+            <p>Tấm gương sáng về phẩm chất đạo đức, được Công an phường biểu dương kịp thời.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill info">Thông báo</span><span>03/05/2026</span></div>
+            <h3>Mở lớp huấn luyện nghiệp vụ bảo vệ dân phố 2026</h3>
+            <p>Đăng ký từ 01/06/2026, dành cho cán bộ tổ dân phố và lực lượng tự nguyện trên địa bàn.</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Pagination -->
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:40px">
+        <button class="chip">‹ Trước</button>
+        <button class="chip active">1</button>
+        <button class="chip">2</button>
+        <button class="chip">3</button>
+        <button class="chip">…</button>
+        <button class="chip">42</button>
+        <button class="chip">Sau ›</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: PROCEDURES
+     ============================================================ -->
+<main id="page-procedures" class="page-hide" data-screen-label="03 Procedures">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <span class="here">Thủ tục hành chính</span>
+      </div>
+      <h1>Thủ tục hành chính</h1>
+      <p>Hướng dẫn chi tiết các thủ tục thuộc thẩm quyền Công an phường — minh bạch, công khai, thực hiện trực tuyến.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container">
+      <div class="filter-row">
+        <button class="chip active">Tất cả</button>
+        <button class="chip">Cư trú</button>
+        <button class="chip">Căn cước công dân</button>
+        <button class="chip">Phương tiện</button>
+        <button class="chip">An ninh trật tự</button>
+        <button class="chip">Khác</button>
+        <div class="search-box">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input type="text" placeholder="Tìm thủ tục…" />
+        </div>
+      </div>
+
+      <div class="proc-table">
+        <div class="proc-row head">
+          <div>Mã</div>
+          <div>Tên thủ tục</div>
+          <div>Thời gian xử lý</div>
+          <div>Phí, lệ phí</div>
+          <div>Hình thức</div>
+        </div>
+
+        <div class="proc-row">
+          <div class="code">TT-001</div>
+          <div>
+            <h4>Đăng ký thường trú</h4>
+            <div class="sub">Áp dụng cho công dân chuyển đến cư trú tại địa phương · Lĩnh vực: Cư trú</div>
+          </div>
+          <div class="field"><b>7 ngày</b><div class="lbl">Làm việc</div></div>
+          <div class="field"><b>20.000đ</b><div class="lbl">Lệ phí</div></div>
+          <div><span class="badge online">Trực tuyến</span></div>
+        </div>
+
+        <div class="proc-row">
+          <div class="code">TT-002</div>
+          <div>
+            <h4>Đăng ký tạm trú</h4>
+            <div class="sub">Công dân tạm trú từ 30 ngày trở lên · Lĩnh vực: Cư trú</div>
+          </div>
+          <div class="field"><b>3 ngày</b><div class="lbl">Làm việc</div></div>
+          <div class="field"><b>15.000đ</b><div class="lbl">Lệ phí</div></div>
+          <div><span class="badge online">Trực tuyến</span></div>
+        </div>
+
+        <div class="proc-row">
+          <div class="code">TT-003</div>
+          <div>
+            <h4>Khai báo lưu trú</h4>
+            <div class="sub">Khai báo cho người đến lưu trú tại cơ sở · Lĩnh vực: Cư trú</div>
+          </div>
+          <div class="field"><b>Ngay</b><div class="lbl">Tức thời</div></div>
+          <div class="field"><b>Miễn phí</b></div>
+          <div><span class="badge online">Trực tuyến</span></div>
+        </div>
+
+        <div class="proc-row">
+          <div class="code">TT-004</div>
+          <div>
+            <h4>Cấp lần đầu Căn cước công dân</h4>
+            <div class="sub">Công dân Việt Nam từ đủ 14 tuổi · Lĩnh vực: CCCD</div>
+          </div>
+          <div class="field"><b>7 ngày</b><div class="lbl">Làm việc</div></div>
+          <div class="field"><b>30.000đ</b><div class="lbl">Lệ phí</div></div>
+          <div><span class="badge offline">Trực tiếp</span></div>
+        </div>
+
+        <div class="proc-row">
+          <div class="code">TT-005</div>
+          <div>
+            <h4>Cấp lại, đổi Căn cước công dân</h4>
+            <div class="sub">Trường hợp mất, hỏng, thay đổi thông tin · Lĩnh vực: CCCD</div>
+          </div>
+          <div class="field"><b>7 ngày</b><div class="lbl">Làm việc</div></div>
+          <div class="field"><b>50.000đ</b><div class="lbl">Lệ phí</div></div>
+          <div><span class="badge offline">Trực tiếp</span></div>
+        </div>
+
+        <div class="proc-row">
+          <div class="code">TT-006</div>
+          <div>
+            <h4>Đăng ký xe mô tô, xe gắn máy</h4>
+            <div class="sub">Đăng ký lần đầu phương tiện · Lĩnh vực: Phương tiện</div>
+          </div>
+          <div class="field"><b>2 ngày</b><div class="lbl">Làm việc</div></div>
+          <div class="field"><b>Theo biểu giá</b><div class="lbl">Lệ phí</div></div>
+          <div><span class="badge online">Trực tuyến</span></div>
+        </div>
+
+        <div class="proc-row">
+          <div class="code">TT-007</div>
+          <div>
+            <h4>Cấp giấy phép kinh doanh có điều kiện ANTT</h4>
+            <div class="sub">Đối với các ngành nghề quy định · Lĩnh vực: An ninh trật tự</div>
+          </div>
+          <div class="field"><b>15 ngày</b><div class="lbl">Làm việc</div></div>
+          <div class="field"><b>300.000đ</b><div class="lbl">Lệ phí</div></div>
+          <div><span class="badge offline">Trực tiếp</span></div>
+        </div>
+
+        <div class="proc-row">
+          <div class="code">TT-008</div>
+          <div>
+            <h4>Xác nhận cư trú phục vụ giao dịch dân sự</h4>
+            <div class="sub">Cấp giấy xác nhận theo yêu cầu · Lĩnh vực: Cư trú</div>
+          </div>
+          <div class="field"><b>1 ngày</b><div class="lbl">Làm việc</div></div>
+          <div class="field"><b>Miễn phí</b></div>
+          <div><span class="badge online">Trực tuyến</span></div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;color:var(--muted);font-size:13px">
+        <span>Hiển thị 1 – 8 trên tổng 89 thủ tục</span>
+        <div style="display:flex;gap:6px">
+          <button class="chip">‹</button>
+          <button class="chip active">1</button>
+          <button class="chip">2</button>
+          <button class="chip">…</button>
+          <button class="chip">12</button>
+          <button class="chip">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: FEEDBACK
+     ============================================================ -->
+<main id="page-feedback" class="page-hide" data-screen-label="04 Feedback">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <span class="here">Phản ánh trực tuyến</span>
+      </div>
+      <h1>Phản ánh trực tuyến</h1>
+      <p>Gửi tin báo tội phạm, kiến nghị, phản ánh đến Công an phường Bình Dương. Mọi thông tin được bảo mật theo Luật Tố cáo 2018.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container" style="display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:flex-start">
+      <div>
+        <div class="notice">
+          <svg class="ic"><use href="#i-warn"/></svg>
+          <div>
+            <b>Lưu ý quan trọng:</b> Đây là kênh tiếp nhận thông tin <b>phi khẩn cấp</b>.
+            Trong trường hợp nguy hiểm tính mạng hoặc đang xảy ra tội phạm, hãy gọi ngay <b>113</b>.
+          </div>
+        </div>
+
+        <form class="form-card" onsubmit="event.preventDefault(); alert('Bản demo — đã gửi giả lập.')">
+          <div class="form-row">
+            <div class="field">
+              <label>Họ và tên <span class="req">*</span></label>
+              <input type="text" placeholder="Nguyễn Văn A" required />
+            </div>
+            <div class="field">
+              <label>Số điện thoại <span class="req">*</span></label>
+              <input type="tel" placeholder="0912 345 678" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label>Email (tùy chọn)</label>
+              <input type="email" placeholder="email@example.com" />
+            </div>
+            <div class="field">
+              <label>Loại phản ánh <span class="req">*</span></label>
+              <select>
+                <option>-- Chọn loại phản ánh --</option>
+                <option>Tin báo tội phạm</option>
+                <option>Tệ nạn xã hội</option>
+                <option>An toàn giao thông</option>
+                <option>Phản ánh thái độ phục vụ</option>
+                <option>Kiến nghị khác</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Chủ đề phản ánh <span class="req">*</span></label>
+            <input type="text" placeholder="Ví dụ: Tụ điểm nghi buôn bán ma túy tại khu phố Hòa Phú 3" required />
+          </div>
+
+          <div class="field">
+            <label>Địa điểm cụ thể</label>
+            <input type="text" placeholder="Số nhà, đường, khu phố…" />
+            <span class="help">Cung cấp địa chỉ chi tiết giúp lực lượng chức năng xử lý nhanh chóng.</span>
+          </div>
+
+          <div class="field">
+            <label>Nội dung chi tiết <span class="req">*</span></label>
+            <textarea placeholder="Mô tả chi tiết sự việc: thời gian xảy ra, đối tượng liên quan, hành vi vi phạm…" required></textarea>
+            <span class="help">Hạn chế: tối đa 2000 ký tự. Cung cấp càng nhiều thông tin càng tốt.</span>
+          </div>
+
+          <div class="field">
+            <label>Tài liệu đính kèm (tùy chọn)</label>
+            <div style="display:grid;place-items:center;border:2px dashed var(--border-strong);border-radius:var(--radius);padding:24px;background:var(--surface-2);color:var(--muted);font-size:13.5px;text-align:center;cursor:pointer">
+              Kéo thả file vào đây hoặc <u>chọn từ máy</u><br>
+              <span style="font-size:12px;color:var(--subtle)">Hỗ trợ JPG, PNG, MP4, PDF · Tối đa 25MB</span>
+            </div>
+          </div>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="anon" />
+            <label for="anon">Gửi ẩn danh (không hiển thị tên và số điện thoại trong hồ sơ công khai)</label>
+          </div>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="agree" required />
+            <label for="agree">Tôi cam đoan thông tin cung cấp là đúng sự thật và chịu trách nhiệm trước pháp luật về tố cáo sai sự thật.</label>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:8px">
+            <button type="submit" class="btn btn-primary" style="flex:1;justify-content:center">Gửi phản ánh</button>
+            <button type="reset" class="btn btn-secondary">Làm mới</button>
+          </div>
+        </form>
+      </div>
+
+      <aside style="display:flex;flex-direction:column;gap:16px">
+        <div class="form-card" style="background:var(--navy);color:white;border:none;padding:24px">
+          <div style="font-size:11.5px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Khẩn cấp</div>
+          <div style="font-size:48px;font-weight:800;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums">113</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.75);margin-top:6px">Gọi ngay khi có sự việc đang xảy ra hoặc cần can thiệp trực tiếp.</div>
+        </div>
+
+        <div class="form-card" style="padding:22px">
+          <h3 style="margin:0 0 14px;color:var(--navy);font-size:15px;font-weight:700">Quy trình xử lý phản ánh</h3>
+          <ol style="margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:14px;font-size:13.5px;color:var(--ink-2)">
+            <li style="display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:flex-start">
+              <span style="background:var(--navy);color:white;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700">1</span>
+              <span><b style="color:var(--navy)">Tiếp nhận</b> · Ngay khi gửi, hệ thống cấp mã hồ sơ. Trong 4 giờ làm việc cán bộ trực sẽ xem xét.</span>
+            </li>
+            <li style="display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:flex-start">
+              <span style="background:var(--navy);color:white;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700">2</span>
+              <span><b style="color:var(--navy)">Phân loại</b> · Hồ sơ được chuyển đến bộ phận nghiệp vụ phù hợp xử lý theo thẩm quyền.</span>
+            </li>
+            <li style="display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:flex-start">
+              <span style="background:var(--navy);color:white;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700">3</span>
+              <span><b style="color:var(--navy)">Phản hồi</b> · Trong 24 giờ làm việc, người phản ánh sẽ nhận tin nhắn/email phản hồi tiến độ.</span>
+            </li>
+            <li style="display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:flex-start">
+              <span style="background:var(--navy);color:white;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700">4</span>
+              <span><b style="color:var(--navy)">Xử lý</b> · Lực lượng chức năng kiểm tra, xác minh và xử lý theo đúng quy định pháp luật.</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="form-card" style="padding:22px">
+          <h3 style="margin:0 0 12px;color:var(--navy);font-size:15px;font-weight:700">Tra cứu hồ sơ đã gửi</h3>
+          <div class="field" style="margin-bottom:10px">
+            <input type="text" placeholder="Nhập mã hồ sơ (VD: PA-2026-00123)" />
+          </div>
+          <button class="btn btn-navy" style="width:100%;justify-content:center">Tra cứu</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: ABOUT (Giới thiệu)
+     ============================================================ -->
+<main id="page-about" class="page-hide" data-screen-label="05 About">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <span class="here">Giới thiệu đơn vị</span>
+      </div>
+      <h1>Giới thiệu Công an phường Bình Dương</h1>
+      <p>Đơn vị trực thuộc Công an Thành phố Hồ Chí Minh — vì an ninh Tổ quốc, vì hạnh phúc nhân dân.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container">
+      <div class="about-tabs">
+        <button class="about-tab active" data-tab="function">Chức năng &amp; nhiệm vụ</button>
+        <button class="about-tab" data-tab="org">Sơ đồ tổ chức</button>
+        <button class="about-tab" data-tab="leaders">Ban lãnh đạo</button>
+        <button class="about-tab" data-tab="schedule">Lịch tiếp công dân</button>
+        <button class="about-tab" data-tab="contact">Liên hệ</button>
+      </div>
+
+      <div class="tab-pane" data-pane="function">
+        <div class="org-card">
+          <h3>Về đơn vị</h3>
+          <p><b>Công an phường Bình Dương</b> là đơn vị trực thuộc Công an Thành phố Hồ Chí Minh. Đơn vị được thành lập trên cơ sở sáp nhập các phường Hòa Phú, Phú Mỹ, Phú Tân và Phú Chánh theo chủ trương sắp xếp đơn vị hành chính của tỉnh Bình Dương cũ (nay là TP.HCM).</p>
+          <p>Nhiệm vụ chính: <b>bảo đảm an ninh trật tự</b>, phòng chống tội phạm, quản lý hành chính về trật tự xã hội, đăng ký cư trú, cấp Căn cước công dân, và phục vụ nhân dân trên địa bàn phường.</p>
+
+          <div class="ward-grid">
+            <div class="ward-cell"><b>Hòa Phú</b><div class="lbl">Đơn vị sáp nhập</div></div>
+            <div class="ward-cell"><b>Phú Mỹ</b><div class="lbl">Đơn vị sáp nhập</div></div>
+            <div class="ward-cell"><b>Phú Tân</b><div class="lbl">Đơn vị sáp nhập</div></div>
+            <div class="ward-cell"><b>Phú Chánh</b><div class="lbl">Đơn vị sáp nhập</div></div>
+          </div>
+        </div>
+
+        <div class="org-card">
+          <h3>Chức năng &amp; nhiệm vụ chính</h3>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px">
+            <div style="display:flex;gap:14px;padding:18px;background:var(--surface-2);border-radius:var(--radius)">
+              <div style="width:36px;height:36px;background:var(--gold);color:var(--navy-deep);border-radius:8px;display:grid;place-items:center;font-weight:700;flex-shrink:0">1</div>
+              <div><b style="color:var(--navy);font-size:14.5px">Đảm bảo an ninh trật tự</b><div style="font-size:13px;color:var(--muted);margin-top:4px">Phòng ngừa, đấu tranh chống các loại tội phạm, tệ nạn xã hội trên địa bàn phường.</div></div>
+            </div>
+            <div style="display:flex;gap:14px;padding:18px;background:var(--surface-2);border-radius:var(--radius)">
+              <div style="width:36px;height:36px;background:var(--gold);color:var(--navy-deep);border-radius:8px;display:grid;place-items:center;font-weight:700;flex-shrink:0">2</div>
+              <div><b style="color:var(--navy);font-size:14.5px">Quản lý cư trú &amp; CCCD</b><div style="font-size:13px;color:var(--muted);margin-top:4px">Đăng ký thường trú, tạm trú, cấp Căn cước công dân, khai báo lưu trú.</div></div>
+            </div>
+            <div style="display:flex;gap:14px;padding:18px;background:var(--surface-2);border-radius:var(--radius)">
+              <div style="width:36px;height:36px;background:var(--gold);color:var(--navy-deep);border-radius:8px;display:grid;place-items:center;font-weight:700;flex-shrink:0">3</div>
+              <div><b style="color:var(--navy);font-size:14.5px">Quản lý phương tiện</b><div style="font-size:13px;color:var(--muted);margin-top:4px">Đăng ký xe mô tô, xe gắn máy và phương tiện thuộc thẩm quyền cấp phường.</div></div>
+            </div>
+            <div style="display:flex;gap:14px;padding:18px;background:var(--surface-2);border-radius:var(--radius)">
+              <div style="width:36px;height:36px;background:var(--gold);color:var(--navy-deep);border-radius:8px;display:grid;place-items:center;font-weight:700;flex-shrink:0">4</div>
+              <div><b style="color:var(--navy);font-size:14.5px">Phục vụ nhân dân</b><div style="font-size:13px;color:var(--muted);margin-top:4px">Tiếp công dân, giải quyết khiếu nại, tố cáo, hỗ trợ thủ tục hành chính.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane page-hide" data-pane="org">
+        <div class="org-card">
+          <h3>Sơ đồ tổ chức</h3>
+          <p>Bộ máy tổ chức Công an phường Bình Dương được thiết kế theo nguyên tắc tinh gọn, hiệu quả — phù hợp với địa bàn dân cư sau sáp nhập.</p>
+
+          <div style="margin-top:24px">
+            <!-- Top node -->
+            <div style="display:grid;place-items:center;margin-bottom:32px">
+              <div style="background:var(--navy);color:white;padding:18px 28px;border-radius:var(--radius-lg);text-align:center;min-width:280px;box-shadow:var(--shadow)">
+                <div style="font-size:11.5px;color:var(--gold);text-transform:uppercase;letter-spacing:0.06em;font-weight:600">Cấp lãnh đạo</div>
+                <div style="font-size:16px;font-weight:700;margin-top:4px">Ban Chỉ huy</div>
+                <div style="font-size:12px;opacity:0.75;margin-top:2px">1 Trưởng + 3 Phó Trưởng</div>
+              </div>
+              <div style="width:2px;height:32px;background:var(--gold);margin-top:-2px"></div>
+            </div>
+
+            <!-- Mid nodes -->
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative">
+              <div style="position:absolute;top:-16px;left:12.5%;right:12.5%;height:2px;background:var(--gold)"></div>
+              <div class="ward-cell" style="background:var(--surface);border-color:var(--navy);position:relative">
+                <div style="position:absolute;top:-16px;left:50%;width:2px;height:16px;background:var(--gold)"></div>
+                <b style="color:var(--navy)">Đội Cảnh sát ANTT</b>
+                <div class="lbl">12 cán bộ chiến sĩ</div>
+              </div>
+              <div class="ward-cell" style="background:var(--surface);border-color:var(--navy);position:relative">
+                <div style="position:absolute;top:-16px;left:50%;width:2px;height:16px;background:var(--gold)"></div>
+                <b style="color:var(--navy)">Đội Cảnh sát Hình sự</b>
+                <div class="lbl">8 cán bộ chiến sĩ</div>
+              </div>
+              <div class="ward-cell" style="background:var(--surface);border-color:var(--navy);position:relative">
+                <div style="position:absolute;top:-16px;left:50%;width:2px;height:16px;background:var(--gold)"></div>
+                <b style="color:var(--navy)">Đội Quản lý hành chính</b>
+                <div class="lbl">10 cán bộ chiến sĩ</div>
+              </div>
+              <div class="ward-cell" style="background:var(--surface);border-color:var(--navy);position:relative">
+                <div style="position:absolute;top:-16px;left:50%;width:2px;height:16px;background:var(--gold)"></div>
+                <b style="color:var(--navy)">Cảnh sát Khu vực</b>
+                <div class="lbl">4 cán bộ phụ trách 4 KP</div>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px;font-size:13px;color:var(--muted)">
+              <div><b style="color:var(--ink-2)">Tổng quân số:</b> 38 cán bộ chiến sĩ</div>
+              <div><b style="color:var(--ink-2)">Địa bàn:</b> 4 khu phố · ~112.500 dân</div>
+              <div><b style="color:var(--ink-2)">Trụ sở:</b> 01 trụ sở chính</div>
+              <div><b style="color:var(--ink-2)">Hoạt động:</b> 24/7 với đường dây nóng</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane page-hide" data-pane="leaders">
+        <div class="org-card">
+          <h3>Ban Lãnh đạo</h3>
+          <p style="margin-bottom:24px">Đội ngũ cán bộ chỉ huy giàu kinh nghiệm, được đào tạo bài bản, cam kết phục vụ nhân dân.</p>
+          <div class="personnel-grid">
+            <div class="person-card">
+              <div class="photo">Ảnh chân dung</div>
+              <div class="name">Nguyễn Văn Hùng</div>
+              <div class="rank">Thượng tá</div>
+              <div class="position">Trưởng Công an phường</div>
+            </div>
+            <div class="person-card">
+              <div class="photo">Ảnh chân dung</div>
+              <div class="name">Trần Quốc Tuấn</div>
+              <div class="rank">Trung tá</div>
+              <div class="position">Phó Trưởng Công an phường</div>
+            </div>
+            <div class="person-card">
+              <div class="photo">Ảnh chân dung</div>
+              <div class="name">Lê Thị Minh Anh</div>
+              <div class="rank">Thiếu tá</div>
+              <div class="position">Phó Trưởng Công an phường</div>
+            </div>
+            <div class="person-card">
+              <div class="photo">Ảnh chân dung</div>
+              <div class="name">Phạm Đức Thắng</div>
+              <div class="rank">Thiếu tá</div>
+              <div class="position">Đội trưởng Đội Cảnh sát ANTT</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane page-hide" data-pane="schedule">
+        <div class="org-card" style="text-align:center;padding:48px 32px">
+          <svg width="48" height="48" style="color:var(--gold-deep);margin-bottom:14px"><use href="#i-cal"/></svg>
+          <h3 style="justify-content:center;display:inline-flex">Lịch tiếp công dân</h3>
+          <p style="max-width:520px;margin:8px auto 24px">Xem chi tiết lịch tiếp công dân định kỳ hàng tháng — gồm thời gian, cán bộ trực và nội dung tiếp.</p>
+          <button class="btn btn-red" data-nav="schedule" style="font-size:14px">Xem lịch tháng này →</button>
+        </div>
+      </div>
+
+      <div class="tab-pane page-hide" data-pane="contact">
+        <div class="org-card">
+          <h3>Thông tin liên hệ</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px">
+            <div style="display:flex;gap:14px">
+              <svg width="20" height="20" style="color:var(--red);flex-shrink:0;margin-top:2px"><use href="#i-pin"/></svg>
+              <div>
+                <div style="font-size:11.5px;color:var(--subtle);text-transform:uppercase;letter-spacing:0.04em;font-weight:600">Địa chỉ</div>
+                <div style="font-size:14px;color:var(--ink);margin-top:2px">Số 01, Đường D27, KP. Hòa Phú 1, Phường Bình Dương, TP. Hồ Chí Minh</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px">
+              <svg width="20" height="20" style="color:var(--red);flex-shrink:0;margin-top:2px"><use href="#i-phone"/></svg>
+              <div>
+                <div style="font-size:11.5px;color:var(--subtle);text-transform:uppercase;letter-spacing:0.04em;font-weight:600">Điện thoại</div>
+                <div style="font-size:14px;color:var(--ink);margin-top:2px;font-variant-numeric:tabular-nums">0274 3515 097</div>
+                <div style="font-size:12.5px;color:var(--muted);margin-top:2px">Đường dây nóng: <b style="color:var(--red)">113</b></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px">
+              <svg width="20" height="20" style="color:var(--red);flex-shrink:0;margin-top:2px"><use href="#i-mail"/></svg>
+              <div>
+                <div style="font-size:11.5px;color:var(--subtle);text-transform:uppercase;letter-spacing:0.04em;font-weight:600">Email</div>
+                <div style="font-size:14px;color:var(--ink);margin-top:2px">cong-an-phuong-binh-duong@mail.gov.vn</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px">
+              <svg width="20" height="20" style="color:var(--red);flex-shrink:0;margin-top:2px"><use href="#i-clock"/></svg>
+              <div>
+                <div style="font-size:11.5px;color:var(--subtle);text-transform:uppercase;letter-spacing:0.04em;font-weight:600">Giờ làm việc</div>
+                <div style="font-size:14px;color:var(--ink);margin-top:2px">Thứ Hai – Thứ Sáu: 7:00 – 11:30, 13:30 – 17:00</div>
+                <div style="font-size:14px;color:var(--ink)">Thứ Bảy: 7:30 – 11:30</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: QNA (Hỏi đáp)
+     ============================================================ -->
+<main id="page-qna" class="page-hide" data-screen-label="06 QnA">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <span class="here">Hỏi đáp pháp luật</span>
+      </div>
+      <h1>Hỏi đáp pháp luật</h1>
+      <p>Tổng hợp câu hỏi thường gặp và giải đáp của cán bộ Công an phường Bình Dương.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container">
+      <div class="qna-layout">
+        <div>
+          <div class="filter-row">
+            <button class="chip active">Tất cả (124)</button>
+            <button class="chip">Cư trú (38)</button>
+            <button class="chip">CCCD (29)</button>
+            <button class="chip">VNeID (18)</button>
+            <button class="chip">Xe máy (15)</button>
+            <button class="chip">Hành chính (16)</button>
+            <button class="chip">Khác (8)</button>
+          </div>
+
+          <div class="qna-callout">
+            <div>
+              <div class="t">Chưa tìm thấy câu trả lời?</div>
+              <div class="s">Gửi câu hỏi — cán bộ sẽ trả lời trong 1–3 ngày làm việc.</div>
+            </div>
+            <button class="btn btn-red">Gửi câu hỏi</button>
+          </div>
+
+          <div class="qna-list">
+            <div class="qna-card">
+              <div class="q">Tôi mới chuyển đến phường Bình Dương, cần làm thủ tục gì để đăng ký thường trú?</div>
+              <div class="a">
+                <div class="a-body">Bạn cần chuẩn bị: <b>CCCD</b>, giấy tờ chứng minh chỗ ở hợp pháp (sổ đỏ, hợp đồng thuê có công chứng…), và đơn đề nghị (mẫu CT01). Nộp tại trụ sở Công an phường hoặc qua Cổng DVC Quốc gia. Thời gian xử lý: <b>7 ngày làm việc</b>, lệ phí 20.000đ. <a href="#" style="color:var(--navy);text-decoration:underline">Xem hướng dẫn chi tiết →</a></div>
+              </div>
+              <div class="meta">
+                <span class="tag">Cư trú</span>
+                <span>Đã trả lời · 14/05/2026</span>
+                <span>·</span>
+                <span>1.234 lượt xem</span>
+              </div>
+            </div>
+
+            <div class="qna-card">
+              <div class="q">VNeID là gì? Tôi có bắt buộc phải kích hoạt mức 2 không?</div>
+              <div class="a">
+                <div class="a-body">VNeID là ứng dụng định danh điện tử do Bộ Công an phát triển. Kích hoạt <b>mức 2 không bắt buộc</b>, nhưng được khuyến khích vì có thể thay thế nhiều giấy tờ khi giao dịch hành chính, thực hiện các dịch vụ công trực tuyến và xác minh danh tính ngân hàng.</div>
+              </div>
+              <div class="meta">
+                <span class="tag">VNeID</span>
+                <span>Đã trả lời · 13/05/2026</span>
+                <span>·</span>
+                <span>892 lượt xem</span>
+              </div>
+            </div>
+
+            <div class="qna-card">
+              <div class="q">Tôi có thể đăng ký xe máy ở đâu nếu đăng ký xe của tôi đã đứng tên ở tỉnh khác?</div>
+              <div class="a">
+                <div class="a-body">Bạn cần làm thủ tục <b>sang tên di chuyển</b>. Mang theo: giấy đăng ký xe gốc, biển số, CCCD, giấy tờ chứng minh cư trú tại phường. Nộp hồ sơ tại Phòng CSGT Công an TP.HCM. Lệ phí theo dung tích xe — tham khảo Thông tư 60/2024.</div>
+              </div>
+              <div class="meta">
+                <span class="tag">Xe máy</span>
+                <span>Đã trả lời · 12/05/2026</span>
+                <span>·</span>
+                <span>645 lượt xem</span>
+              </div>
+            </div>
+
+            <div class="qna-card">
+              <div class="q">Làm CCCD mất bao lâu? Có thể nhận tại nhà không?</div>
+              <div class="a">
+                <div class="a-body">Thời gian cấp CCCD gắn chip thông thường là <b>7 ngày làm việc</b>. Bạn có thể chọn nhận tại trụ sở hoặc <b>nhận tại nhà</b> qua bưu điện (có phụ thu). Theo dõi tiến độ trên Cổng DVC Quốc gia hoặc app VNeID.</div>
+              </div>
+              <div class="meta">
+                <span class="tag">CCCD</span>
+                <span>Đã trả lời · 10/05/2026</span>
+                <span>·</span>
+                <span>2.103 lượt xem</span>
+              </div>
+            </div>
+
+            <div class="qna-card">
+              <div class="q">Khi nào tôi cần khai báo lưu trú? Khai báo qua điện thoại được không?</div>
+              <div class="a">
+                <div class="a-body">Cơ sở lưu trú (khách sạn, nhà trọ, homestay…) <b>bắt buộc khai báo</b> với Công an phường khi có khách đến lưu trú. Hộ gia đình tiếp khách lưu trú trên 30 ngày cũng phải khai báo. Có thể thực hiện qua app <b>VNeID</b> hoặc Cổng DVC, không cần đến trực tiếp.</div>
+              </div>
+              <div class="meta">
+                <span class="tag">Cư trú</span>
+                <span>Đã trả lời · 08/05/2026</span>
+                <span>·</span>
+                <span>456 lượt xem</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="aside-card">
+            <h4>Câu hỏi xem nhiều</h4>
+            <div class="aside-list">
+              <a href="#">Cách kích hoạt VNeID mức 2 tại nhà</a>
+              <a href="#">Thủ tục đổi CCCD khi sai thông tin</a>
+              <a href="#">Đăng ký tạm trú cho người ngoại tỉnh</a>
+              <a href="#">Mức phạt khi không đội mũ bảo hiểm</a>
+              <a href="#">Làm gì khi mất CCCD?</a>
+            </div>
+          </div>
+
+          <div class="aside-card" style="background:var(--navy-soft);border-color:var(--gold)">
+            <h4 style="color:var(--red-deep);border-color:var(--gold)">Liên hệ trực tiếp</h4>
+            <div style="font-size:13.5px;color:var(--ink-2);line-height:1.6">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><svg width="16" height="16" style="color:var(--red)"><use href="#i-phone"/></svg>0274 3515 097</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><svg width="16" height="16" style="color:var(--red)"><use href="#i-mail"/></svg>hoidap@cap-binhduong.gov.vn</div>
+              <div style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" style="color:var(--red)"><use href="#i-clock"/></svg>T2–T6: 7:00–17:00</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: LEGAL DOCUMENTS (Văn bản pháp luật)
+     ============================================================ -->
+<main id="page-legal" class="page-hide" data-screen-label="07 Legal">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <span class="here">Văn bản pháp luật</span>
+      </div>
+      <h1>Văn bản pháp luật</h1>
+      <p>Thư viện văn bản pháp luật — Nghị quyết, Quyết định, Kế hoạch, Thông tư đang có hiệu lực.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container">
+      <div class="filter-row">
+        <button class="chip active">Tất cả (412)</button>
+        <button class="chip">Nghị quyết (48)</button>
+        <button class="chip">Quyết định (156)</button>
+        <button class="chip">Kế hoạch (89)</button>
+        <button class="chip">Thông tư (74)</button>
+        <button class="chip">Công văn (45)</button>
+        <div class="search-box">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input type="text" placeholder="Tìm văn bản theo số, tên…" />
+        </div>
+      </div>
+
+      <div class="doc-grid">
+        <div class="doc-card">
+          <div class="doc-icon"><svg><use href="#i-doc"/></svg></div>
+          <div class="b">
+            <span class="badge-type">Nghị quyết</span>
+            <h4>Nghị quyết số 57/NQ-CP về phát triển khoa học công nghệ và đổi mới sáng tạo</h4>
+            <div class="meta"><b>Số 57/NQ-CP</b> · Ban hành 15/04/2026 · Có hiệu lực 01/05/2026</div>
+          </div>
+          <button class="doc-download" title="Tải xuống PDF"><svg width="18" height="18"><use href="#i-download"/></svg></button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-icon"><svg><use href="#i-doc"/></svg></div>
+          <div class="b">
+            <span class="badge-type">Quyết định</span>
+            <h4>Quyết định số 06/QĐ-TTg về Đề án phát triển ứng dụng dữ liệu dân cư</h4>
+            <div class="meta"><b>Số 06/QĐ-TTg</b> · Ban hành 06/01/2026 · Có hiệu lực 06/01/2026</div>
+          </div>
+          <button class="doc-download" title="Tải xuống PDF"><svg width="18" height="18"><use href="#i-download"/></svg></button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-icon"><svg><use href="#i-doc"/></svg></div>
+          <div class="b">
+            <span class="badge-type">Thông tư</span>
+            <h4>Thông tư số 60/2024/TT-BCA quy định cấp đăng ký, biển số xe</h4>
+            <div class="meta"><b>Số 60/2024/TT-BCA</b> · Ban hành 12/12/2024 · Có hiệu lực 01/01/2025</div>
+          </div>
+          <button class="doc-download" title="Tải xuống PDF"><svg width="18" height="18"><use href="#i-download"/></svg></button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-icon"><svg><use href="#i-doc"/></svg></div>
+          <div class="b">
+            <span class="badge-type">Kế hoạch</span>
+            <h4>Kế hoạch triển khai cao điểm tấn công, trấn áp tội phạm quý II/2026</h4>
+            <div class="meta"><b>Số 142/KH-CAP</b> · Ban hành 28/03/2026 · Áp dụng đến 30/06/2026</div>
+          </div>
+          <button class="doc-download" title="Tải xuống PDF"><svg width="18" height="18"><use href="#i-download"/></svg></button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-icon"><svg><use href="#i-doc"/></svg></div>
+          <div class="b">
+            <span class="badge-type">Quyết định</span>
+            <h4>Quyết định thành lập Công an phường Bình Dương trên cơ sở sáp nhập</h4>
+            <div class="meta"><b>Số 1024/QĐ-BCA</b> · Ban hành 01/07/2025 · Có hiệu lực 01/07/2025</div>
+          </div>
+          <button class="doc-download" title="Tải xuống PDF"><svg width="18" height="18"><use href="#i-download"/></svg></button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-icon"><svg><use href="#i-doc"/></svg></div>
+          <div class="b">
+            <span class="badge-type">Công văn</span>
+            <h4>Công văn tăng cường công tác phòng chống tội phạm sử dụng công nghệ cao</h4>
+            <div class="meta"><b>Số 0825/CV-CAP</b> · Ban hành 02/05/2026</div>
+          </div>
+          <button class="doc-download" title="Tải xuống PDF"><svg width="18" height="18"><use href="#i-download"/></svg></button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-icon"><svg><use href="#i-doc"/></svg></div>
+          <div class="b">
+            <span class="badge-type">Thông tư</span>
+            <h4>Thông tư hướng dẫn cấp căn cước công dân gắn chip điện tử</h4>
+            <div class="meta"><b>Số 59/2021/TT-BCA</b> · Ban hành 15/05/2021 · Còn hiệu lực</div>
+          </div>
+          <button class="doc-download" title="Tải xuống PDF"><svg width="18" height="18"><use href="#i-download"/></svg></button>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-icon"><svg><use href="#i-doc"/></svg></div>
+          <div class="b">
+            <span class="badge-type">Kế hoạch</span>
+            <h4>Kế hoạch tuyên truyền Luật Trật tự an toàn giao thông đường bộ 2024</h4>
+            <div class="meta"><b>Số 089/KH-CAP</b> · Ban hành 18/02/2026</div>
+          </div>
+          <button class="doc-download" title="Tải xuống PDF"><svg width="18" height="18"><use href="#i-download"/></svg></button>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:40px">
+        <button class="chip">‹</button>
+        <button class="chip active">1</button>
+        <button class="chip">2</button>
+        <button class="chip">3</button>
+        <button class="chip">…</button>
+        <button class="chip">52</button>
+        <button class="chip">›</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: GALLERY (Thư viện ảnh)
+     ============================================================ -->
+<main id="page-gallery" class="page-hide" data-screen-label="08 Gallery">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <span class="here">Thư viện ảnh</span>
+      </div>
+      <h1>Thư viện ảnh</h1>
+      <p>Album ảnh hoạt động và sự kiện của Công an phường Bình Dương.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container">
+      <div class="filter-row">
+        <button class="chip active">Tất cả album (48)</button>
+        <button class="chip">Sự kiện</button>
+        <button class="chip">Hoạt động cộng đồng</button>
+        <button class="chip">Tuần tra</button>
+        <button class="chip" data-nav="video-page">Xem video →</button>
+      </div>
+
+      <div class="gallery-grid">
+        <a class="album-card">
+          <div class="cover">img · cover<span class="badge">48 ảnh</span></div>
+          <div class="body">
+            <h4>Ra quân tổng kiểm tra dịp lễ 30/4 — 1/5</h4>
+            <div class="date">15/05/2026</div>
+          </div>
+        </a>
+        <a class="album-card">
+          <div class="cover">img · cover<span class="badge">32 ảnh</span></div>
+          <div class="body">
+            <h4>Tuyên truyền Luật Giao thông tại trường THCS</h4>
+            <div class="date">12/05/2026</div>
+          </div>
+        </a>
+        <a class="album-card">
+          <div class="cover">img · cover<span class="badge">24 ảnh</span></div>
+          <div class="body">
+            <h4>Hội nghị tổng kết phong trào toàn dân bảo vệ ANTQ</h4>
+            <div class="date">08/05/2026</div>
+          </div>
+        </a>
+        <a class="album-card">
+          <div class="cover">img · cover<span class="badge">56 ảnh</span></div>
+          <div class="body">
+            <h4>Cấp đổi CCCD lưu động tại UBND phường</h4>
+            <div class="date">05/05/2026</div>
+          </div>
+        </a>
+        <a class="album-card">
+          <div class="cover">img · cover<span class="badge">28 ảnh</span></div>
+          <div class="body">
+            <h4>Hoạt động kỷ niệm 80 năm CAND Việt Nam</h4>
+            <div class="date">19/08/2025</div>
+          </div>
+        </a>
+        <a class="album-card">
+          <div class="cover">img · cover<span class="badge">42 ảnh</span></div>
+          <div class="body">
+            <h4>Diễn tập phòng chống cháy nổ tại chợ Bình Dương</h4>
+            <div class="date">22/04/2026</div>
+          </div>
+        </a>
+        <a class="album-card">
+          <div class="cover">img · cover<span class="badge">36 ảnh</span></div>
+          <div class="body">
+            <h4>Khen thưởng tổ dân phố xuất sắc</h4>
+            <div class="date">10/04/2026</div>
+          </div>
+        </a>
+        <a class="album-card">
+          <div class="cover">img · cover<span class="badge">18 ảnh</span></div>
+          <div class="body">
+            <h4>Thăm hỏi gia đình thương binh, liệt sĩ</h4>
+            <div class="date">27/07/2025</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: VIDEO
+     ============================================================ -->
+<main id="page-video-page" class="page-hide" data-screen-label="09 Video">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <a data-nav="gallery">Thư viện</a>
+        <span class="sep">›</span>
+        <span class="here">Video</span>
+      </div>
+      <h1>Video</h1>
+      <p>Phim tài liệu và clip hoạt động của đơn vị.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container">
+      <div class="filter-row">
+        <button class="chip active">Tất cả</button>
+        <button class="chip">Hoạt động</button>
+        <button class="chip">An ninh</button>
+        <button class="chip">Cộng đồng</button>
+        <button class="chip">Tuyên truyền</button>
+        <button class="chip" data-nav="gallery">← Xem ảnh</button>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="thumb"><div class="play"></div><span class="duration">5:24</span></div>
+          <div class="body">
+            <h4>Tổng kết công tác đảm bảo ANTT quý I/2026 tại phường Bình Dương</h4>
+            <div class="meta"><span class="cat-pill">Hoạt động</span><span>12/05/2026</span></div>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="thumb"><div class="play"></div><span class="duration">3:18</span></div>
+          <div class="body">
+            <h4>Hướng dẫn nhận biết và phòng tránh lừa đảo qua điện thoại</h4>
+            <div class="meta"><span class="cat-pill">Tuyên truyền</span><span>10/05/2026</span></div>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="thumb"><div class="play"></div><span class="duration">8:42</span></div>
+          <div class="body">
+            <h4>Phóng sự: Người chiến sĩ Công an khu vực với nhân dân</h4>
+            <div class="meta"><span class="cat-pill">Cộng đồng</span><span>05/05/2026</span></div>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="thumb"><div class="play"></div><span class="duration">2:36</span></div>
+          <div class="body">
+            <h4>Cảnh báo: Tăng cường an ninh khu vực chợ Bình Dương</h4>
+            <div class="meta"><span class="cat-pill">An ninh</span><span>03/05/2026</span></div>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="thumb"><div class="play"></div><span class="duration">12:08</span></div>
+          <div class="body">
+            <h4>Diễn tập phòng chống cháy nổ và cứu nạn cứu hộ</h4>
+            <div class="meta"><span class="cat-pill">Hoạt động</span><span>28/04/2026</span></div>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="thumb"><div class="play"></div><span class="duration">6:54</span></div>
+          <div class="body">
+            <h4>Hướng dẫn đăng ký tài khoản VNeID và xác minh mức 2</h4>
+            <div class="meta"><span class="cat-pill">Tuyên truyền</span><span>22/04/2026</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: SCHEDULE (Lịch tiếp công dân)
+     ============================================================ -->
+<main id="page-schedule" class="page-hide" data-screen-label="10 Schedule">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <span class="here">Lịch tiếp công dân</span>
+      </div>
+      <h1>Lịch tiếp công dân</h1>
+      <p>Lịch tiếp công dân định kỳ của Ban lãnh đạo và cán bộ Công an phường Bình Dương.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container" style="max-width:960px">
+      <div class="schedule-nav">
+        <button class="btn btn-secondary"><svg width="14" height="14"><use href="#i-chev-left"/></svg> Tháng trước</button>
+        <h2>Tháng 5 năm 2026</h2>
+        <button class="btn btn-secondary">Tháng sau <svg width="14" height="14"><use href="#i-chev-right"/></svg></button>
+      </div>
+
+      <div class="notice" style="margin-bottom:24px">
+        <svg class="ic"><use href="#i-warn"/></svg>
+        <div>
+          <b>Thông tin tiếp công dân:</b> Địa điểm tại Trụ sở Công an phường Bình Dương — Số 01, Đường D27, KP. Hòa Phú 1. Công dân vui lòng mang theo <b>CCCD/CMND</b> và giấy tờ liên quan. Liên hệ đặt lịch trước qua số <b>0274 3515 097</b>.
+        </div>
+      </div>
+
+      <div class="schedule-day">
+        <div class="day-head">
+          <span class="day-num">06/05</span>
+          Thứ Tư · Tiếp công dân định kỳ
+        </div>
+        <div class="schedule-slot">
+          <span class="time">08:00 – 11:30</span>
+          <div><div class="lbl">Cán bộ trực</div><b>Thượng tá Nguyễn Văn Hùng</b><br>Trưởng Công an phường</div>
+          <div><div class="lbl">Nội dung</div>Tiếp công dân chung — phản ánh, kiến nghị</div>
+          <div><div class="lbl">Trạng thái</div><span class="recurring">Thường kỳ</span></div>
+        </div>
+        <div class="schedule-slot">
+          <span class="time">13:30 – 16:30</span>
+          <div><div class="lbl">Cán bộ trực</div><b>Trung tá Trần Quốc Tuấn</b><br>Phó Trưởng Công an phường</div>
+          <div><div class="lbl">Nội dung</div>Tiếp công dân về thủ tục cư trú, CCCD</div>
+          <div><div class="lbl">Trạng thái</div><span class="recurring">Thường kỳ</span></div>
+        </div>
+      </div>
+
+      <div class="schedule-day">
+        <div class="day-head">
+          <span class="day-num">13/05</span>
+          Thứ Tư · Tiếp công dân định kỳ
+        </div>
+        <div class="schedule-slot">
+          <span class="time">08:00 – 11:30</span>
+          <div><div class="lbl">Cán bộ trực</div><b>Thiếu tá Lê Thị Minh Anh</b><br>Phó Trưởng Công an phường</div>
+          <div><div class="lbl">Nội dung</div>Tiếp công dân về an ninh trật tự, phương tiện</div>
+          <div><div class="lbl">Trạng thái</div><span class="recurring">Thường kỳ</span></div>
+        </div>
+      </div>
+
+      <div class="schedule-day">
+        <div class="day-head">
+          <span class="day-num">20/05</span>
+          Thứ Tư · Tiếp công dân định kỳ
+        </div>
+        <div class="schedule-slot">
+          <span class="time">08:00 – 11:30</span>
+          <div><div class="lbl">Cán bộ trực</div><b>Thượng tá Nguyễn Văn Hùng</b><br>Trưởng Công an phường</div>
+          <div><div class="lbl">Nội dung</div>Tiếp công dân chung</div>
+          <div><div class="lbl">Trạng thái</div><span class="recurring">Thường kỳ</span></div>
+        </div>
+        <div class="schedule-slot">
+          <span class="time">13:30 – 16:30</span>
+          <div><div class="lbl">Cán bộ trực</div><b>Thiếu tá Phạm Đức Thắng</b><br>Đội trưởng Đội Cảnh sát ANTT</div>
+          <div><div class="lbl">Nội dung</div>Chuyên đề: phòng chống tội phạm công nghệ cao</div>
+          <div><div class="lbl">Trạng thái</div><span style="font-size:11px;background:var(--gold-soft);color:var(--gold-deep);padding:2px 8px;border-radius:99px;font-weight:600">Chuyên đề</span></div>
+        </div>
+      </div>
+
+      <div class="schedule-day">
+        <div class="day-head">
+          <span class="day-num">27/05</span>
+          Thứ Tư · Tiếp công dân định kỳ
+        </div>
+        <div class="schedule-slot">
+          <span class="time">08:00 – 11:30</span>
+          <div><div class="lbl">Cán bộ trực</div><b>Trung tá Trần Quốc Tuấn</b><br>Phó Trưởng Công an phường</div>
+          <div><div class="lbl">Nội dung</div>Tiếp công dân về thủ tục cư trú, CCCD</div>
+          <div><div class="lbl">Trạng thái</div><span class="recurring">Thường kỳ</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: WANTED (Truy nã)
+     ============================================================ -->
+<main id="page-wanted" class="page-hide" data-screen-label="11 Wanted">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <span class="here">Thông báo truy nã</span>
+      </div>
+      <h1>Thông báo truy nã</h1>
+      <p>Danh sách các đối tượng đang bị truy nã theo thông báo của cơ quan điều tra.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container">
+      <div class="wanted-banner">
+        <svg><use href="#i-warn"/></svg>
+        <div>
+          <div class="t">Lưu ý an toàn — Không tự ý tiếp cận đối tượng</div>
+          <div class="s">Nếu phát hiện các đối tượng này, vui lòng <b>gọi ngay 113</b> hoặc liên hệ Công an phường Bình Dương theo số <b>0274 3515 097</b>. Mọi thông tin tố giác đều được bảo mật theo Luật Tố cáo 2018.</div>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <button class="chip active">Đang truy nã (12)</button>
+        <button class="chip">Đã bắt được (47)</button>
+        <div class="search-box">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input type="text" placeholder="Tìm theo họ tên, biệt danh…" />
+        </div>
+      </div>
+
+      <div class="wanted-grid">
+        <div class="wanted-card">
+          <div class="photo">Ảnh nhận dạng<span class="status-pill">Đang truy nã</span></div>
+          <div class="body">
+            <h4>Nguyễn Văn A</h4>
+            <dl>
+              <dt>Năm sinh</dt><dd>1985 · Bình Dương</dd>
+              <dt>Tội danh</dt><dd class="crime">Lừa đảo chiếm đoạt tài sản</dd>
+              <dt>Số quyết định</dt><dd>012/QĐ-TN/2026</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="wanted-card">
+          <div class="photo">Ảnh nhận dạng<span class="status-pill">Đang truy nã</span></div>
+          <div class="body">
+            <h4>Trần Thị B</h4>
+            <dl>
+              <dt>Năm sinh</dt><dd>1990 · Long An</dd>
+              <dt>Tội danh</dt><dd class="crime">Mua bán trái phép chất ma túy</dd>
+              <dt>Số quyết định</dt><dd>008/QĐ-TN/2026</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="wanted-card">
+          <div class="photo">Ảnh nhận dạng<span class="status-pill">Đang truy nã</span></div>
+          <div class="body">
+            <h4>Lê Văn C</h4>
+            <dl>
+              <dt>Năm sinh</dt><dd>1978 · TP.HCM</dd>
+              <dt>Tội danh</dt><dd class="crime">Cố ý gây thương tích</dd>
+              <dt>Số quyết định</dt><dd>015/QĐ-TN/2026</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="wanted-card">
+          <div class="photo">Ảnh nhận dạng<span class="status-pill">Đang truy nã</span></div>
+          <div class="body">
+            <h4>Phạm Quốc D</h4>
+            <dl>
+              <dt>Năm sinh</dt><dd>1992 · Tây Ninh</dd>
+              <dt>Tội danh</dt><dd class="crime">Trộm cắp tài sản</dd>
+              <dt>Số quyết định</dt><dd>019/QĐ-TN/2026</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: ARTICLE (Tin tức chi tiết)
+     ============================================================ -->
+<main id="page-article" class="page-hide" data-screen-label="12 Article">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a data-nav="home">Trang chủ</a>
+        <span class="sep">›</span>
+        <a data-nav="news">Tin tức</a>
+        <span class="sep">›</span>
+        <span class="here">An ninh trật tự</span>
+      </div>
+      <h1 style="font-size:32px;line-height:1.2;max-width:880px">Ra quân tổng kiểm tra an ninh trật tự dịp lễ 30/4 — 1/5 năm 2026</h1>
+      <p style="margin-top:10px">Lực lượng Công an phối hợp các đơn vị nghiệp vụ tổ chức ra quân tổng kiểm tra, đảm bảo an ninh trật tự cho người dân trong dịp lễ lớn của đất nước.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="article-container">
+      <div class="article-meta">
+        <span class="cat-pill">An ninh trật tự</span>
+        <span>Thứ Năm, 15/05/2026 · 14:32</span>
+        <span>·</span>
+        <span>5 phút đọc</span>
+        <span>·</span>
+        <span>1.842 lượt xem</span>
+      </div>
+
+      <div class="article-cover">FEATURED · Ảnh tin nổi bật 16:9</div>
+
+      <p class="article-lede">
+        Sáng ngày 28/04, lực lượng Công an phường Bình Dương phối hợp với Cảnh sát giao thông và Cảnh sát cơ động Công an TP.HCM tổ chức ra quân tổng kiểm tra an ninh trật tự, đảm bảo cho người dân vui đón lễ 30/4 — 1/5 an toàn.
+      </p>
+
+      <div class="article-body">
+        <p>Theo Thượng tá Nguyễn Văn Hùng — Trưởng Công an phường Bình Dương, đợt ra quân kéo dài từ ngày 25/04 đến 03/05/2026 với sự tham gia của toàn bộ cán bộ chiến sĩ thuộc đơn vị, tập trung vào 4 nhiệm vụ trọng tâm.</p>
+
+        <h2>Bốn nhiệm vụ trọng tâm</h2>
+        <ul>
+          <li><b>Tuần tra kiểm soát giao thông</b> — kiểm tra nồng độ cồn, tốc độ, tải trọng phương tiện trên các tuyến đường chính</li>
+          <li><b>Kiểm tra cơ sở kinh doanh có điều kiện</b> — khách sạn, nhà nghỉ, quán bar, karaoke</li>
+          <li><b>Tăng cường lực lượng tại điểm tập trung</b> — trung tâm thương mại, chợ, công viên</li>
+          <li><b>Phối hợp lực lượng tự quản</b> — tổ dân phố tham gia tuần tra ban đêm</li>
+        </ul>
+
+        <h2>Kết quả 3 ngày đầu</h2>
+        <p>Tính đến hết ngày 27/04, lực lượng Công an phường Bình Dương đã thực hiện được những kết quả tích cực trong việc đảm bảo an ninh trật tự trên địa bàn.</p>
+
+        <blockquote>"Chúng tôi quyết tâm không để xảy ra bất kỳ vụ việc nghiêm trọng nào trong dịp lễ. Đề nghị bà con nhân dân nâng cao cảnh giác, phối hợp cung cấp tin báo qua đường dây nóng 113."<br><br>— <b>Thượng tá Nguyễn Văn Hùng</b>, Trưởng Công an phường Bình Dương</blockquote>
+
+        <h2>Khuyến cáo người dân</h2>
+        <p>Để đợt cao điểm đạt hiệu quả cao, Công an phường Bình Dương khuyến cáo người dân:</p>
+        <ul>
+          <li>Khi tham gia giao thông, tuyệt đối tuân thủ luật lệ, đội mũ bảo hiểm và không sử dụng rượu bia</li>
+          <li>Khi thuê lưu trú hoặc tiếp khách lưu trú trên 30 ngày, phải khai báo với Công an phường</li>
+          <li>Phát hiện đối tượng khả nghi, hãy báo ngay qua số 113 hoặc liên hệ Công an phường</li>
+          <li>Cảnh giác với các thủ đoạn lừa đảo qua mạng, đặc biệt giả danh Công an, ngân hàng</li>
+        </ul>
+
+        <p>Mọi thông tin, kiến nghị vui lòng gửi qua <a href="#" data-nav="feedback" style="color:var(--red);text-decoration:underline">cổng phản ánh trực tuyến</a> hoặc gọi số <b>0274 3515 097</b>.</p>
+      </div>
+
+      <div class="article-foot">
+        <div class="tag-list">
+          <span class="tag">#anninhtrattự</span>
+          <span class="tag">#30thang4</span>
+          <span class="tag">#tuantra</span>
+          <span class="tag">#bìnhdương</span>
+        </div>
+        <div class="share-btns">
+          <button title="Facebook"><svg width="14" height="14"><use href="#i-fb"/></svg></button>
+          <button title="Chia sẻ"><svg width="14" height="14"><use href="#i-share"/></svg></button>
+          <button title="In bài"><svg width="14" height="14"><use href="#i-print"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block alt">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-eyebrow">Đọc thêm</div>
+          <h2 class="section-title">Tin liên quan</h2>
+        </div>
+        <a class="section-link" data-nav="news">Xem tất cả tin <svg class="arrow" width="16" height="16"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill info">Thông báo</span><span>14/05</span></div>
+            <h3>Lịch cấp đổi CCCD lưu động tháng 5/2026</h3>
+            <p>UBND phường Bình Dương phối hợp triển khai cấp đổi CCCD cho người cao tuổi.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill warning">Cảnh báo</span><span>13/05</span></div>
+            <h3>Cảnh giác chiêu trò giả danh Công an gọi điện</h3>
+            <p>Thủ đoạn lừa đảo công nghệ cao mạo danh cán bộ yêu cầu chuyển khoản.</p>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="thumb"><div class="placeholder-img">img · 16:10</div></div>
+          <div class="body">
+            <div class="news-meta"><span class="cat-pill">An ninh trật tự</span><span>12/05</span></div>
+            <h3>Triệt phá đường dây cá độ bóng đá qua mạng</h3>
+            <p>Lực lượng nghiệp vụ phát hiện và xử lý theo đúng quy định pháp luật.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     FOOTER (shared)
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="container site-footer-main">
+    <div>
+      <div class="footer-brand">
+        <div class="emblem"></div>
+        <div class="brand-text">
+          <span class="brand-line1" style="color:var(--gold)">Cổng thông tin chính thống</span>
+          <span class="brand-line2">Công an phường Bình Dương</span>
+          <span class="brand-line3" style="color:rgba(255,255,255,0.6)">Thành phố Hồ Chí Minh</span>
+        </div>
+      </div>
+      <p class="footer-about">Đơn vị trực thuộc Công an Thành phố Hồ Chí Minh — phục vụ nhân dân, đảm bảo an ninh trật tự trên địa bàn phường Bình Dương.</p>
+      <ul class="footer-contact-list" style="list-style:none;padding:0;margin:0">
+        <li><svg class="ic"><use href="#i-pin"/></svg>Số 01, Đường D27, KP. Hòa Phú 1, P. Bình Dương, TP.HCM</li>
+        <li><svg class="ic"><use href="#i-phone"/></svg>0274 3515 097</li>
+        <li><svg class="ic"><use href="#i-mail"/></svg>cong-an-phuong-binh-duong@mail.gov.vn</li>
+        <li><svg class="ic"><use href="#i-clock"/></svg>T2–T6: 7:00–17:00 · T7: 7:30–11:30</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="footer-h" data-i18n="footer.h.links">Liên kết nhanh</h3>
+      <ul class="footer-list">
+        <li><a data-nav="home">Trang chủ</a></li>
+        <li><a data-nav="about">Giới thiệu</a></li>
+        <li><a data-nav="news">Tin tức</a></li>
+        <li><a data-nav="procedures">Thủ tục hành chính</a></li>
+        <li><a data-nav="feedback">Phản ánh trực tuyến</a></li>
+        <li><a data-nav="qna">Hỏi đáp pháp luật</a></li>
+        <li><a data-nav="legal">Văn bản pháp luật</a></li>
+        <li><a data-nav="schedule">Lịch tiếp công dân</a></li>
+        <li><a data-nav="gallery">Thư viện ảnh</a></li>
+        <li><a data-nav="wanted">Truy nã</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="footer-h" data-i18n="footer.h.agencies">Cơ quan liên quan</h3>
+      <ul class="footer-list">
+        <li><a href="#">Công an TP. Hồ Chí Minh</a></li>
+        <li><a href="#">Bộ Công an</a></li>
+        <li><a href="#">Cổng DVC Quốc gia</a></li>
+        <li><a href="#">VNeID</a></li>
+        <li><a href="#">UBND phường Bình Dương</a></li>
+      </ul>
+
+      <h3 class="footer-h" style="margin-top:24px" data-i18n="footer.h.social">Theo dõi chúng tôi</h3>
+      <div style="display:flex;gap:8px">
+        <a href="#" style="width:36px;height:36px;display:grid;place-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:rgba(255,255,255,0.85)" aria-label="Facebook"><svg width="14" height="14"><use href="#i-fb"/></svg></a>
+        <a href="#" style="width:36px;height:36px;display:grid;place-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:rgba(255,255,255,0.85)" aria-label="YouTube"><svg width="14" height="14"><use href="#i-yt"/></svg></a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="footer-h" data-i18n="footer.h.emergency">Đường dây khẩn cấp</h3>
+      <div class="footer-emergency">
+        <div class="label">Phản ánh tội phạm 24/7</div>
+        <div class="number">113</div>
+        <div class="sub">Gọi ngay khi có sự việc nguy cấp</div>
+      </div>
+      <div class="footer-other-nums">
+        <div>Cứu hỏa<b>114</b></div>
+        <div>Cấp cứu<b>115</b></div>
+        <div>Điện lực<b>1900 6006</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 Công an phường Bình Dương. Cổng thông tin điện tử chính thức.</span>
+      <div style="display:flex;gap:18px">
+        <a href="#">Sơ đồ trang</a>
+        <a href="#">Chính sách bảo mật</a>
+        <a href="#">Điều khoản sử dụng</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating help bubble + AI support panel -->
+<button class="cop-bubble" id="copBubble" aria-label="Mở trợ lý ảo">
+  <span class="pulse-ring"></span>
+  <svg id="copBubbleIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</button>
+
+<div class="support-panel" id="supportPanel" role="dialog" aria-labelledby="supportTitle">
+  <div class="support-head">
+    <div class="support-avatar">CA</div>
+    <div class="support-head-text">
+      <div class="title" id="supportTitle">Trợ lý ảo Công an phường</div>
+      <div class="sub">Đang trực tuyến · Phản hồi ngay</div>
+    </div>
+  </div>
+
+  <div class="support-body" id="supportBody">
+    <div class="support-msg">
+      Xin chào! Tôi là <b>Trợ lý ảo</b> của Công an phường Bình Dương. Tôi có thể giúp bạn:
+      <span class="time">14:32 hôm nay</span>
+    </div>
+
+    <div class="support-actions">
+      <button class="support-action" data-nav="procedures">
+        <div class="ic"><svg><use href="#i-doc"/></svg></div>
+        <span>Tra cứu thủ tục hành chính</span>
+      </button>
+      <button class="support-action" data-nav="feedback">
+        <div class="ic"><svg><use href="#i-megaphone"/></svg></div>
+        <span>Gửi phản ánh trực tuyến</span>
+      </button>
+      <button class="support-action" data-nav="qna">
+        <div class="ic"><svg><use href="#i-help"/></svg></div>
+        <span>Hỏi đáp pháp luật</span>
+      </button>
+      <button class="support-action" data-nav="schedule">
+        <div class="ic"><svg><use href="#i-cal"/></svg></div>
+        <span>Đặt lịch tiếp dân</span>
+      </button>
+      <button class="support-action danger" onclick="window.location.href='tel:113'">
+        <div class="ic"><svg><use href="#i-phone"/></svg></div>
+        <span>Gọi khẩn cấp 113</span>
+      </button>
+      <button class="support-action" data-nav="legal">
+        <div class="ic"><svg><use href="#i-scroll"/></svg></div>
+        <span>Văn bản pháp luật</span>
+      </button>
+    </div>
+
+    <div class="support-msg" style="margin-top:16px">
+      Hoặc đặt câu hỏi trực tiếp ở khung bên dưới — tôi sẽ trả lời nhanh nhất có thể.
+    </div>
+  </div>
+
+  <div class="support-foot">
+    <input type="text" class="support-input" id="supportInput" placeholder="Nhập câu hỏi của bạn..." />
+    <button class="support-send" id="supportSend" aria-label="Gửi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+
+  <div class="support-footnote">
+    Khẩn cấp gọi ngay <b>113</b> · Câu trả lời mang tính tham khảo
+  </div>
+</div>
+
+<script>
+  // === Page navigation ===
+  const pages = ['home','news','procedures','feedback','about','qna','legal','gallery','video-page','schedule','wanted','article'];
+  const showPage = (name) => {
+    pages.forEach(p => {
+      const el = document.getElementById('page-' + p);
+      if (el) el.classList.toggle('page-hide', p !== name);
+    });
+    document.querySelectorAll('.nav-link[data-nav], .nav-cta-btn[data-nav]').forEach(b => {
+      b.classList.toggle('active', b.dataset.nav === name);
+    });
+    window.scrollTo({top: 0, behavior: 'instant'});
+  };
+
+  // === Mobile drawer ===
+  const drawer = document.getElementById('mobileDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+  const openDrawer = () => {
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeDrawer = () => {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  document.getElementById('menuBtn').addEventListener('click', openDrawer);
+  document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+  backdrop.addEventListener('click', closeDrawer);
+
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-nav]');
+    if (t) {
+      e.preventDefault();
+      const cat = t.dataset.newsCat;
+      showPage(t.dataset.nav);
+      // If clicked inside drawer, close it
+      if (drawer.contains(t)) closeDrawer();
+      // Update drawer active state
+      document.querySelectorAll('.drawer-nav-item').forEach(b => {
+        b.classList.toggle('active', b.dataset.nav === t.dataset.nav);
+      });
+      // News category filter highlight
+      if (cat) {
+        document.querySelectorAll('#page-news .filter-row .chip').forEach((chip) => {
+          chip.classList.remove('active');
+          if (chip.dataset.cat === cat) chip.classList.add('active');
+        });
+      }
+    }
+  });
+
+  // === About page tabs ===
+  document.querySelectorAll('.about-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      document.querySelectorAll('.about-tab').forEach(b => b.classList.toggle('active', b === btn));
+      document.querySelectorAll('.tab-pane').forEach(p => {
+        p.classList.toggle('page-hide', p.dataset.pane !== target);
+      });
+    });
+  });
+
+  // === Filter chips (visual toggle within a filter-row) ===
+  document.querySelectorAll('.filter-row').forEach(row => {
+    row.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip || chip.tagName !== 'BUTTON') return;
+      // Skip if chip has data-nav (those should navigate, not toggle)
+      if (chip.dataset.nav) return;
+      row.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+
+  // === Live clock ===
+  function tickClock() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const el = document.getElementById('liveClock');
+    if (el) el.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} · ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  // === Dark mode ===
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const setTheme = (mode) => {
+    document.documentElement.dataset.theme = mode;
+    themeIcon.innerHTML = mode === 'dark'
+      ? '<use href="#i-sun"/>'
+      : '<use href="#i-moon"/>';
+    localStorage.setItem('theme', mode);
+  };
+  const savedTheme = localStorage.getItem('theme')
+    || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  setTheme(savedTheme);
+  themeToggle.addEventListener('click', () => {
+    setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+  });
+
+  // === Language switcher ===
+  const I18N = {
+    vi: {
+      'hotline': 'Đường dây nóng:',
+      'brand1': 'Cộng hòa Xã hội Chủ nghĩa Việt Nam',
+      'brand2': 'Công an phường Bình Dương',
+      'brand3': 'Thành phố Hồ Chí Minh',
+      'nav.home': 'Trang chủ',
+      'nav.about': 'Giới thiệu',
+      'nav.news': 'Tin tức',
+      'nav.legal': 'Văn bản',
+      'nav.procedures': 'Thủ tục',
+      'nav.qna': 'Hỏi đáp',
+      'nav.gallery': 'Thư viện',
+      'nav.schedule': 'Lịch tiếp dân',
+      'nav.wanted': 'Truy nã',
+      'nav.cta': 'Phản ánh ngay',
+      'ticker.label': 'Khẩn cấp',
+      'hero.eyebrow': 'Cổng thông tin chính thống',
+      'hero.h1.1': 'Vì an ninh trật tự —',
+      'hero.h1.2': 'vì nhân dân phục vụ.',
+      'hero.lead': 'Cổng thông tin điện tử của Công an phường Bình Dương, TP. Hồ Chí Minh. Tra cứu thủ tục hành chính, gửi phản ánh trực tuyến, tiếp cận thông tin pháp luật mọi lúc — minh bạch, nhanh chóng, đúng pháp luật.',
+      'hero.search.placeholder': 'Tìm thủ tục, văn bản, tin tức…',
+      'hero.search.btn': 'Tra cứu',
+      'hero.quicktags': 'Tra cứu nhanh:',
+      'stat1': 'Tin tức & thông báo đã đăng',
+      'stat2': 'Thủ tục hành chính trực tuyến',
+      'stat3': 'Thời gian phản hồi phản ánh',
+      'stat4': 'Quy trình minh bạch, công khai',
+      'emergency.title': 'Trường hợp khẩn cấp gọi ngay',
+      'emergency.police': 'Cảnh sát',
+      'emergency.fire': 'Cứu hỏa',
+      'emergency.medical': 'Cấp cứu y tế',
+      'section.services.eye': 'Dịch vụ trực tuyến',
+      'section.services.title': 'Truy cập nhanh các dịch vụ công',
+      'section.services.sub': 'Tra cứu thông tin và thực hiện các thủ tục hành chính mọi lúc, không cần đến trực tiếp đơn vị.',
+      'section.news.eye': 'Tin tức & Thông báo',
+      'section.news.title': 'Cập nhật tình hình an ninh, trật tự',
+      'section.news.link': 'Xem tất cả tin tức',
+      'section.honor.eye': 'Người tốt — Việc tốt',
+      'section.honor.title': 'Những tấm gương đáng trân trọng',
+      'svc.proc': 'Thủ tục hành chính',
+      'svc.legal': 'Văn bản pháp luật',
+      'svc.qna': 'Hỏi đáp pháp luật',
+      'svc.schedule': 'Lịch tiếp công dân',
+      'svc.feedback': 'Phản ánh trực tuyến',
+      'svc.about': 'Giới thiệu đơn vị',
+      'footer.h.links': 'Liên kết nhanh',
+      'footer.h.agencies': 'Cơ quan liên quan',
+      'footer.h.social': 'Theo dõi chúng tôi',
+      'footer.h.emergency': 'Đường dây khẩn cấp',
+    },
+    en: {
+      'hotline': 'Hotline:',
+      'brand1': 'Socialist Republic of Vietnam',
+      'brand2': 'Binh Duong Ward Police',
+      'brand3': 'Ho Chi Minh City',
+      'nav.home': 'Home',
+      'nav.about': 'About',
+      'nav.news': 'News',
+      'nav.legal': 'Documents',
+      'nav.procedures': 'Procedures',
+      'nav.qna': 'Q&A',
+      'nav.gallery': 'Library',
+      'nav.schedule': 'Reception Schedule',
+      'nav.wanted': 'Wanted',
+      'nav.cta': 'Submit Report',
+      'ticker.label': 'Urgent',
+      'hero.eyebrow': 'Official Information Portal',
+      'hero.h1.1': 'For Security & Order —',
+      'hero.h1.2': 'serving the people.',
+      'hero.lead': 'Official electronic portal of Binh Duong Ward Police, Ho Chi Minh City. Look up administrative procedures, submit reports online, access legal information anytime — transparent, fast, and lawful.',
+      'hero.search.placeholder': 'Search procedures, documents, news…',
+      'hero.search.btn': 'Search',
+      'hero.quicktags': 'Quick search:',
+      'stat1': 'News & announcements published',
+      'stat2': 'Online administrative procedures',
+      'stat3': 'Average response time',
+      'stat4': 'Transparent, open process',
+      'emergency.title': 'In emergency call immediately',
+      'emergency.police': 'Police',
+      'emergency.fire': 'Fire',
+      'emergency.medical': 'Medical',
+      'section.services.eye': 'Online Services',
+      'section.services.title': 'Quick access to public services',
+      'section.services.sub': 'Look up information and complete administrative procedures anytime, without needing to visit our office.',
+      'section.news.eye': 'News & Announcements',
+      'section.news.title': 'Security & order updates',
+      'section.news.link': 'View all news',
+      'section.honor.eye': 'Good People — Good Deeds',
+      'section.honor.title': 'Inspiring role models',
+      'svc.proc': 'Administrative Procedures',
+      'svc.legal': 'Legal Documents',
+      'svc.qna': 'Legal Q&A',
+      'svc.schedule': 'Citizen Reception',
+      'svc.feedback': 'Submit Report',
+      'svc.about': 'About the Unit',
+      'footer.h.links': 'Quick Links',
+      'footer.h.agencies': 'Related Agencies',
+      'footer.h.social': 'Follow Us',
+      'footer.h.emergency': 'Emergency Hotline',
+    },
+  };
+
+  const langToggle = document.getElementById('langToggle');
+  const langLabel = document.getElementById('langLabel');
+  const applyLang = (lang) => {
+    const dict = I18N[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (dict[key]) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      if (dict[key]) el.placeholder = dict[key];
+    });
+    langLabel.textContent = lang.toUpperCase();
+    localStorage.setItem('lang', lang);
+  };
+  const savedLang = localStorage.getItem('lang') || 'vi';
+  applyLang(savedLang);
+  langToggle.addEventListener('click', () => {
+    applyLang(document.documentElement.lang === 'vi' ? 'en' : 'vi');
+  });
+
+  // === Support panel (AI assistant) ===
+  const copBubble = document.getElementById('copBubble');
+  const supportPanel = document.getElementById('supportPanel');
+  const supportBody = document.getElementById('supportBody');
+  const supportInput = document.getElementById('supportInput');
+  const supportSend = document.getElementById('supportSend');
+  const copBubbleIcon = document.getElementById('copBubbleIcon');
+
+  const togglePanel = (open) => {
+    const isOpen = open ?? !supportPanel.classList.contains('open');
+    supportPanel.classList.toggle('open', isOpen);
+    copBubble.classList.toggle('open', isOpen);
+    copBubble.setAttribute('aria-label', isOpen ? 'Đóng trợ lý' : 'Mở trợ lý ảo');
+    if (isOpen) setTimeout(() => supportInput.focus(), 250);
+  };
+  copBubble.addEventListener('click', () => togglePanel());
+
+  // Close panel when navigating via support actions
+  supportBody.addEventListener('click', (e) => {
+    if (e.target.closest('.support-action[data-nav]')) togglePanel(false);
+  });
+
+  // === AI chat using claude.complete ===
+  const SYSTEM = `Bạn là trợ lý ảo của Công an phường Bình Dương, TP. Hồ Chí Minh. Nhiệm vụ:
+- Trả lời thân thiện, ngắn gọn (3-5 câu) các câu hỏi về thủ tục hành chính, cư trú, CCCD, VNeID, xe máy, phản ánh, hỏi đáp pháp luật.
+- LUÔN nhắc người dùng gọi 113 nếu là tình huống khẩn cấp.
+- Nếu câu hỏi ngoài phạm vi (ngoài lĩnh vực công an phường), lịch sự hướng dẫn đến cơ quan đúng thẩm quyền.
+- Trả lời bằng tiếng Việt, xưng hô lịch sự ("bạn", "anh/chị", "quý công dân"). Không bịa số liệu hoặc văn bản cụ thể nếu không chắc chắn.`;
+
+  const addMsg = (text, role) => {
+    const div = document.createElement('div');
+    div.className = 'support-msg' + (role === 'user' ? ' user' : '');
+    div.innerHTML = text.replace(/\n/g, '<br>') + '<span class="time">vừa xong</span>';
+    supportBody.appendChild(div);
+    supportBody.scrollTop = supportBody.scrollHeight;
+    return div;
+  };
+
+  const sendMessage = async () => {
+    const q = supportInput.value.trim();
+    if (!q) return;
+    supportInput.value = '';
+    supportSend.disabled = true;
+    addMsg(q, 'user');
+
+    // typing indicator
+    const typing = document.createElement('div');
+    typing.className = 'support-msg typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    supportBody.appendChild(typing);
+    supportBody.scrollTop = supportBody.scrollHeight;
+
+    try {
+      const reply = await window.claude.complete({
+        messages: [
+          { role: 'user', content: SYSTEM + '\n\nCâu hỏi của người dân: ' + q }
+        ]
+      });
+      typing.remove();
+      addMsg(reply || 'Xin lỗi, tôi chưa hiểu câu hỏi. Bạn có thể diễn đạt lại không?', 'bot');
+    } catch (err) {
+      typing.remove();
+      addMsg('Hiện tôi đang gặp sự cố kết nối. Vui lòng thử lại sau hoặc liên hệ trực tiếp <b>0274 3515 097</b> · khẩn cấp gọi <b>113</b>.', 'bot');
+    } finally {
+      supportSend.disabled = false;
+      supportInput.focus();
+    }
+  };
+
+  supportSend.addEventListener('click', sendMessage);
+  supportInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+</script>
+
+</body>
+</html>

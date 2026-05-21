@@ -1,84 +1,89 @@
+"use client";
+
 import Link from "next/link";
+import { useI18n, type I18nKey } from "@/lib/i18n";
 
 const LINKS = [
   {
-    icon: "📋",
+    icon: "#i-doc",
     title: "Thủ tục hành chính",
     desc: "Cư trú, CCCD, phương tiện",
+    more: "Tra cứu thủ tục",
     href: "/thu-tuc-hanh-chinh",
-    color: "from-blue-500 to-blue-600",
-    bg: "bg-blue-50 group-hover:bg-blue-100",
+    i18nTitle: "svc.proc",
   },
   {
-    icon: "📄",
+    icon: "#i-scroll",
     title: "Văn bản pháp luật",
     desc: "Nghị quyết, kế hoạch, quyết định",
+    more: "Xem văn bản",
     href: "/van-ban-phap-luat",
-    color: "from-purple-500 to-purple-600",
-    bg: "bg-purple-50 group-hover:bg-purple-100",
+    i18nTitle: "svc.legal",
   },
   {
-    icon: "💬",
+    icon: "#i-help",
     title: "Hỏi đáp pháp luật",
     desc: "Câu hỏi thường gặp, giải đáp trực tuyến",
+    more: "Đặt câu hỏi",
     href: "/hoi-dap",
-    color: "from-green-500 to-green-600",
-    bg: "bg-green-50 group-hover:bg-green-100",
+    i18nTitle: "svc.qna",
   },
   {
-    icon: "📅",
+    icon: "#i-cal",
     title: "Lịch tiếp công dân",
     desc: "Lịch tiếp dân, đăng ký gặp cán bộ",
+    more: "Đặt lịch hẹn",
     href: "/lich-tiep-cong-dan",
-    color: "from-orange-500 to-orange-600",
-    bg: "bg-orange-50 group-hover:bg-orange-100",
+    i18nTitle: "svc.schedule",
   },
   {
-    icon: "📢",
+    icon: "#i-megaphone",
     title: "Phản ánh trực tuyến",
     desc: "Gửi tin báo tội phạm, kiến nghị",
+    more: "Gửi phản ánh",
     href: "/phan-anh",
-    color: "from-police-red to-police-red-dark",
-    bg: "bg-red-50 group-hover:bg-red-100",
+    i18nTitle: "svc.feedback",
   },
   {
-    icon: "🏛️",
+    icon: "#i-shield",
     title: "Giới thiệu đơn vị",
     desc: "Lãnh đạo, lịch sử, nhiệm vụ",
+    more: "Tìm hiểu thêm",
     href: "/gioi-thieu",
-    color: "from-police-navy to-police-navy-dark",
-    bg: "bg-blue-50 group-hover:bg-blue-100",
+    i18nTitle: "svc.about",
   },
 ];
 
 export default function QuickLinks() {
-  return (
-    <section className="py-16 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-police-navy mb-3">Dịch vụ trực tuyến</h2>
-          <p className="text-gray-500 max-w-xl mx-auto">
-            Tra cứu thông tin và thực hiện các thủ tục hành chính nhanh chóng, thuận tiện
-          </p>
-          <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-police-red" />
-        </div>
+  const { t } = useI18n();
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {LINKS.map((link, i) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="group relative bg-white rounded-2xl border border-gray-100 p-5 text-center card-hover shadow-sm animate-fade-up"
-              style={{ animationDelay: `${i * 80}ms` }}
-            >
-              <div className={`w-14 h-14 mx-auto rounded-2xl ${link.bg} flex items-center justify-center text-2xl mb-3 transition-colors duration-200`}>
-                {link.icon}
+  return (
+    <section className="block">
+      <div className="container">
+        <div className="section-head-center">
+          <div className="section-eyebrow" data-i18n="section.services.eye">
+            {t("section.services.eye", "Dịch vụ trực tuyến")}
+          </div>
+          <h2 className="section-title" data-i18n="section.services.title">
+            {t("section.services.title", "Truy cập nhanh các dịch vụ công")}
+          </h2>
+          <p className="section-sub" data-i18n="section.services.sub">
+            {t("section.services.sub", "Tra cứu thông tin và thực hiện các thủ tục hành chính mọi lúc, không cần đến trực tiếp đơn vị.")}
+          </p>
+        </div>
+        <div className="service-grid">
+          {LINKS.map((link) => (
+            <Link href={link.href} key={link.href} className="service-cell">
+              <div className="service-ic">
+                <svg>
+                  <use href={link.icon} />
+                </svg>
               </div>
-              <h3 className="font-bold text-gray-900 group-hover:text-police-red mb-1 transition-colors duration-200 text-xs leading-tight">
-                {link.title}
+              <h3 data-i18n={link.i18nTitle}>
+                {t(link.i18nTitle as I18nKey, link.title)}
               </h3>
-              <p className="text-[11px] text-gray-400 leading-snug hidden sm:block">{link.desc}</p>
-              <div className={`absolute bottom-0 left-0 right-0 h-1 rounded-b-2xl bg-gradient-to-r ${link.color} opacity-0 group-hover:opacity-100 transition-opacity duration-200`} />
+              <p>{link.desc}</p>
+              <span className="more">{link.more}</span>
             </Link>
           ))}
         </div>

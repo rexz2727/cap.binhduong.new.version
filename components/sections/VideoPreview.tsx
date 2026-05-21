@@ -1,111 +1,108 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
 import type { VideoPreviewItem } from "@/types/video";
+import { useI18n } from "@/lib/i18n";
 
 interface Props {
   videos: VideoPreviewItem[];
 }
 
 export default function VideoPreview({ videos }: Props) {
+  const { t } = useI18n();
+
   if (!videos.length) return null;
 
   const [featured, ...rest] = videos;
 
+  const formattedDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
   return (
-    <section className="py-14 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-police-navy flex items-center gap-2">
-              <span>🎬</span> Video
-            </h2>
-            <p className="text-sm text-gray-500 mt-1">Phim tài liệu và hoạt động của đơn vị</p>
-          </div>
-          <Link
-            href="/video"
-            className="text-sm font-medium text-police-red hover:underline hidden sm:block"
-          >
-            Xem tất cả →
+    <section className="video-grid">
+      <div className="container">
+        <hgroup className="section-h">
+          <p className="eyebrow">Thư viện</p>
+          <h2>Video</h2>
+          <Link href="/video" className="read-more">
+            Xem tất cả
+            <svg width="1em" height="1em"><use href="#i-arrow" /></svg>
           </Link>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Link
-            href={`/video/${featured.slug.current}`}
-            className="group lg:col-span-2 relative rounded-2xl overflow-hidden shadow-sm bg-gray-900 aspect-video"
-          >
-            {featured.thumbnail ? (
-              <Image
-                src={urlFor(featured.thumbnail).width(800).height(450).url()}
-                alt={featured.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300 opacity-80"
-              />
-            ) : (
-              <div
-                className="w-full h-full bg-cover bg-center"
-                style={{
-                  backgroundImage: `url(https://i.ytimg.com/vi/${featured.youtubeId}/maxresdefault.jpg)`,
-                }}
-              />
-            )}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 bg-police-red/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                <span className="text-white text-2xl ml-1">▶</span>
+        </hgroup>
+        <div className="grid">
+          {featured && (
+            <Link href={`/video/${featured.slug.current}`} className="main-video">
+              <figure>
+                {featured.thumbnail ? (
+                  <Image
+                    src={urlFor(featured.thumbnail).width(800).height(450).url()!}
+                    alt={featured.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                ) : (
+                  // Fallback for YouTube videos without Sanity thumbnail
+                  <div
+                    style={{
+                      backgroundImage: `url(https://img.youtube.com/vi/${featured.youtubeId}/maxresdefault.jpg)`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      width: '100%',
+                      height: '100%'
+                    }}
+                  />
+                )}
+                <div className="play-overlay">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </figure>
+              <div className="main-video-text">
+                <h3>{featured.title}</h3>
               </div>
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 p-4">
-              <h3 className="text-white font-semibold line-clamp-2">{featured.title}</h3>
-            </div>
-          </Link>
+            </Link>
+          )}
 
-          <div className="flex flex-col gap-3">
+          <div className="video-list-side">
             {rest.slice(0, 3).map((video) => (
-              <Link
-                key={video._id}
-                href={`/video/${video.slug.current}`}
-                className="group flex gap-3 bg-gray-50 rounded-xl overflow-hidden hover:bg-gray-100 transition-colors"
-              >
-                <div className="relative w-28 h-20 shrink-0 bg-gray-800">
+              <Link href={`/video/${video.slug.current}`} key={video._id} className="video-list-item">
+                <figure>
                   {video.thumbnail ? (
                     <Image
-                      src={urlFor(video.thumbnail).width(200).height(140).url()}
+                      src={urlFor(video.thumbnail).width(200).height(140).url()!}
                       alt={video.title}
                       fill
-                      className="object-cover"
+                      style={{ objectFit: "cover" }}
                     />
                   ) : (
+                    // Fallback for YouTube videos without Sanity thumbnail
                     <div
-                      className="w-full h-full bg-cover bg-center"
                       style={{
-                        backgroundImage: `url(https://i.ytimg.com/vi/${video.youtubeId}/mqdefault.jpg)`,
+                        backgroundImage: `url(https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg)`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        width: '100%',
+                        height: '100%'
                       }}
                     />
                   )}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-7 h-7 bg-police-red/80 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs ml-0.5">▶</span>
-                    </div>
+                  <div className="play-overlay-small">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                   </div>
-                </div>
-                <div className="flex-1 py-2 pr-3">
-                  <h4 className="text-sm font-medium text-gray-900 group-hover:text-police-red transition-colors line-clamp-2 leading-snug">
-                    {video.title}
-                  </h4>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {new Date(video.date).toLocaleDateString("vi-VN")}
-                  </p>
+                </figure>
+                <div className="video-list-item-text">
+                  <h3>{video.title}</h3>
+                  <time>{formattedDate(video.date)}</time>
                 </div>
               </Link>
             ))}
           </div>
-        </div>
-
-        <div className="mt-6 text-center sm:hidden">
-          <Link href="/video" className="text-sm font-medium text-police-red hover:underline">
-            Xem tất cả →
-          </Link>
         </div>
       </div>
     </section>

@@ -25,10 +25,28 @@ export const metadata: Metadata = {
   },
 };
 
+import { LanguageProvider } from "@/lib/i18n";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi">
-      <body className={`${beVietnamPro.variable} min-h-screen flex flex-col`}>{children}</body>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function() {
+              try {
+                var theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+              } catch (e) {}
+            })()`
+          }}
+        />
+      </head>
+      <body className={`${beVietnamPro.variable} min-h-screen flex flex-col`}>
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   );
 }

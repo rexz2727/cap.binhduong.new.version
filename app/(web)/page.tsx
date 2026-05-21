@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import HeroSection from "@/components/sections/HeroSection";
-import NewsCarousel from "@/components/sections/NewsCarousel";
+import EmergencyRow from "@/components/sections/EmergencyRow";
+import ValuesStrip from "@/components/sections/ValuesStrip";
+import QuickLinks from "@/components/sections/QuickLinks";
 import LatestNews from "@/components/sections/LatestNews";
 import NguoiTotViecTot from "@/components/sections/NguoiTotViecTot";
 import PhotoAlbumPreview from "@/components/sections/PhotoAlbumPreview";
 import VideoPreview from "@/components/sections/VideoPreview";
-import QuickLinks from "@/components/sections/QuickLinks";
-import ContactInfo from "@/components/sections/ContactInfo";
 import {
   getLatestNews,
-  getFeaturedNews,
   getNguoiTotViecTot,
   getPhotoAlbums,
   getVideos,
@@ -22,9 +21,8 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [latestNews, featuredNews, nguoiTotViecTot, photoAlbums, videos] = await Promise.all([
+  const [latestNews, nguoiTotViecTot, photoAlbums, videos] = await Promise.all([
     getLatestNews(6),
-    getFeaturedNews(),
     getNguoiTotViecTot(6),
     getPhotoAlbums(4),
     getVideos("all", 4),
@@ -33,13 +31,13 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      <NewsCarousel posts={featuredNews} />
+      <EmergencyRow />
+      <ValuesStrip />
       <QuickLinks />
       <LatestNews posts={latestNews} />
       <NguoiTotViecTot posts={nguoiTotViecTot} />
       <PhotoAlbumPreview albums={photoAlbums} />
       <VideoPreview videos={videos} />
-      <ContactInfo />
     </>
   );
 }
