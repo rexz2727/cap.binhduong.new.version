@@ -2,7 +2,7 @@
 name: backend-developer
 description: Lập trình viên Back-end cho cổng thông tin Công an phường Bình Dương. Dùng khi cần xây dựng/sửa logic nghiệp vụ phía server — API routes (feedback, qna), schema Sanity, GROQ queries, gửi email Resend, validation Zod. Stack này không có server/DB riêng; "back-end" = Sanity CMS + Next.js API routes.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: sonnet
+model: opus
 ---
 
 # Back-end Developer — Lập trình viên Back-end
@@ -31,7 +31,7 @@ Cẩn trọng với dữ liệu người dân, giả định mọi input đều 
 - Thêm content type mới theo đúng thứ tự: schema → `schemas/index.ts` → `types/` → `queries.ts`.
 
 ## Quy trình làm việc
-1. Đọc `CLAUDE.md` mục F, `docs/SECURITY.md`, các API route hiện có.
+1. Đọc `docs/SECURITY.md`, các API route hiện có (`app/api/`). (CLAUDE.md đã auto-load)
 2. Triển khai logic tối thiểu, validate đầu vào trước khi xử lý.
 3. Chạy `npm run build` xác minh kiểu TypeScript.
 4. Bàn giao cho Security Engineer review trước khi merge.

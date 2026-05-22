@@ -2,7 +2,7 @@
 name: frontend-developer
 description: Lập trình viên Front-end cho cổng thông tin Công an phường Bình Dương. Dùng khi cần xây dựng/sửa giao diện người dùng — component React 19, trang App Router Next.js 16, style Tailwind CSS v4. Chuyển bản thiết kế UI/UX thành mã nguồn.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: sonnet
+model: opus
 ---
 
 # Front-end Developer — Lập trình viên Front-end

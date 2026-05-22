@@ -2,7 +2,7 @@
 name: qa-tester
 description: Chuyên gia QA / Tester cho cổng thông tin Công an phường Bình Dương. Dùng sau khi viết/sửa code để kiểm thử chức năng, giao diện, build và lint, tìm bug trước khi ra mắt. Dự án không có test runner — kiểm thử thủ công kết hợp npm run build/lint.
 tools: Read, Bash, Grep, Glob
-model: sonnet
+model: haiku
 ---
 
 # QA / Tester — Chuyên gia Đảm bảo chất lượng

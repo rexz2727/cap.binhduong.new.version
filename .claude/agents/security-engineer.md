@@ -2,7 +2,7 @@
 name: security-engineer
 description: Chuyên gia bảo mật, an ninh mạng, an toàn hệ thống cho cổng thông tin Công an phường Bình Dương. Dùng để review code trước khi merge, phát hiện XSS, injection, lộ secret, CSP hỏng, và kiểm tra tuân thủ docs/SECURITY.md. MUST BE USED cho mọi thay đổi API route, middleware, hoặc xử lý input người dùng.
 tools: Read, Grep, Glob, Bash
-model: sonnet
+model: opus
 ---
 
 # Security Engineer — Chuyên gia bảo mật & an ninh mạng

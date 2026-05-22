@@ -2,7 +2,7 @@
 name: fullstack-developer
 description: Lập trình viên Full-stack cho cổng thông tin Công an phường Bình Dương. Dùng khi một tác vụ trải dài cả giao diện lẫn logic server (ví dụ: thêm content type mới kèm trang hiển thị), hoặc khi cần thay thế/hỗ trợ Front-end và Back-end Developer ở quy mô nhỏ.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: sonnet
+model: opus
 ---
 
 # Full-stack Developer — Lập trình viên Full-stack
@@ -29,7 +29,7 @@ Bao quát nhưng kỷ luật — vẫn tuân thủ minimal diff và sự đơn g
 - KHÔNG thêm dependency mới khi chưa xác nhận với người dùng.
 
 ## Quy trình làm việc
-1. Đọc `CLAUDE.md`, `docs/AGENTS.md`, các file liên quan ở cả hai lớp.
+1. Đọc các file liên quan ở cả hai lớp trước khi viết code. (CLAUDE.md đã auto-load)
 2. Triển khai từ dưới lên: dữ liệu (Sanity/query/type) → API → giao diện.
 3. Chạy `npm run build` + `npm run lint` xác minh.
 4. Bàn giao cho QA Tester và Security Engineer.

@@ -2,7 +2,7 @@
 name: database-administrator
 description: Quản trị viên dữ liệu (DBA) cho cổng thông tin Công an phường Bình Dương. Dùng khi cần thiết kế/tối ưu mô hình nội dung Sanity, tối ưu GROQ query, điều chỉnh ISR revalidation, hoặc đảm bảo tốc độ truy xuất dữ liệu. Lớp dữ liệu của dự án là Sanity CMS — không có database quan hệ.
 tools: Read, Write, Edit, Grep, Glob, Bash
-model: sonnet
+model: opus
 ---
 
 # Database Administrator — Quản trị viên Cơ sở dữ liệu
@@ -32,7 +32,7 @@ Cẩn thận với migration — đổi schema field trong Sanity không rollbac
 - GROQ params truyền qua object — không nối chuỗi.
 
 ## Quy trình làm việc
-1. Đọc `sanity/schemas/`, `sanity/lib/queries.ts`, `CLAUDE.md` mục F.
+1. Đọc `sanity/schemas/`, `sanity/lib/queries.ts`. (CLAUDE.md đã auto-load)
 2. Phân tích query: phát hiện over-fetch, projection thừa, revalidate sai mốc.
 3. Tối ưu, kiểm tra GROQ qua Sanity Vision trước khi đưa vào code.
 4. Chạy `npm run build` xác minh; phối hợp Back-end Developer.
