@@ -1,9 +1,11 @@
+import { CommentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const qnaSchema = defineType({
   name: "qna",
   title: "Hỏi đáp công dân",
   type: "document",
+  icon: CommentIcon,
   fields: [
     defineField({ name: "question", title: "Câu hỏi", type: "text", rows: 4, validation: (r) => r.required() }),
     defineField({ name: "askerName", title: "Người hỏi (để trống = ẩn danh)", type: "string" }),
@@ -30,10 +32,15 @@ export const qnaSchema = defineType({
     defineField({ name: "publishedAt", title: "Ngày đăng câu hỏi", type: "datetime" }),
   ],
   preview: {
-    select: { title: "question", subtitle: "askerName" },
-    prepare: ({ title, subtitle }) => ({
+    select: { title: "question", askerName: "askerName", isAnswered: "isAnswered", category: "category" },
+    prepare: ({ title, askerName, isAnswered, category }) => ({
       title: title?.slice(0, 80),
-      subtitle: subtitle ?? "Ẩn danh",
+      subtitle: [
+        isAnswered ? "Đã trả lời" : "Chờ trả lời",
+        category,
+        askerName ?? "Ẩn danh",
+      ].filter(Boolean).join(" · "),
+      media: CommentIcon,
     }),
   },
 });

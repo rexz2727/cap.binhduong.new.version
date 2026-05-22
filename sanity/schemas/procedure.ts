@@ -1,9 +1,11 @@
+import { ClipboardIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const procedureSchema = defineType({
   name: "procedure",
   title: "Thủ tục hành chính",
   type: "document",
+  icon: ClipboardIcon,
   fields: [
     defineField({ name: "title", title: "Tên thủ tục", type: "string", validation: (r) => r.required() }),
     defineField({ name: "slug", title: "Đường dẫn", type: "slug", options: { source: "title", maxLength: 120 }, validation: (r) => r.required() }),
@@ -29,5 +31,12 @@ export const procedureSchema = defineType({
     }),
     defineField({ name: "onlineServiceUrl", title: "Link nộp hồ sơ trực tuyến (Cổng DVC)", type: "url" }),
   ],
-  preview: { select: { title: "title", subtitle: "category" } },
+  preview: {
+    select: { title: "title", category: "category", processingTime: "processingTime" },
+    prepare: ({ title, category, processingTime }) => ({
+      title,
+      subtitle: [category, processingTime].filter(Boolean).join(" · "),
+      media: ClipboardIcon,
+    }),
+  },
 });

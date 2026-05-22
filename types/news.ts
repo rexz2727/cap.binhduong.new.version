@@ -18,11 +18,10 @@ export interface NewsPost {
   mainImage?: SanityImage;
   category: NewsCategory;
   isFeatured?: boolean;
-  isNguoiTotViecTot?: boolean;
   body: PortableTextBlock[];
 }
 
 export type NewsPostPreview = Pick<
   NewsPost,
-  "_id" | "title" | "slug" | "publishedAt" | "excerpt" | "mainImage" | "category" | "isFeatured" | "isNguoiTotViecTot"
+  "_id" | "title" | "slug" | "publishedAt" | "excerpt" | "mainImage" | "category" | "isFeatured"
 >;

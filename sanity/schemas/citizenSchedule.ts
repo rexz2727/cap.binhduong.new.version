@@ -1,9 +1,11 @@
+import { CalendarIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const citizenScheduleSchema = defineType({
   name: "citizenSchedule",
   title: "Lịch tiếp công dân",
   type: "document",
+  icon: CalendarIcon,
   fields: [
     defineField({
       name: "officer", title: "Cán bộ tiếp dân", type: "reference",
@@ -17,10 +19,11 @@ export const citizenScheduleSchema = defineType({
     defineField({ name: "isRegular", title: "Lịch thường xuyên (không phải đột xuất)", type: "boolean", initialValue: true }),
   ],
   preview: {
-    select: { title: "date", subtitle: "timeSlot", officer: "officer.fullName" },
-    prepare: ({ title, subtitle, officer }) => ({
+    select: { title: "date", subtitle: "timeSlot", officer: "officer.fullName", isRegular: "isRegular" },
+    prepare: ({ title, subtitle, officer, isRegular }) => ({
       title: `${title} — ${officer ?? "Chưa phân công"}`,
-      subtitle,
+      subtitle: [subtitle, isRegular === false ? "Đột xuất" : null].filter(Boolean).join(" · "),
+      media: CalendarIcon,
     }),
   },
 });

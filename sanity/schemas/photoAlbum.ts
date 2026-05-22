@@ -1,9 +1,11 @@
+import { ImagesIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const photoAlbumSchema = defineType({
   name: "photoAlbum",
   title: "Album ảnh",
   type: "document",
+  icon: ImagesIcon,
   fields: [
     defineField({ name: "title", title: "Tiêu đề album", type: "string", validation: (r) => r.required() }),
     defineField({ name: "slug", title: "Đường dẫn", type: "slug", options: { source: "title", maxLength: 100 }, validation: (r) => r.required() }),

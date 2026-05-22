@@ -1,12 +1,14 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import type { NewsPostPreview } from "@/types/news";
+import type { GoodDeedPreview } from "@/types/goodDeed";
+import { urlFor } from "@/sanity/lib/image";
 import { useI18n } from "@/lib/i18n";
 
 interface Props {
-  posts: NewsPostPreview[];
+  posts: GoodDeedPreview[];
 }
 
 export default function NguoiTotViecTot({ posts }: Props) {
@@ -46,18 +48,43 @@ export default function NguoiTotViecTot({ posts }: Props) {
         </div>
 
         <div className="honor-grid">
-          {posts.slice(0, 4).map((post) => (
-            <Link
-              href={`/tin-tuc/${post.slug.current}`}
-              key={post._id}
-              className="honor-card"
-            >
-              <div className="avatar" />
-              <div className="name">{post.title}</div>
-              <div className="role">Gương người tốt</div>
-              <div className="desc">{post.excerpt}</div>
-            </Link>
-          ))}
+          {posts.slice(0, 4).map((post) => {
+            const imgUrl = post.photo
+              ? urlFor(post.photo).width(240).height(240).url()
+              : null;
+            return (
+              <Link
+                href={`/nguoi-tot-viec-tot/${post.slug.current}`}
+                key={post._id}
+                className="honor-card"
+              >
+                <div className="avatar">
+                  {imgUrl ? (
+                    <Image
+                      src={imgUrl}
+                      alt={post.name}
+                      fill
+                      style={{ objectFit: "cover" }}
+                      sizes="120px"
+                    />
+                  ) : null}
+                </div>
+                <div className="name">{post.name}</div>
+                <div className="role">{post.role}</div>
+                <div className="desc">{post.summary}</div>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div style={{ textAlign: "center", marginTop: "32px" }}>
+          <Link
+            href="/nguoi-tot-viec-tot"
+            className="btn btn-outline"
+            style={{ color: "white", borderColor: "rgba(255,255,255,0.4)" }}
+          >
+            {t("section.honor.viewAll", "Xem tất cả")} →
+          </Link>
         </div>
       </div>
     </section>

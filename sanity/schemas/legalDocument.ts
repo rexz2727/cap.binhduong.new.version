@@ -1,9 +1,17 @@
+import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+
+const STATUS_LABEL: Record<string, string> = {
+  "con-hieu-luc": "Còn hiệu lực",
+  "het-hieu-luc": "Hết hiệu lực",
+  "cho-hieu-luc": "Chờ hiệu lực",
+};
 
 export const legalDocumentSchema = defineType({
   name: "legalDocument",
   title: "Văn bản pháp luật",
   type: "document",
+  icon: DocumentIcon,
   fields: [
     defineField({ name: "title", title: "Tên văn bản", type: "string", validation: (r) => r.required() }),
     defineField({ name: "slug", title: "Đường dẫn", type: "slug", options: { source: "title", maxLength: 120 }, validation: (r) => r.required() }),
@@ -31,5 +39,16 @@ export const legalDocumentSchema = defineType({
     defineField({ name: "fileUrl", title: "Link tải file (PDF)", type: "url" }),
     defineField({ name: "body", title: "Nội dung chi tiết", type: "array", of: [{ type: "block" }] }),
   ],
-  preview: { select: { title: "title", subtitle: "documentNumber" } },
+  preview: {
+    select: { title: "title", documentNumber: "documentNumber", status: "status", issuedDate: "issuedDate" },
+    prepare: ({ title, documentNumber, status, issuedDate }) => ({
+      title,
+      subtitle: [
+        documentNumber,
+        issuedDate,
+        status ? STATUS_LABEL[status] : null,
+      ].filter(Boolean).join(" · "),
+      media: DocumentIcon,
+    }),
+  },
 });

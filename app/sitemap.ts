@@ -22,7 +22,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [news, procedures, legalDocs, albums, videos] = await getAllSlugsForSitemap();
+  const [news, procedures, legalDocs, albums, videos, goodDeeds] = await getAllSlugsForSitemap();
 
   return [
     ...STATIC_ROUTES,
@@ -52,6 +52,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${base}/video/${item.slug}`,
       changeFrequency: "monthly" as const,
       priority: 0.5,
+    })),
+    ...goodDeeds.map((item) => ({
+      url: `${base}/nguoi-tot-viec-tot/${item.slug}`,
+      lastModified: item.date ? new Date(item.date) : undefined,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
   ];
 }

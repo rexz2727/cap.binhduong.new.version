@@ -11,6 +11,7 @@ import type { Announcement } from "@/types/announcement";
 import type { DraftDocument } from "@/types/draftDocument";
 import type { WantedPerson } from "@/types/wantedPerson";
 import type { CitizenSchedule } from "@/types/citizenSchedule";
+import type { GoodDeed, GoodDeedPreview } from "@/types/goodDeed";
 
 const isConfigured = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID !== "placeholder";
 
@@ -148,18 +149,31 @@ export async function getFeaturedNews(): Promise<NewsPostPreview[]> {
   );
 }
 
-// ─── Người tốt việc tốt ──────────────────────────────────────────────────────
+// ─── Good Deeds ───────────────────────────────────────────────────────────────
 
-export async function getNguoiTotViecTot(limit = 6): Promise<NewsPostPreview[]> {
+export async function getGoodDeeds(limit = 6): Promise<GoodDeedPreview[]> {
   return safeFetch(
     () => client.fetch(
-      groq`*[_type == "newsPost" && isNguoiTotViecTot == true] | order(publishedAt desc) [0...$limit] {
-        _id, title, slug, publishedAt, excerpt, mainImage, category
+      groq`*[_type == "goodDeed"] | order(date desc) [0...$limit] {
+        _id, name, slug, photo, role, summary, date
       }`,
       { limit },
       noCache
     ),
     []
+  );
+}
+
+export async function getGoodDeedBySlug(slug: string): Promise<GoodDeed | null> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "goodDeed" && slug.current == $slug][0] {
+        _id, name, slug, photo, role, summary, date, body
+      }`,
+      { slug },
+      noCache
+    ),
+    null
   );
 }
 
@@ -348,13 +362,18 @@ export async function getAllSlugsForSitemap() {
         groq`*[_type == "video"] { "slug": slug.current }`,
         {}, noCache
       ),
+      client.fetch<{ slug: string; date: string }[]>(
+        groq`*[_type == "goodDeed"] { "slug": slug.current, "date": date }`,
+        {}, noCache
+      ),
     ]),
-    [[], [], [], [], []] as [
+    [[], [], [], [], [], []] as [
       { slug: string; date: string }[],
       { slug: string }[],
       { slug: string; date: string }[],
       { slug: string }[],
       { slug: string }[],
+      { slug: string; date: string }[],
     ]
   );
 }

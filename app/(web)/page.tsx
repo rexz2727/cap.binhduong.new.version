@@ -5,7 +5,7 @@ import ValuesStrip from "@/components/sections/ValuesStrip";
 import QuickLinks from "@/components/sections/QuickLinks";
 import LatestNews from "@/components/sections/LatestNews";
 import NguoiTotViecTot from "@/components/sections/NguoiTotViecTot";
-import { getLatestNews, getNguoiTotViecTot, getHeroStats } from "@/sanity/lib/queries";
+import { getLatestNews, getGoodDeeds, getHeroStats } from "@/sanity/lib/queries";
 import { SITE } from "@/constants/site";
 
 export const metadata: Metadata = {
@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [latestNews, nguoiTotViecTot, heroStats] = await Promise.all([
+  const [latestNews, goodDeeds, heroStats] = await Promise.all([
     getLatestNews(6),
-    getNguoiTotViecTot(6),
+    getGoodDeeds(6),
     getHeroStats(),
   ]);
 
@@ -27,7 +27,7 @@ export default async function HomePage() {
       <ValuesStrip />
       <QuickLinks />
       <LatestNews posts={latestNews} />
-      <NguoiTotViecTot posts={nguoiTotViecTot} />
+      <NguoiTotViecTot posts={goodDeeds} />
     </>
   );
 }

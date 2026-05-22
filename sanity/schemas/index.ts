@@ -10,6 +10,7 @@ import { announcementSchema } from "./announcement";
 import { draftDocumentSchema } from "./draftDocument";
 import { wantedPersonSchema } from "./wantedPerson";
 import { citizenScheduleSchema } from "./citizenSchedule";
+import { goodDeedSchema } from "./goodDeed";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   newsSchema,
@@ -23,4 +24,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   draftDocumentSchema,
   wantedPersonSchema,
   citizenScheduleSchema,
+  goodDeedSchema,
 ];

@@ -1,9 +1,11 @@
+import { SearchIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const wantedPersonSchema = defineType({
   name: "wantedPerson",
   title: "Đối tượng truy nã",
   type: "document",
+  icon: SearchIcon,
   fields: [
     defineField({ name: "fullName", title: "Họ và tên", type: "string", validation: (r) => r.required() }),
     defineField({ name: "aliases", title: "Bí danh / Tên khác", type: "array", of: [{ type: "string" }] }),
@@ -27,5 +29,12 @@ export const wantedPersonSchema = defineType({
     }),
     defineField({ name: "note", title: "Ghi chú", type: "text", rows: 3 }),
   ],
-  preview: { select: { title: "fullName", subtitle: "crime", media: "photo" } },
+  preview: {
+    select: { title: "fullName", crime: "crime", status: "status", media: "photo" },
+    prepare: ({ title, crime, status, media }) => ({
+      title,
+      subtitle: [crime, status === "da-bat" ? "Đã bắt" : "Đang truy nã"].filter(Boolean).join(" · "),
+      media,
+    }),
+  },
 });

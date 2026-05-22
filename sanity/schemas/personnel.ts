@@ -1,9 +1,11 @@
+import { UsersIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const personnelSchema = defineType({
   name: "personnel",
   title: "Cán bộ lãnh đạo",
   type: "document",
+  icon: UsersIcon,
   fields: [
     defineField({ name: "fullName", title: "Họ và tên", type: "string", validation: (r) => r.required() }),
     defineField({ name: "rank", title: "Cấp bậc", type: "string", validation: (r) => r.required() }),

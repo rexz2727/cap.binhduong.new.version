@@ -1,9 +1,11 @@
+import { EditIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const draftDocumentSchema = defineType({
   name: "draftDocument",
   title: "Văn bản dự thảo",
   type: "document",
+  icon: EditIcon,
   fields: [
     defineField({ name: "title", title: "Tên dự thảo", type: "string", validation: (r) => r.required() }),
     defineField({ name: "slug", title: "Đường dẫn", type: "slug", options: { source: "title", maxLength: 120 }, validation: (r) => r.required() }),
@@ -12,5 +14,14 @@ export const draftDocumentSchema = defineType({
     defineField({ name: "fileUrl", title: "Link tải dự thảo (PDF)", type: "url" }),
     defineField({ name: "publishedAt", title: "Ngày đăng", type: "datetime" }),
   ],
-  preview: { select: { title: "title", subtitle: "deadline" } },
+  preview: {
+    select: { title: "title", deadline: "deadline" },
+    prepare: ({ title, deadline }) => ({
+      title,
+      subtitle: deadline
+        ? `Hạn góp ý: ${new Date(deadline).toLocaleDateString("vi-VN")}`
+        : "Chưa có hạn góp ý",
+      media: EditIcon,
+    }),
+  },
 });
