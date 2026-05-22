@@ -31,24 +31,28 @@ export default function CopBubble() {
     <div ref={ref} data-print="hide" className="fixed bottom-7 right-6 z-50 animate-fade-up">
       {/* Dropdown menu */}
       {menuOpen && (
-        <div className="absolute bottom-full right-0 mb-3 bg-white border border-blue-100 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 min-w-[260px] animate-fade-up">
+        <div role="menu" className="absolute bottom-full right-0 mb-3 bg-white border border-blue-100 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 min-w-[260px] animate-fade-up">
           {/* caret */}
           <span className="absolute bottom-[-8px] right-7 w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-white" />
 
-          <a href={tel} className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm font-semibold text-gray-700">
-            <span className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-base">📞</span>
+          <a role="menuitem" href={tel} className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm font-semibold text-gray-700">
+            <span className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700">
+              <svg width="16" height="16" aria-hidden="true"><use href="#i-phone" /></svg>
+            </span>
             Gọi điện thoại cơ quan
           </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm font-semibold text-gray-700">
+          <a role="menuitem" href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm font-semibold text-gray-700">
             <span className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-sm font-black text-blue-600">Z</span>
             Gửi phản ánh qua Zalo
           </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm font-semibold text-gray-700">
+          <a role="menuitem" href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm font-semibold text-gray-700">
             <span className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-sm font-black text-blue-700">f</span>
             Phản ánh qua Facebook
           </a>
-          <Link href="/phan-anh" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-50 transition-colors text-sm font-semibold text-police-red">
-            <span className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-base">✉️</span>
+          <Link role="menuitem" href="/phan-anh" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-50 transition-colors text-sm font-semibold text-police-red">
+            <span className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-police-red">
+              <svg width="16" height="16" aria-hidden="true"><use href="#i-mail" /></svg>
+            </span>
             Phản ánh trực tuyến
           </Link>
         </div>

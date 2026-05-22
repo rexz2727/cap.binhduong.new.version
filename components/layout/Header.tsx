@@ -132,6 +132,7 @@ export default function Header({ announcements }: Props) {
               </svg>
             </a>
           </div>
+
         </div>
       </div>
       {/* 2. MAIN NAV BAR */}

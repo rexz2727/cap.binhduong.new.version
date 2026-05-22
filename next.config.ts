@@ -14,7 +14,7 @@ const securityHeaders = [
       "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: blob: https://cdn.sanity.io",
+      "img-src 'self' data: blob: https://cdn.sanity.io https://img.youtube.com https://i.ytimg.com",
       "connect-src 'self' https://*.sanity.io https://api.sanity.io wss://*.sanity.io",
       "frame-src https://www.youtube.com",
       "object-src 'none'",
@@ -29,6 +29,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "cdn.sanity.io" },
+      { protocol: "https", hostname: "img.youtube.com" },
+      { protocol: "https", hostname: "i.ytimg.com" },
     ],
   },
   async headers() {

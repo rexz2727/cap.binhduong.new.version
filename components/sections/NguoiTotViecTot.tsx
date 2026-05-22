@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import type { NewsPostPreview } from "@/types/news";
 import { useI18n } from "@/lib/i18n";
@@ -13,13 +14,6 @@ export default function NguoiTotViecTot({ posts }: Props) {
 
   if (!posts.length) return null;
 
-  const formattedDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString("vi-VN", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-
   return (
     <section className="block honor-strip">
       <div className="container">
@@ -29,6 +23,7 @@ export default function NguoiTotViecTot({ posts }: Props) {
             style={{ color: "var(--gold)" }}
             data-i18n="section.honor.eye"
           >
+            <span style={{ "--bg": "var(--gold)" } as React.CSSProperties}></span>
             {t("section.honor.eye", "Người tốt — Việc tốt")}
           </div>
           <h2
@@ -59,7 +54,7 @@ export default function NguoiTotViecTot({ posts }: Props) {
             >
               <div className="avatar" />
               <div className="name">{post.title}</div>
-              <div className="role">{formattedDate(post.publishedAt)}</div>
+              <div className="role">Gương người tốt</div>
               <div className="desc">{post.excerpt}</div>
             </Link>
           ))}

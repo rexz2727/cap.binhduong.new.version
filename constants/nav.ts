@@ -27,6 +27,6 @@ export const NAV_ITEMS: NavItem[] = [
       { label: "Video", href: "/video" },
     ],
   },
-  { label: "Chính sách pháp luật", href: "/chinh-sach-phap-luat" },
-  { label: "Lịch tiếp dân", href: "/lich-tiep-cong-dan" },
+  { label: "Lịch tiếp công dân", href: "/lich-tiep-cong-dan" },
+  { label: "Truy nã", href: "/truy-na" },
 ];

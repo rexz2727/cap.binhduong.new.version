@@ -8,7 +8,7 @@ interface Props {
 
 export default function WantedCard({ person }: Props) {
   return (
-    <div className="bg-white border border-red-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white border border-red-100 rounded-[20px] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
       <div className="relative h-48 bg-gray-100">
         {person.photo ? (
           <Image
@@ -18,9 +18,7 @@ export default function WantedCard({ person }: Props) {
             className="object-cover object-top"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-5xl text-gray-300">
-            👤
-          </div>
+          <div className="placeholder-img w-full h-full" />
         )}
         <div className="absolute top-3 right-3">
           <span

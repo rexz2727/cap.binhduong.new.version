@@ -72,15 +72,16 @@ export default function MobileMenu({ isOpen, onClose }: Props) {
                     {item.label}
                     <svg className="chev" style={{ transform: isOpen ? 'rotate(180deg)' : ''}}><use href="#i-chev-down" /></svg>
                   </button>
-                  {isOpen && (
-                    <div className="drawer-sub">
-                      {item.children.map(child => (
-                        <Link href={child.href} key={child.href} onClick={handleLinkClick}>
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+                  <div
+                    className="drawer-sub"
+                    style={isOpen ? undefined : { display: "none" }}
+                  >
+                    {item.children.map(child => (
+                      <Link href={child.href} key={child.href} onClick={handleLinkClick}>
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )
             }

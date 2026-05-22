@@ -3,7 +3,8 @@ import Link from "next/link";
 interface ButtonProps {
   href?: string;
   onClick?: () => void;
-  variant?: "primary" | "outline";
+  variant?: "primary" | "red" | "secondary" | "navy" | "ghost" | "outline";
+  size?: "sm";
   children: React.ReactNode;
   className?: string;
   type?: "button" | "submit" | "reset";
@@ -14,18 +15,17 @@ export default function Button({
   href,
   onClick,
   variant = "primary",
+  size,
   children,
   className = "",
   type = "button",
   disabled,
 }: ButtonProps) {
-  const base =
-    "inline-flex items-center justify-center px-5 py-2.5 rounded font-medium text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-police-red focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
-  const variants = {
-    primary: "bg-police-red hover:bg-police-red-dark text-white",
-    outline: "border-2 border-police-red text-police-red hover:bg-police-red hover:text-white",
-  };
-  const cls = `${base} ${variants[variant]} ${className}`;
+  // "outline" is kept as an alias for "secondary" for backward compatibility
+  const variantClass = variant === "outline" ? "btn-secondary" : `btn-${variant}`;
+  const cls = ["btn", variantClass, size === "sm" ? "btn-sm" : "", className]
+    .filter(Boolean)
+    .join(" ");
 
   if (href) {
     return (

@@ -26,6 +26,13 @@ export default function HeroSection() {
             )}
           </p>
           <HeroSearch />
+          <div className="hero-quick-tags">
+            <span data-i18n="hero.quicktags">{t("hero.quicktags", "Tra cứu nhanh:")}</span>
+            <a href="#">Cấp CCCD</a>
+            <a href="#">Đăng ký tạm trú</a>
+            <a href="#">Xe máy điện</a>
+            <a href="#">Hộ chiếu</a>
+          </div>
         </div>
 
         <div className="hero-stats">
@@ -51,7 +58,7 @@ export default function HeroSection() {
             <svg className="ic">
               <use href="#i-clock-fast" />
             </svg>
-            <div className="v">&lt;24h</div>
+            <div className="v">&lt; 24h</div>
             <div className="l" data-i18n="stat3">
               {t("stat3", "Thời gian phản hồi phản ánh")}
             </div>
