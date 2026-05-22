@@ -24,8 +24,7 @@ export default function QnaCard({ qna }: Props) {
     <div className="qna-card">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-left"
-        style={{ background: "none", border: "none", padding: 0 }}
+        style={{ background: "none", border: "none", padding: 0, width: "100%", textAlign: "left", cursor: "pointer" }}
       >
         <div className="q">{qna.question}</div>
       </button>
@@ -40,12 +39,14 @@ export default function QnaCard({ qna }: Props) {
 
       <div className="meta">
         <span className="tag">{CATEGORY_LABELS[qna.category] ?? qna.category}</span>
-        {qna.answeredBy && <span>{qna.answeredBy}</span>}
         {qna.answeredAt && (
-          <span>· {new Date(qna.answeredAt).toLocaleDateString("vi-VN")}</span>
+          <span>Đã trả lời · {new Date(qna.answeredAt).toLocaleDateString("vi-VN")}</span>
         )}
         {qna.viewCount !== undefined && qna.viewCount > 0 && (
-          <span>· {qna.viewCount} lượt xem</span>
+          <>
+            <span>·</span>
+            <span>{qna.viewCount.toLocaleString("vi-VN")} lượt xem</span>
+          </>
         )}
       </div>
     </div>

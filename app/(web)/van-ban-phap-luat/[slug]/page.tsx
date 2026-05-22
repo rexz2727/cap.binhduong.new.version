@@ -2,12 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLegalDocBySlug } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
-import Badge from "@/components/ui/Badge";
-import Button from "@/components/ui/Button";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
+
+const CATEGORY_LABEL: Record<string, string> = {
+  "nghi-quyet": "Nghị quyết",
+  "ke-hoach": "Kế hoạch",
+  "quyet-dinh": "Quyết định",
+  "thong-tu": "Thông tư",
+  "khac": "Khác",
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -21,6 +27,11 @@ export default async function LegalDocDetailPage({ params }: Props) {
   const doc = await getLegalDocBySlug(slug);
   if (!doc) notFound();
 
+  const issuedDate = new Date(doc.issuedDate).toLocaleDateString("vi-VN");
+  const effectiveDate = doc.effectiveDate
+    ? new Date(doc.effectiveDate).toLocaleDateString("vi-VN")
+    : null;
+
   return (
     <>
       <PageHeader
@@ -30,42 +41,63 @@ export default async function LegalDocDetailPage({ params }: Props) {
           { label: doc.documentNumber },
         ]}
       />
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Badge category={doc.category} />
+
+      <section className="block">
+        <div className="container-narrow">
+          <div className="org-card" style={{ marginBottom: "32px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
+              <div className="doc-icon" style={{ flexShrink: 0 }}>
+                <svg aria-hidden="true"><use href="#i-doc" /></svg>
+              </div>
+              <span className="badge-type">{CATEGORY_LABEL[doc.category] ?? doc.category}</span>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div>
+                <div className="lbl">Số hiệu</div>
+                <b>{doc.documentNumber}</b>
+              </div>
+              <div>
+                <div className="lbl">Ngày ban hành</div>
+                <b>{issuedDate}</b>
+              </div>
+              {effectiveDate && (
+                <div>
+                  <div className="lbl">Có hiệu lực</div>
+                  <b>{effectiveDate}</b>
+                </div>
+              )}
+              <div>
+                <div className="lbl">Cơ quan ban hành</div>
+                <b>{doc.issuingBody}</b>
+              </div>
+            </div>
+
+            {doc.fileUrl && (
+              <div style={{ marginTop: "20px" }}>
+                <a
+                  href={doc.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="doc-download"
+                  title="Tải xuống PDF"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
+                >
+                  <svg width="18" height="18"><use href="#i-download" /></svg>
+                  Tải văn bản (PDF)
+                </a>
+              </div>
+            )}
           </div>
-          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-            <div>
-              <dt className="font-medium text-gray-500">Số hiệu</dt>
-              <dd className="text-gray-900">{doc.documentNumber}</dd>
+
+          {doc.summary && (
+            <div className="article-body">
+              <h2>Tóm tắt nội dung</h2>
+              <p>{doc.summary}</p>
             </div>
-            <div>
-              <dt className="font-medium text-gray-500">Ngày ban hành</dt>
-              <dd className="text-gray-900">
-                {new Date(doc.issuedDate).toLocaleDateString("vi-VN")}
-              </dd>
-            </div>
-            <div className="sm:col-span-2">
-              <dt className="font-medium text-gray-500">Cơ quan ban hành</dt>
-              <dd className="text-gray-900">{doc.issuingBody}</dd>
-            </div>
-          </dl>
+          )}
         </div>
-
-        {doc.summary && (
-          <div className="prose prose-gray max-w-none mb-6">
-            <h2 className="text-lg font-semibold text-police-navy">Tóm tắt nội dung</h2>
-            <p>{doc.summary}</p>
-          </div>
-        )}
-
-        {doc.fileUrl && (
-          <Button href={doc.fileUrl} variant="primary">
-            Tải văn bản (PDF) →
-          </Button>
-        )}
-      </div>
+      </section>
     </>
   );
 }

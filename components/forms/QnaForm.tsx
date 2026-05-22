@@ -46,15 +46,16 @@ export default function QnaForm() {
 
   if (status === "success") {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
-        <div className="text-4xl mb-3">✅</div>
-        <h3 className="text-lg font-bold text-green-800 mb-2">Câu hỏi đã được gửi!</h3>
-        <p className="text-green-700 text-sm">
-          Chúng tôi sẽ trả lời trong thời gian sớm nhất. Câu hỏi sẽ được đăng công khai sau khi có câu trả lời.
+      <div className="form-card" style={{ textAlign: "center", padding: "40px 24px" }}>
+        <h3 style={{ color: "var(--navy)", marginBottom: "8px" }}>Câu hỏi đã được gửi!</h3>
+        <p style={{ color: "var(--ink-2)", fontSize: "14px" }}>
+          Chúng tôi sẽ trả lời trong thời gian sớm nhất. Câu hỏi sẽ được đăng công khai sau khi
+          có câu trả lời.
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-4 text-sm text-green-700 underline hover:text-green-900"
+          className="btn btn-secondary"
+          style={{ marginTop: "16px" }}
         >
           Gửi câu hỏi khác
         </button>
@@ -63,10 +64,10 @@ export default function QnaForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1.5">
-          Câu hỏi của bạn <span className="text-police-red">*</span>
+    <form className="form-card" onSubmit={handleSubmit}>
+      <div className="field">
+        <label>
+          Câu hỏi của bạn <span className="req">*</span>
         </label>
         <textarea
           name="question"
@@ -76,14 +77,15 @@ export default function QnaForm() {
           required
           maxLength={1000}
           placeholder="Nhập câu hỏi của bạn..."
-          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-police-red/30 focus:border-police-red resize-none"
         />
-        <p className="text-xs text-gray-400 mt-1 text-right">{form.question.length}/1000</p>
+        <span className="help" style={{ textAlign: "right", display: "block" }}>
+          {form.question.length}/1000 ký tự
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Họ tên</label>
+      <div className="form-row">
+        <div className="field">
+          <label>Họ tên</label>
           <input
             type="text"
             name="askerName"
@@ -91,11 +93,10 @@ export default function QnaForm() {
             onChange={handleChange}
             maxLength={100}
             placeholder="Họ tên (tùy chọn)"
-            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-police-red/30 focus:border-police-red"
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Số điện thoại</label>
+        <div className="field">
+          <label>Số điện thoại</label>
           <input
             type="tel"
             name="phone"
@@ -103,19 +104,13 @@ export default function QnaForm() {
             onChange={handleChange}
             maxLength={15}
             placeholder="SĐT (tùy chọn)"
-            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-police-red/30 focus:border-police-red"
           />
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1.5">Lĩnh vực</label>
-        <select
-          name="category"
-          value={form.category}
-          onChange={handleChange}
-          className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-police-red/30 focus:border-police-red bg-white"
-        >
+      <div className="field">
+        <label>Lĩnh vực</label>
+        <select name="category" value={form.category} onChange={handleChange}>
           {CATEGORIES.map((c) => (
             <option key={c.value} value={c.value}>
               {c.label}
@@ -125,18 +120,21 @@ export default function QnaForm() {
       </div>
 
       {status === "error" && (
-        <p className="text-sm text-red-600 bg-red-50 rounded-lg px-4 py-2">
-          Có lỗi xảy ra, vui lòng thử lại.
-        </p>
+        <div className="notice">
+          <div>Có lỗi xảy ra, vui lòng thử lại.</div>
+        </div>
       )}
 
-      <button
-        type="submit"
-        disabled={status === "loading" || !form.question.trim()}
-        className="w-full bg-police-red hover:bg-police-red-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-colors duration-150"
-      >
-        {status === "loading" ? "Đang gửi..." : "Gửi câu hỏi"}
-      </button>
+      <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={status === "loading" || !form.question.trim()}
+          style={{ flex: 1, justifyContent: "center" }}
+        >
+          {status === "loading" ? "Đang gửi..." : "Gửi câu hỏi"}
+        </button>
+      </div>
     </form>
   );
 }

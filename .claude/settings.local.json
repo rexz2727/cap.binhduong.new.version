@@ -57,7 +57,20 @@
       "Bash(git restore *)",
       "PowerShell(New-Item *)",
       "Skill(update-config)",
-      "Bash(Remove-Item *)"
+      "Bash(Remove-Item *)",
+      "mcp__plugin_ecc_playwright__browser_navigate",
+      "WebFetch(domain:cap-binhduong-new-version.vercel.app)",
+      "Bash(openssl rand *)",
+      "Bash(curl *)",
+      "Bash(git fetch *)",
+      "mcp__plugin_ecc_playwright__browser_resize",
+      "Read(//home/rexz2424/.cache/**)",
+      "Bash(npx playwright *)",
+      "Bash(pkill -f \"next build\")",
+      "Bash(sed -n '1,12p' \"app/\\(web\\)/phan-anh/page.tsx\")",
+      "Bash(sed -n '128,145p' \"components/sections/GioiThieuTabs.tsx\")",
+      "Bash(awk 'NR>=1000')",
+      "Bash(git check-ignore *)"
     ]
   }
 }

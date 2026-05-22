@@ -7,7 +7,6 @@ const LINKS = [
   {
     icon: "#i-doc",
     title: "Thủ tục hành chính",
-    desc: "Cư trú, CCCD, phương tiện",
     more: "Tra cứu thủ tục",
     href: "/thu-tuc-hanh-chinh",
     i18nTitle: "svc.proc",
@@ -15,7 +14,6 @@ const LINKS = [
   {
     icon: "#i-scroll",
     title: "Văn bản pháp luật",
-    desc: "Nghị quyết, kế hoạch, quyết định",
     more: "Xem văn bản",
     href: "/van-ban-phap-luat",
     i18nTitle: "svc.legal",
@@ -23,7 +21,6 @@ const LINKS = [
   {
     icon: "#i-help",
     title: "Hỏi đáp pháp luật",
-    desc: "Câu hỏi thường gặp, giải đáp trực tuyến",
     more: "Đặt câu hỏi",
     href: "/hoi-dap",
     i18nTitle: "svc.qna",
@@ -31,7 +28,6 @@ const LINKS = [
   {
     icon: "#i-cal",
     title: "Lịch tiếp công dân",
-    desc: "Lịch tiếp dân, đăng ký gặp cán bộ",
     more: "Đặt lịch hẹn",
     href: "/lich-tiep-cong-dan",
     i18nTitle: "svc.schedule",
@@ -39,7 +35,6 @@ const LINKS = [
   {
     icon: "#i-megaphone",
     title: "Phản ánh trực tuyến",
-    desc: "Gửi tin báo tội phạm, kiến nghị",
     more: "Gửi phản ánh",
     href: "/phan-anh",
     i18nTitle: "svc.feedback",
@@ -47,7 +42,6 @@ const LINKS = [
   {
     icon: "#i-shield",
     title: "Giới thiệu đơn vị",
-    desc: "Lãnh đạo, lịch sử, nhiệm vụ",
     more: "Tìm hiểu thêm",
     href: "/gioi-thieu",
     i18nTitle: "svc.about",
@@ -82,7 +76,6 @@ export default function QuickLinks() {
               <h3 data-i18n={link.i18nTitle}>
                 {t(link.i18nTitle as I18nKey, link.title)}
               </h3>
-              <p>{link.desc}</p>
               <span className="more">{link.more}</span>
             </Link>
           ))}

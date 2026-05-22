@@ -7,9 +7,11 @@ interface Props {
 }
 
 export default function WantedCard({ person }: Props) {
+  const caught = person.status === "da-bat";
+
   return (
-    <div className="bg-white border border-red-100 rounded-[20px] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-      <div className="relative h-48 bg-gray-100">
+    <div className={`wanted-card${caught ? " caught" : ""}`}>
+      <div className="photo">
         {person.photo ? (
           <Image
             src={urlFor(person.photo).width(400).height(300).url()}
@@ -17,55 +19,38 @@ export default function WantedCard({ person }: Props) {
             fill
             className="object-cover object-top"
           />
-        ) : (
-          <div className="placeholder-img w-full h-full" />
-        )}
-        <div className="absolute top-3 right-3">
-          <span
-            className={`text-[10px] font-extrabold px-2 py-1 rounded-full uppercase tracking-wider ${
-              person.status === "dang-truy-na"
-                ? "bg-police-red text-white"
-                : "bg-green-600 text-white"
-            }`}
-          >
-            {person.status === "dang-truy-na" ? "Đang truy nã" : "Đã bắt"}
-          </span>
-        </div>
+        ) : null}
+        <span className="status-pill">
+          {caught ? "Đã bắt" : "Đang truy nã"}
+        </span>
       </div>
-
-      <div className="p-4">
-        <h3 className="font-bold text-police-navy text-base mb-1">{person.fullName}</h3>
-        {person.aliases && person.aliases.length > 0 && (
-          <p className="text-xs text-gray-500 mb-2">Bí danh: {person.aliases.join(", ")}</p>
-        )}
-
-        <div className="space-y-1 text-xs text-gray-600">
-          {person.birthYear && (
-            <p><span className="font-medium text-gray-500">Năm sinh:</span> {person.birthYear}</p>
+      <div className="body">
+        <h4>{person.fullName}</h4>
+        <dl>
+          {(person.birthYear || person.hometown) && (
+            <>
+              <dt>Năm sinh</dt>
+              <dd>
+                {person.birthYear ?? "—"}
+                {person.hometown ? ` · ${person.hometown}` : ""}
+              </dd>
+            </>
           )}
-          {person.hometown && (
-            <p><span className="font-medium text-gray-500">Quê quán:</span> {person.hometown}</p>
-          )}
-          <p>
-            <span className="font-medium text-gray-500">Tội danh:</span>{" "}
-            <span className="text-police-red font-semibold">{person.crime}</span>
-          </p>
+          <dt>Tội danh</dt>
+          <dd className="crime">{person.crime}</dd>
           {person.warrantDate && (
-            <p>
-              <span className="font-medium text-gray-500">Ngày phát lệnh:</span>{" "}
-              {new Date(person.warrantDate).toLocaleDateString("vi-VN")}
-            </p>
+            <>
+              <dt>Ngày phát lệnh</dt>
+              <dd>{new Date(person.warrantDate).toLocaleDateString("vi-VN")}</dd>
+            </>
           )}
           {person.warrantAgency && (
-            <p><span className="font-medium text-gray-500">Cơ quan:</span> {person.warrantAgency}</p>
+            <>
+              <dt>Cơ quan</dt>
+              <dd>{person.warrantAgency}</dd>
+            </>
           )}
-        </div>
-
-        {person.status === "dang-truy-na" && (
-          <div className="mt-4 bg-red-50 border border-red-100 rounded-lg p-3 text-xs text-red-700">
-            <strong>Nếu phát hiện, hãy báo ngay:</strong> 113 hoặc Công an phường Bình Dương
-          </div>
-        )}
+        </dl>
       </div>
     </div>
   );

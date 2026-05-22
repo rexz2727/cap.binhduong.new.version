@@ -3,11 +3,24 @@ export default function EmergencyButton() {
     <a
       href="tel:113"
       data-print="hide"
-      className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-center gap-2 bg-police-red text-white text-sm font-bold py-3 shadow-lg sm:hidden"
+      className="btn btn-red"
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 40,
+        display: "none",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "8px",
+        borderRadius: 0,
+        padding: "12px",
+      }}
       aria-label="Gọi khẩn cấp 113"
     >
-      <span>📞</span>
-      <span>GỌI KHẨN CẤP 113</span>
+      <svg width="16" height="16"><use href="#i-phone" /></svg>
+      GỌI KHẨN CẤP 113
     </a>
   );
 }

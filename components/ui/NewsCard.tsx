@@ -16,31 +16,29 @@ export default function NewsCard({ post }: { post: NewsPostPreview }) {
   });
 
   return (
-    <article className="news-card">
-      <div className="thumb relative">
-        {imgUrl ? (
-          <Image
-            src={imgUrl}
-            alt={post.mainImage?.alt ?? post.title}
-            fill
-            className="object-cover"
-          />
-        ) : (
-          <div className="placeholder-img w-full h-full" />
-        )}
-      </div>
-      <div className="body">
-        <div className="flex items-center gap-2 mb-2">
-          <Badge category={post.category} />
-          <time className="text-xs text-gray-400">{formattedDate}</time>
+    <Link href={`/tin-tuc/${post.slug.current}`} style={{ textDecoration: "none" }}>
+      <article className="news-card">
+        <div className="thumb">
+          {imgUrl ? (
+            <Image
+              src={imgUrl}
+              alt={post.mainImage?.alt ?? post.title}
+              fill
+              style={{ objectFit: "cover" }}
+            />
+          ) : (
+            <div className="placeholder-img" />
+          )}
         </div>
-        <h3>
-          <Link href={`/tin-tuc/${post.slug.current}`}>
-            {post.title}
-          </Link>
-        </h3>
-        <p>{post.excerpt}</p>
-      </div>
-    </article>
+        <div className="body">
+          <div className="news-meta">
+            <Badge category={post.category} />
+            <span>{formattedDate}</span>
+          </div>
+          <h3>{post.title}</h3>
+          <p>{post.excerpt}</p>
+        </div>
+      </article>
+    </Link>
   );
 }

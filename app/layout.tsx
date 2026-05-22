@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
+import { Inter, Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/constants/site";
 
-const beVietnamPro = Be_Vietnam_Pro({
+const inter = Inter({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
-  variable: "--font-sans",
+  variable: "--font-inter",
+});
+
+const beVietnamPro = Be_Vietnam_Pro({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-bvp",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +36,7 @@ import { LanguageProvider } from "@/lib/i18n";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="vi">
+    <html lang="vi" className={`${inter.variable} ${beVietnamPro.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -42,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${beVietnamPro.variable} min-h-screen flex flex-col`}>
+      <body className="min-h-screen flex flex-col">
         <LanguageProvider>
           {children}
         </LanguageProvider>

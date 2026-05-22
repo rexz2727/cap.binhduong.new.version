@@ -18,53 +18,59 @@ export default async function ThuVienAnhPage() {
       <PageHeader
         title="Thư viện ảnh"
         breadcrumbs={[{ label: "Thư viện ảnh" }]}
-        description="Album ảnh hoạt động, sự kiện của đơn vị"
+        description="Album ảnh hoạt động và sự kiện của Công an phường Bình Dương."
       />
-      <div className="max-w-7xl mx-auto px-4 py-10">
-        {albums.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
-            <p className="text-5xl mb-3">📷</p>
-            <p>Chưa có album ảnh nào.</p>
+      <section className="block">
+        <div className="container">
+          <div className="filter-row">
+            <span className="chip active">
+              Tất cả album {albums.length > 0 ? `(${albums.length})` : ""}
+            </span>
+            <Link href="/video" className="chip">
+              Xem video →
+            </Link>
           </div>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {albums.map((album) => (
-              <Link key={album._id} href={`/thu-vien-anh/${album.slug.current}`} className="group block">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 shadow-sm">
-                  {album.coverImage ? (
-                    <Image
-                      src={urlFor(album.coverImage).width(500).height(375).url()}
-                      alt={album.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-5xl text-gray-300">📷</div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3">
+
+          {albums.length === 0 ? (
+            <p style={{ color: "var(--subtle)", textAlign: "center", padding: "64px 0" }}>
+              Chưa có album ảnh nào.
+            </p>
+          ) : (
+            <div className="gallery-grid">
+              {albums.map((album) => (
+                <Link
+                  key={album._id}
+                  href={`/thu-vien-anh/${album.slug.current}`}
+                  className="album-card"
+                >
+                  <div className="cover">
+                    {album.coverImage ? (
+                      <Image
+                        src={urlFor(album.coverImage).width(500).height(375).url()}
+                        alt={album.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 25vw"
+                      />
+                    ) : null}
                     {album.photoCount !== undefined && (
-                      <span className="text-xs bg-black/40 text-white px-2 py-0.5 rounded-full">
-                        {album.photoCount} ảnh
-                      </span>
+                      <span className="badge">{album.photoCount} ảnh</span>
                     )}
                   </div>
-                </div>
-                <div className="mt-2 px-1">
-                  <h3 className="font-semibold text-gray-900 group-hover:text-police-red transition-colors text-sm line-clamp-2">
-                    {album.title}
-                  </h3>
-                  {album.date && (
-                    <p className="text-xs text-gray-400 mt-0.5">
-                      {new Date(album.date).toLocaleDateString("vi-VN")}
-                    </p>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
+                  <div className="body">
+                    <h4>{album.title}</h4>
+                    {album.date && (
+                      <div className="date">
+                        {new Date(album.date).toLocaleDateString("vi-VN")}
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 }

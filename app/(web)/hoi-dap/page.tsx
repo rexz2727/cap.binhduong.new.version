@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { getQnaAnswered } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
 import QnaCard from "@/components/ui/QnaCard";
-import Sidebar from "@/components/ui/Sidebar";
 import Link from "next/link";
+import { SITE } from "@/constants/site";
 
 export const metadata: Metadata = {
   title: "Hỏi đáp pháp luật | Công an phường Bình Dương",
@@ -32,60 +32,93 @@ export default async function HoiDapPage({ searchParams }: Props) {
     <>
       <PageHeader
         title="Hỏi đáp pháp luật"
-        breadcrumbs={[{ label: "Hỏi đáp" }]}
-        description="Tổng hợp câu hỏi thường gặp và giải đáp của cán bộ Công an phường Bình Dương"
+        breadcrumbs={[{ label: "Hỏi đáp pháp luật" }]}
+        description="Tổng hợp câu hỏi thường gặp và giải đáp của cán bộ Công an phường Bình Dương."
       />
-      <div className="max-w-7xl mx-auto px-4 py-10">
-        <div className="flex flex-col lg:flex-row gap-8">
-          <main className="flex-1 min-w-0">
-            <div className="flex flex-wrap gap-2 mb-6">
-              {CATEGORIES.map((cat) => (
-                <Link
-                  key={cat.value}
-                  href={cat.value === "all" ? "/hoi-dap" : `/hoi-dap?category=${cat.value}`}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                    (cat.value === "all" && !category) || cat.value === category
-                      ? "bg-police-red text-white"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  {cat.label}
-                </Link>
-              ))}
-            </div>
 
-            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <p className="font-semibold text-police-navy text-sm">Chưa tìm thấy câu trả lời?</p>
-                <p className="text-xs text-gray-500 mt-0.5">Gửi câu hỏi — sẽ được trả lời trong 1–3 ngày làm việc.</p>
-              </div>
-              <Link
-                href="/hoi-dap/gui-cau-hoi"
-                className="shrink-0 bg-police-red hover:bg-police-red-dark text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
-              >
-                Gửi câu hỏi
-              </Link>
-            </div>
-
-            {items.length === 0 ? (
-              <div className="text-center py-16 text-gray-400">
-                <p className="text-4xl mb-3">💬</p>
-                <p>Chưa có câu hỏi nào trong danh mục này.</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {items.map((qna) => (
-                  <QnaCard key={qna._id} qna={qna} />
+      <section className="block">
+        <div className="container">
+          <div className="qna-layout">
+            <div>
+              <div className="filter-row">
+                {CATEGORIES.map((cat) => (
+                  <Link
+                    key={cat.value}
+                    href={cat.value === "all" ? "/hoi-dap" : `/hoi-dap?category=${cat.value}`}
+                    className={`chip${(cat.value === "all" && !category) || cat.value === category ? " active" : ""}`}
+                  >
+                    {cat.label}
+                  </Link>
                 ))}
               </div>
-            )}
-          </main>
 
-          <div className="w-full lg:w-72 shrink-0">
-            <Sidebar />
+              <div className="qna-callout">
+                <div>
+                  <div className="t">Chưa tìm thấy câu trả lời?</div>
+                  <div className="s">Gửi câu hỏi — cán bộ sẽ trả lời trong 1–3 ngày làm việc.</div>
+                </div>
+                <Link href="/hoi-dap/gui-cau-hoi" className="btn btn-red">
+                  Gửi câu hỏi
+                </Link>
+              </div>
+
+              {items.length === 0 ? (
+                <div className="qna-list" style={{ textAlign: "center", padding: "48px 0", color: "var(--muted)" }}>
+                  <p>Chưa có câu hỏi nào trong danh mục này.</p>
+                </div>
+              ) : (
+                <div className="qna-list">
+                  {items.map((qna) => (
+                    <QnaCard key={qna._id} qna={qna} />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <aside>
+              <div className="aside-card">
+                <h4>Câu hỏi xem nhiều</h4>
+                <div className="aside-list">
+                  <Link href="/hoi-dap?category=vneid">Cách kích hoạt VNeID mức 2 tại nhà</Link>
+                  <Link href="/hoi-dap?category=cccd">Thủ tục đổi CCCD khi sai thông tin</Link>
+                  <Link href="/hoi-dap?category=cu-tru">Đăng ký tạm trú cho người ngoại tỉnh</Link>
+                  <Link href="/hoi-dap?category=xe-may">Mức phạt khi không đội mũ bảo hiểm</Link>
+                  <Link href="/hoi-dap?category=cccd">Làm gì khi mất CCCD?</Link>
+                </div>
+              </div>
+
+              <div
+                className="aside-card"
+                style={{ background: "var(--navy-soft)", borderColor: "var(--gold)" }}
+              >
+                <h4 style={{ color: "var(--red-deep)", borderColor: "var(--gold)" }}>
+                  Liên hệ trực tiếp
+                </h4>
+                <div style={{ fontSize: "13.5px", color: "var(--ink-2)", lineHeight: 1.6 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+                    <svg width="16" height="16" style={{ color: "var(--red)" }}>
+                      <use href="#i-phone" />
+                    </svg>
+                    {SITE.phone}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+                    <svg width="16" height="16" style={{ color: "var(--red)" }}>
+                      <use href="#i-mail" />
+                    </svg>
+                    {SITE.email}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <svg width="16" height="16" style={{ color: "var(--red)" }}>
+                      <use href="#i-clock" />
+                    </svg>
+                    T2–T6: 7:00–17:00
+                  </div>
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

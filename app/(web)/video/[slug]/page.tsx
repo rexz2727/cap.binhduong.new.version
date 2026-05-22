@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getVideos } from "@/sanity/lib/queries";
+import { notFound } from "next/navigation";
 import PageHeader from "@/components/ui/PageHeader";
 import VideoPlayer from "@/components/ui/VideoPlayer";
 
@@ -31,55 +31,56 @@ export default async function VideoDetailPage({ params }: Props) {
         title={video.title}
         breadcrumbs={[{ label: "Video", href: "/video" }, { label: video.title }]}
       />
-      <div className="max-w-7xl mx-auto px-4 py-10">
-        <div className="flex flex-col lg:flex-row gap-8">
-          <main className="flex-1 min-w-0">
-            <VideoPlayer youtubeId={video.youtubeId} title={video.title} />
-            <h1 className="text-xl font-bold text-police-navy mt-5">{video.title}</h1>
-            <p className="text-sm text-gray-400 mt-1">
-              {new Date(video.date).toLocaleDateString("vi-VN")}
-            </p>
-          </main>
+      <section className="block">
+        <div className="container-narrow">
+          <VideoPlayer youtubeId={video.youtubeId} title={video.title} />
+          <h2 style={{ marginTop: "24px", marginBottom: "8px" }}>{video.title}</h2>
+          <p style={{ fontSize: "13px", color: "var(--subtle)" }}>
+            {new Date(video.date).toLocaleDateString("vi-VN")}
+          </p>
 
           {related.length > 0 && (
-            <aside className="w-full lg:w-80 shrink-0">
-              <h3 className="font-bold text-police-navy text-sm mb-4 uppercase tracking-wider">
+            <div style={{ marginTop: "48px" }}>
+              <h3 style={{ fontSize: "14px", fontWeight: 700, marginBottom: "16px", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--navy)" }}>
                 Video liên quan
               </h3>
-              <div className="space-y-3">
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 {related.map((v) => (
                   <Link
                     key={v._id}
                     href={`/video/${v.slug.current}`}
-                    className="group flex gap-3 bg-gray-50 rounded-xl overflow-hidden hover:bg-gray-100 transition-colors"
+                    style={{ display: "flex", gap: "12px", alignItems: "center", textDecoration: "none" }}
                   >
                     <div
-                      className="relative w-28 h-20 shrink-0 bg-gray-800 bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url(https://i.ytimg.com/vi/${v.youtubeId}/mqdefault.jpg)`,
-                      }}
+                      className="video-card"
+                      style={{ flex: 1, display: "flex", gap: "12px", alignItems: "flex-start" }}
                     >
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-7 h-7 bg-police-red/80 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xs ml-0.5">▶</span>
+                      <div
+                        className="thumb"
+                        style={{
+                          width: "120px",
+                          minWidth: "120px",
+                          height: "80px",
+                          backgroundImage: `url(https://i.ytimg.com/vi/${v.youtubeId}/mqdefault.jpg)`,
+                          flex: "none",
+                        }}
+                      >
+                        <div className="play" style={{ transform: "translate(-50%, -50%) scale(0.6)" }} />
+                      </div>
+                      <div className="body" style={{ padding: "4px 0" }}>
+                        <h4 style={{ fontSize: "13px", WebkitLineClamp: 2 }}>{v.title}</h4>
+                        <div className="meta">
+                          <span>{new Date(v.date).toLocaleDateString("vi-VN")}</span>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex-1 py-2 pr-3">
-                      <p className="text-xs font-medium text-gray-900 group-hover:text-police-red line-clamp-2">
-                        {v.title}
-                      </p>
-                      <p className="text-[11px] text-gray-400 mt-1">
-                        {new Date(v.date).toLocaleDateString("vi-VN")}
-                      </p>
                     </div>
                   </Link>
                 ))}
               </div>
-            </aside>
+            </div>
           )}
         </div>
-      </div>
+      </section>
     </>
   );
 }

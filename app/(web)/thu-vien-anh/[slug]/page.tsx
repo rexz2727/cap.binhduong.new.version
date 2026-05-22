@@ -38,21 +38,22 @@ export default async function AlbumDetailPage({ params }: Props) {
         ]}
         description={album.description}
       />
-      <div className="max-w-7xl mx-auto px-4 py-10">
-        <div className="flex items-center justify-between mb-6">
-          <p className="text-sm text-gray-500">
-            {new Date(album.date).toLocaleDateString("vi-VN")} · {photos.length} ảnh
+      <section className="block">
+        <div className="container">
+          <p style={{ fontSize: "13px", color: "var(--subtle)", marginBottom: "24px" }}>
+            {album.date && new Date(album.date).toLocaleDateString("vi-VN")}
+            {photos.length > 0 && ` · ${photos.length} ảnh`}
           </p>
+
+          {photos.length === 0 ? (
+            <p style={{ color: "var(--subtle)", textAlign: "center", padding: "64px 0" }}>
+              Album chưa có ảnh.
+            </p>
+          ) : (
+            <PhotoLightbox photos={photos} columns={3} />
+          )}
         </div>
-        {photos.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
-            <p className="text-5xl mb-3">📷</p>
-            <p>Album chưa có ảnh.</p>
-          </div>
-        ) : (
-          <PhotoLightbox photos={photos} columns={3} />
-        )}
-      </div>
+      </section>
     </>
   );
 }

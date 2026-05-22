@@ -1,171 +1,209 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { SITE } from "@/constants/site";
 
-type Tab = "functions" | "structure" | "schedule";
+type Tab = "function" | "org" | "leaders" | "schedule" | "contact";
 
-const TABS: { id: Tab; label: string; icon: string }[] = [
-  { id: "functions", label: "Chức năng nhiệm vụ", icon: "📋" },
-  { id: "structure", label: "Sơ đồ tổ chức", icon: "🏛️" },
-  { id: "schedule", label: "Lịch tiếp công dân", icon: "📅" },
+const TABS: { id: Tab; label: string }[] = [
+  { id: "function", label: "Chức năng & nhiệm vụ" },
+  { id: "org", label: "Sơ đồ tổ chức" },
+  { id: "leaders", label: "Ban lãnh đạo" },
+  { id: "schedule", label: "Lịch tiếp công dân" },
+  { id: "contact", label: "Liên hệ" },
 ];
 
-const FUNCTIONS = [
-  { title: "Nắm tình hình an ninh, trật tự", body: "Thu thập thông tin, phân tích, đánh giá tình hình; tham mưu cho cấp ủy, chính quyền phường và Công an TP. Hồ Chí Minh các biện pháp bảo đảm an ninh." },
-  { title: "Phòng ngừa, đấu tranh chống tội phạm", body: "Tiếp nhận, phân loại, xác minh tin báo tội phạm; phối hợp xử lý vi phạm pháp luật, bắt người phạm tội quả tang tại địa bàn cơ sở." },
-  { title: "Giải quyết thủ tục hành chính", body: "Tiếp nhận và giải quyết phân cấp thủ tục: cư trú (thường trú, tạm trú, lưu trú), cấp đổi Căn cước, hộ chiếu và đăng ký phương tiện giao thông." },
-  { title: "Điều tra, tư pháp cơ sở", body: "Bố trí Điều tra viên trực tiếp tại Công an phường để giải quyết án hình sự; quản lý người chấp hành án tại cộng đồng (án treo, cải tạo không giam giữ)." },
-  { title: "Trật tự công cộng", body: "Tuần tra, kiểm soát, bảo đảm trật tự công cộng; phát hiện và xử lý vi phạm trật tự xã hội và an toàn giao thông trên địa bàn." },
-  { title: "Phòng cháy, chữa cháy, cứu nạn", body: "Tuyên truyền, kiểm tra công tác PCCC; tổ chức chữa cháy, cứu nạn ban đầu khi xảy ra sự cố tại phường." },
-  { title: "Xử phạt vi phạm hành chính", body: "Xử phạt vi phạm hành chính trong lĩnh vực an ninh, trật tự theo thẩm quyền; lập hồ sơ đề nghị áp dụng biện pháp xử lý hành chính." },
-  { title: "Tiếp nhận phản ánh", body: "Tiếp nhận góp ý, phản ánh, kiến nghị của nhân dân về tình hình an ninh, trật tự; bảo vệ quyền và lợi ích hợp pháp của công dân." },
-  { title: "Xây dựng phong trào toàn dân", body: "Làm nòng cốt xây dựng nền an ninh nhân dân; hướng dẫn hoạt động lực lượng bảo vệ an ninh cơ sở, bảo vệ dân phố, dân phòng." },
-  { title: "Quản lý ngành nghề có điều kiện", body: "Quản lý an ninh, trật tự đối với ngành nghề đầu tư kinh doanh có điều kiện; quản lý vũ khí, vật liệu nổ theo phân cấp." },
-];
+interface PersonnelItem {
+  _id: string;
+  fullName: string;
+  rank?: string;
+  position?: string;
+  photoUrl: string | null;
+}
 
-const ORG_BRANCHES = [
-  { desc: "Tổng hợp", unit: "Tổ Tổng hợp" },
-  { desc: "CS khu vực", unit: "Tổ CSKV" },
-  { desc: "CS trật tự", unit: "Tổ CSTT" },
-  { desc: "PC tội phạm", unit: "Tổ PCTP" },
-  { desc: "An ninh", unit: "Tổ An ninh" },
-];
+interface Props {
+  personnel: PersonnelItem[];
+}
 
-const SCHEDULE = [
-  { day: "Thứ 2", morning: "07:30 – 11:30", afternoon: "13:30 – 17:00", content: "Tiếp nhận hồ sơ cư trú, CCCD" },
-  { day: "Thứ 3", morning: "07:30 – 11:30", afternoon: "13:30 – 17:00", content: "Tiếp nhận phản ánh, tố giác tội phạm" },
-  { day: "Thứ 4", morning: "07:30 – 11:30", afternoon: "13:30 – 17:00", content: "Tiếp nhận hồ sơ cư trú, CCCD" },
-  { day: "Thứ 5", morning: "07:30 – 11:30", afternoon: "13:30 – 17:00", content: "Tiếp nhận phản ánh, giải quyết thủ tục" },
-  { day: "Thứ 6", morning: "07:30 – 11:30", afternoon: "13:30 – 17:00", content: "Tiếp dân, xử lý hồ sơ tồn đọng" },
-  { day: "Thứ 7", morning: "07:30 – 11:30", afternoon: "Nghỉ", content: "Trả kết quả, hồ sơ hành chính", offAfternoon: true },
-  { day: "Chủ nhật", morning: "Nghỉ", afternoon: "Nghỉ", content: "—", allOff: true },
-];
-
-export default function GioiThieuTabs() {
-  const [active, setActive] = useState<Tab>("functions");
+export default function GioiThieuTabs({ personnel }: Props) {
+  const [active, setActive] = useState<Tab>("function");
 
   return (
-    <section>
-      {/* Tab header */}
-      <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-200 pb-4">
+    <>
+      <div className="about-tabs">
         {TABS.map((tab) => (
           <button
             key={tab.id}
+            className={`about-tab${active === tab.id ? " active" : ""}`}
             onClick={() => setActive(tab.id)}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-              active === tab.id
-                ? "bg-police-navy text-white shadow-md"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
           >
-            <span>{tab.icon}</span>
             {tab.label}
           </button>
         ))}
       </div>
 
-      {/* Chức năng nhiệm vụ */}
-      {active === "functions" && (
-        <div className="space-y-3 animate-fade-up">
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800 mb-2">
-            <strong>Cơ sở pháp lý:</strong> Luật Công an nhân dân, Nghị định số 02/2025/NĐ-CP ngày 18/02/2025; mô hình Công an 2 cấp áp dụng từ 01/03/2025.
+      {/* Chức năng & nhiệm vụ */}
+      <div className="tab-pane" style={{ display: active === "function" ? undefined : "none" }}>
+        <div className="org-card">
+          <h3>Về đơn vị</h3>
+          <p>
+            <b>Công an phường Bình Dương</b> là đơn vị trực thuộc Công an Thành phố Hồ Chí Minh. Đơn vị được thành lập trên cơ sở sáp nhập các phường Hòa Phú, Phú Mỹ, Phú Tân và Phú Chánh theo chủ trương sắp xếp đơn vị hành chính của tỉnh Bình Dương cũ (nay là TP.HCM).
+          </p>
+          <p>
+            Nhiệm vụ chính: <b>bảo đảm an ninh trật tự</b>, phòng chống tội phạm, quản lý hành chính về trật tự xã hội, đăng ký cư trú, cấp Căn cước công dân, và phục vụ nhân dân trên địa bàn phường.
+          </p>
+
+          <div className="ward-grid">
+            <div className="ward-cell"><b>Hòa Phú</b><div className="lbl">Đơn vị sáp nhập</div></div>
+            <div className="ward-cell"><b>Phú Mỹ</b><div className="lbl">Đơn vị sáp nhập</div></div>
+            <div className="ward-cell"><b>Phú Tân</b><div className="lbl">Đơn vị sáp nhập</div></div>
+            <div className="ward-cell"><b>Phú Chánh</b><div className="lbl">Đơn vị sáp nhập</div></div>
           </div>
-          {FUNCTIONS.map((fn, i) => (
-            <div key={fn.title} className="flex gap-4 bg-white border border-gray-100 rounded-xl p-4 hover:border-police-navy/20 transition-colors">
-              <span className="text-police-navy font-bold text-sm min-w-[22px]">{i + 1}.</span>
-              <div>
-                <p className="font-semibold text-gray-900 text-sm">{fn.title}</p>
-                <p className="text-gray-600 text-sm mt-1 leading-relaxed">{fn.body}</p>
-              </div>
-            </div>
-          ))}
         </div>
-      )}
 
-      {/* Sơ đồ tổ chức */}
-      {active === "structure" && (
-        <div className="animate-fade-up space-y-4">
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800">
-            Cơ cấu theo mô hình Công an chính quy 2 cấp, trực thuộc <strong>Công an TP. Hồ Chí Minh</strong>. Từ 01/07/2025, đơn vị được tăng cường biên chế và bố trí Điều tra viên tại cơ sở.
-          </div>
-
-          <div className="flex justify-center">
-            <div className="bg-police-red text-white rounded-2xl px-8 py-4 text-center shadow-md max-w-sm w-full">
-              <p className="font-bold text-sm">🏢 Công an TP. Hồ Chí Minh</p>
-              <p className="text-red-200 text-xs mt-1">Cơ quan quản lý, chỉ đạo trực tiếp toàn diện</p>
-            </div>
-          </div>
-          <div className="flex justify-center"><div className="w-0.5 h-8 bg-police-navy" /></div>
-          <div className="flex justify-center">
-            <div className="bg-police-navy text-white rounded-2xl px-8 py-4 text-center shadow-md max-w-sm w-full">
-              <p className="font-bold text-sm">⭐ Trưởng Công an phường</p>
-              <p className="text-blue-300 text-xs mt-1">Phụ trách chung, báo cáo Giám đốc CATP</p>
-            </div>
-          </div>
-          <div className="flex justify-center"><div className="w-0.5 h-8 bg-police-navy" /></div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {ORG_BRANCHES.map((branch) => (
-              <div key={branch.desc} className="flex flex-col items-center gap-2">
-                <div className="bg-white border-2 border-police-navy rounded-xl p-3 text-center w-full">
-                  <p className="font-semibold text-gray-900 text-xs">Phó Trưởng Công an</p>
-                  <p className="text-police-red text-xs mt-1">{branch.desc}</p>
-                </div>
-                <div className="w-0.5 h-4 bg-gray-300" />
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-center w-full">
-                  <p className="text-gray-700 text-xs font-medium">{branch.unit}</p>
+        <div className="org-card">
+          <h3>Chức năng &amp; nhiệm vụ chính</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "16px", marginTop: "8px" }}>
+            {[
+              { n: 1, title: "Đảm bảo an ninh trật tự", body: "Phòng ngừa, đấu tranh chống các loại tội phạm, tệ nạn xã hội trên địa bàn phường." },
+              { n: 2, title: "Quản lý cư trú & CCCD", body: "Đăng ký thường trú, tạm trú, cấp Căn cước công dân, khai báo lưu trú." },
+              { n: 3, title: "Quản lý phương tiện", body: "Đăng ký xe mô tô, xe gắn máy và phương tiện thuộc thẩm quyền cấp phường." },
+              { n: 4, title: "Phục vụ nhân dân", body: "Tiếp công dân, giải quyết khiếu nại, tố cáo, hỗ trợ thủ tục hành chính." },
+            ].map((item) => (
+              <div key={item.n} style={{ display: "flex", gap: "14px", padding: "18px", background: "var(--surface-2)", borderRadius: "var(--radius)" }}>
+                <div style={{ width: "36px", height: "36px", background: "var(--gold)", color: "var(--navy-deep)", borderRadius: "8px", display: "grid", placeItems: "center", fontWeight: 700, flexShrink: 0 }}>{item.n}</div>
+                <div>
+                  <b style={{ color: "var(--navy)", fontSize: "14.5px" }}>{item.title}</b>
+                  <div style={{ fontSize: "13px", color: "var(--muted)", marginTop: "4px" }}>{item.body}</div>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+      </div>
 
-          <div className="flex justify-center"><div className="w-0.5 h-8 bg-police-navy" /></div>
-          <div className="flex justify-center">
-            <div className="border-2 border-dashed border-police-navy/40 rounded-2xl px-8 py-4 text-center max-w-lg w-full">
-              <p className="font-semibold text-gray-700 text-sm">Lực lượng tham gia bảo vệ ANTT ở cơ sở</p>
-              <p className="text-gray-500 text-xs mt-1">Dân phố · Dân phòng · Tổ an ninh khu phố</p>
+      {/* Sơ đồ tổ chức */}
+      <div className="tab-pane" style={{ display: active === "org" ? undefined : "none" }}>
+        <div className="org-card">
+          <h3>Sơ đồ tổ chức</h3>
+          <p>Bộ máy tổ chức Công an phường Bình Dương được thiết kế theo nguyên tắc tinh gọn, hiệu quả — phù hợp với địa bàn dân cư sau sáp nhập.</p>
+
+          <div style={{ marginTop: "24px" }}>
+            <div style={{ display: "grid", placeItems: "center", marginBottom: "32px" }}>
+              <div style={{ background: "var(--navy)", color: "white", padding: "18px 28px", borderRadius: "var(--radius-lg)", textAlign: "center", minWidth: "280px", boxShadow: "var(--shadow)" }}>
+                <div style={{ fontSize: "11.5px", color: "var(--gold)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600 }}>Cấp lãnh đạo</div>
+                <div style={{ fontSize: "16px", fontWeight: 700, marginTop: "4px" }}>Ban Chỉ huy</div>
+                <div style={{ fontSize: "12px", opacity: 0.75, marginTop: "2px" }}>1 Trưởng + 3 Phó Trưởng</div>
+              </div>
+              <div style={{ width: "2px", height: "32px", background: "var(--gold)", marginTop: "-2px" }}></div>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "16px", position: "relative" }}>
+              <div style={{ position: "absolute", top: "-16px", left: "12.5%", right: "12.5%", height: "2px", background: "var(--gold)" }}></div>
+              {[
+                { label: "Đội Cảnh sát ANTT", sub: "12 cán bộ chiến sĩ" },
+                { label: "Đội Cảnh sát Hình sự", sub: "8 cán bộ chiến sĩ" },
+                { label: "Đội Quản lý hành chính", sub: "10 cán bộ chiến sĩ" },
+                { label: "Cảnh sát Khu vực", sub: "4 cán bộ phụ trách 4 KP" },
+              ].map((branch) => (
+                <div key={branch.label} className="ward-cell" style={{ background: "var(--surface)", borderColor: "var(--navy)", position: "relative" }}>
+                  <div style={{ position: "absolute", top: "-16px", left: "50%", width: "2px", height: "16px", background: "var(--gold)" }}></div>
+                  <b style={{ color: "var(--navy)" }}>{branch.label}</b>
+                  <div className="lbl">{branch.sub}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "14px", marginTop: "32px", fontSize: "13px", color: "var(--muted)" }}>
+              <div><b style={{ color: "var(--ink-2)" }}>Tổng quân số:</b> 38 cán bộ chiến sĩ</div>
+              <div><b style={{ color: "var(--ink-2)" }}>Địa bàn:</b> 4 khu phố · ~112.500 dân</div>
+              <div><b style={{ color: "var(--ink-2)" }}>Trụ sở:</b> 01 trụ sở chính</div>
+              <div><b style={{ color: "var(--ink-2)" }}>Hoạt động:</b> 24/7 với đường dây nóng</div>
             </div>
           </div>
-
-          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-sm text-yellow-800">
-            <strong>Ghi chú:</strong> Lần đầu tiên bố trí <strong>Điều tra viên</strong> trực tiếp tại Công an phường. Thông tin nhân sự sẽ cập nhật khi có quyết định bổ nhiệm chính thức.
-          </div>
         </div>
-      )}
+      </div>
+
+      {/* Ban lãnh đạo */}
+      <div className="tab-pane" style={{ display: active === "leaders" ? undefined : "none" }}>
+        <div className="org-card">
+          <h3>Ban Lãnh đạo</h3>
+          <p style={{ marginBottom: "24px" }}>Đội ngũ cán bộ chỉ huy giàu kinh nghiệm, được đào tạo bài bản, cam kết phục vụ nhân dân.</p>
+          {personnel.length > 0 ? (
+            <div className="personnel-grid">
+              {personnel.map((person) => (
+                <div key={person._id} className="person-card">
+                  <div className="photo">
+                    {person.photoUrl ? (
+                      <Image
+                        src={person.photoUrl}
+                        alt={person.fullName}
+                        fill
+                        style={{ objectFit: "cover" }}
+                      />
+                    ) : null}
+                  </div>
+                  <div className="name">{person.fullName}</div>
+                  {person.rank && <div className="rank">{person.rank}</div>}
+                  {person.position && <div className="position">{person.position}</div>}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p style={{ color: "var(--muted)", fontSize: "14px" }}>Chưa có thông tin nhân sự.</p>
+          )}
+        </div>
+      </div>
 
       {/* Lịch tiếp công dân */}
-      {active === "schedule" && (
-        <div className="animate-fade-up space-y-4">
-          <p className="text-gray-600 text-sm">Công an phường tiếp công dân theo lịch cố định hàng tuần. Nhân dân có thể đến trực tiếp trụ sở hoặc liên hệ trước qua điện thoại.</p>
-          <div className="overflow-x-auto rounded-xl border border-gray-200">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-police-navy text-white">
-                  <th className="text-left px-4 py-3 font-semibold">Thứ</th>
-                  <th className="text-left px-4 py-3 font-semibold">Buổi sáng</th>
-                  <th className="text-left px-4 py-3 font-semibold">Buổi chiều</th>
-                  <th className="text-left px-4 py-3 font-semibold">Nội dung</th>
-                </tr>
-              </thead>
-              <tbody>
-                {SCHEDULE.map((row) => (
-                  <tr key={row.day} className={`border-t border-gray-100 ${row.allOff ? "bg-gray-50" : "hover:bg-blue-50/50"} transition-colors`}>
-                    <td className="px-4 py-3 font-semibold text-gray-900">{row.day}</td>
-                    <td className={`px-4 py-3 ${row.allOff ? "text-red-500 font-medium" : "text-gray-700"}`}>{row.morning}</td>
-                    <td className={`px-4 py-3 ${row.offAfternoon || row.allOff ? "text-red-500 font-medium" : "text-gray-700"}`}>{row.afternoon}</td>
-                    <td className="px-4 py-3 text-gray-600">{row.content}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800 space-y-1">
-            <p className="font-semibold mb-1">📝 Lưu ý:</p>
-            <p>• Trường hợp khẩn cấp tiếp nhận <strong>24/7</strong> qua số <a href="tel:113" className="font-bold underline">113</a>.</p>
-            <p>• Lịch có thể thay đổi vào các ngày lễ, tết theo thông báo của UBND phường.</p>
-            <p>• Công dân nên mang theo CCCD/CMND khi đến làm việc.</p>
+      <div className="tab-pane" style={{ display: active === "schedule" ? undefined : "none" }}>
+        <div className="org-card" style={{ textAlign: "center", padding: "48px 32px" }}>
+          <svg width="48" height="48" style={{ color: "var(--gold-deep)", marginBottom: "14px" }}><use href="#i-cal" /></svg>
+          <h3 style={{ justifyContent: "center", display: "inline-flex" }}>Lịch tiếp công dân</h3>
+          <p style={{ maxWidth: "520px", margin: "8px auto 24px" }}>Xem chi tiết lịch tiếp công dân định kỳ hàng tháng — gồm thời gian, cán bộ trực và nội dung tiếp.</p>
+          <Link href="/lich-tiep-cong-dan" className="btn btn-red" style={{ fontSize: "14px" }}>Xem lịch tháng này →</Link>
+        </div>
+      </div>
+
+      {/* Liên hệ */}
+      <div className="tab-pane" style={{ display: active === "contact" ? undefined : "none" }}>
+        <div className="org-card">
+          <h3>Thông tin liên hệ</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginTop: "8px" }}>
+            <div style={{ display: "flex", gap: "14px" }}>
+              <svg width="20" height="20" style={{ color: "var(--red)", flexShrink: 0, marginTop: "2px" }}><use href="#i-pin" /></svg>
+              <div>
+                <div style={{ fontSize: "11.5px", color: "var(--subtle)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Địa chỉ</div>
+                <div style={{ fontSize: "14px", color: "var(--ink)", marginTop: "2px" }}>{SITE.address}</div>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: "14px" }}>
+              <svg width="20" height="20" style={{ color: "var(--red)", flexShrink: 0, marginTop: "2px" }}><use href="#i-phone" /></svg>
+              <div>
+                <div style={{ fontSize: "11.5px", color: "var(--subtle)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Điện thoại</div>
+                <div style={{ fontSize: "14px", color: "var(--ink)", marginTop: "2px", fontVariantNumeric: "tabular-nums" }}>{SITE.phone}</div>
+                <div style={{ fontSize: "12.5px", color: "var(--muted)", marginTop: "2px" }}>Đường dây nóng: <b style={{ color: "var(--red)" }}>113</b></div>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: "14px" }}>
+              <svg width="20" height="20" style={{ color: "var(--red)", flexShrink: 0, marginTop: "2px" }}><use href="#i-mail" /></svg>
+              <div>
+                <div style={{ fontSize: "11.5px", color: "var(--subtle)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Email</div>
+                <div style={{ fontSize: "14px", color: "var(--ink)", marginTop: "2px" }}>{SITE.email}</div>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: "14px" }}>
+              <svg width="20" height="20" style={{ color: "var(--red)", flexShrink: 0, marginTop: "2px" }}><use href="#i-clock" /></svg>
+              <div>
+                <div style={{ fontSize: "11.5px", color: "var(--subtle)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Giờ làm việc</div>
+                <div style={{ fontSize: "14px", color: "var(--ink)", marginTop: "2px" }}>Thứ Hai – Thứ Sáu: 7:00 – 11:30, 13:30 – 17:00</div>
+                <div style={{ fontSize: "14px", color: "var(--ink)" }}>Thứ Bảy: 7:30 – 11:30</div>
+              </div>
+            </div>
           </div>
         </div>
-      )}
-    </section>
+      </div>
+    </>
   );
 }

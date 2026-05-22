@@ -2,20 +2,26 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getProcedures } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
-import Badge from "@/components/ui/Badge";
 
 export const metadata: Metadata = {
   title: "Thủ tục hành chính",
-  description: "Hướng dẫn thủ tục hành chính về cư trú, CCCD và phương tiện",
+  description: "Hướng dẫn chi tiết các thủ tục thuộc thẩm quyền Công an phường — minh bạch, công khai, thực hiện trực tuyến.",
 };
 
 const CATEGORIES = [
   { value: "", label: "Tất cả" },
   { value: "cu-tru", label: "Cư trú" },
-  { value: "cmnd-cccd", label: "CMND/CCCD" },
+  { value: "cmnd-cccd", label: "Căn cước công dân" },
   { value: "xe-co", label: "Phương tiện" },
-  { value: "khac", label: "Khác" },
+  { value: "khac", label: "An ninh trật tự" },
 ];
+
+const CATEGORY_LABEL: Record<string, string> = {
+  "cu-tru": "Cư trú",
+  "cmnd-cccd": "Căn cước công dân",
+  "xe-co": "Phương tiện",
+  "khac": "Khác",
+};
 
 export default async function ProceduresPage({
   searchParams,
@@ -28,64 +34,74 @@ export default async function ProceduresPage({
   return (
     <>
       <PageHeader
-        title="Thủ tục Hành chính"
+        title="Thủ tục hành chính"
         breadcrumbs={[{ label: "Thủ tục hành chính" }]}
-        description="Hướng dẫn chi tiết các thủ tục hành chính tại Công an phường"
+        description="Hướng dẫn chi tiết các thủ tục thuộc thẩm quyền Công an phường — minh bạch, công khai, thực hiện trực tuyến."
       />
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex flex-wrap gap-2 mb-8">
-          {CATEGORIES.map((cat) => {
-            const isActive = (cat.value === "" && !category) || cat.value === category;
-            return (
-              <a
-                key={cat.value}
-                href={
-                  cat.value
-                    ? `/thu-tuc-hanh-chinh?category=${cat.value}`
-                    : "/thu-tuc-hanh-chinh"
-                }
-                className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
-                  isActive
-                    ? "bg-police-red text-white border-police-red"
-                    : "text-gray-600 border-gray-300 hover:border-police-red hover:text-police-red"
-                }`}
-              >
-                {cat.label}
-              </a>
-            );
-          })}
-        </div>
 
-        {procedures.length === 0 ? (
-          <p className="text-center text-gray-500 py-16">Chưa có thủ tục nào.</p>
-        ) : (
-          <div className="space-y-4">
-            {procedures.map((proc) => (
-              <div
-                key={proc._id}
-                className="bg-white rounded-lg border border-gray-200 p-5 hover:border-police-red hover:shadow-sm transition-all"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge category={proc.category} />
-                    </div>
+      <section className="block">
+        <div className="container">
+          <div className="filter-row">
+            {CATEGORIES.map((cat) => {
+              const isActive = (cat.value === "" && !category) || cat.value === category;
+              return (
+                <Link
+                  key={cat.value}
+                  href={cat.value ? `/thu-tuc-hanh-chinh?category=${cat.value}` : "/thu-tuc-hanh-chinh"}
+                  className={isActive ? "chip active" : "chip"}
+                >
+                  {cat.label}
+                </Link>
+              );
+            })}
+          </div>
+
+          {procedures.length === 0 ? (
+            <p style={{ textAlign: "center", color: "var(--muted)", padding: "64px 0" }}>
+              Chưa có thủ tục nào.
+            </p>
+          ) : (
+            <div className="proc-table">
+              <div className="proc-row head">
+                <div>Mã</div>
+                <div>Tên thủ tục</div>
+                <div>Thời gian xử lý</div>
+                <div>Phí, lệ phí</div>
+                <div>Hình thức</div>
+              </div>
+
+              {procedures.map((proc) => (
+                <div className="proc-row" key={proc._id}>
+                  <div className="code">{proc._id.slice(-6).toUpperCase()}</div>
+                  <div>
                     <Link href={`/thu-tuc-hanh-chinh/${proc.slug.current}`}>
-                      <h3 className="font-semibold text-gray-900 hover:text-police-red">
-                        {proc.title}
-                      </h3>
+                      <h4>{proc.title}</h4>
                     </Link>
+                    <div className="sub">
+                      Lĩnh vực: {CATEGORY_LABEL[proc.category] ?? proc.category}
+                    </div>
                   </div>
-                  <div className="text-sm text-right text-gray-500">
-                    <p>Thời gian: <strong>{proc.processingTime}</strong></p>
-                    <p>Lệ phí: <strong>{proc.fee}</strong></p>
+                  <div className="field">
+                    <b>{proc.processingTime}</b>
+                    <div className="lbl">Làm việc</div>
+                  </div>
+                  <div className="field">
+                    <b>{proc.fee}</b>
+                    <div className="lbl">Lệ phí</div>
+                  </div>
+                  <div>
+                    {proc.onlineServiceUrl ? (
+                      <span className="badge online">Trực tuyến</span>
+                    ) : (
+                      <span className="badge offline">Trực tiếp</span>
+                    )}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 }

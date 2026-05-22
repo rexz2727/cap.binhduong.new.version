@@ -6,6 +6,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { getNewsBySlug } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
 import Badge from "@/components/ui/Badge";
+import PrintButton from "@/components/ui/PrintButton";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -24,7 +25,7 @@ export default async function NewsDetailPage({ params }: Props) {
   if (!post) notFound();
 
   const imgUrl = post.mainImage
-    ? urlFor(post.mainImage).width(900).height(500).url()
+    ? urlFor(post.mainImage).width(900).height(506).url()
     : null;
 
   const formattedDate = new Date(post.publishedAt).toLocaleDateString("vi-VN", {
@@ -38,34 +39,52 @@ export default async function NewsDetailPage({ params }: Props) {
     <>
       <PageHeader
         title={post.title}
-        breadcrumbs={[{ label: "Tin tức", href: "/tin-tuc" }, { label: post.title }]}
+        breadcrumbs={[
+          { label: "Tin tức", href: "/tin-tuc" },
+          { label: post.title },
+        ]}
       />
-      <article className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex items-center gap-3 mb-4">
-          <Badge category={post.category} />
-          <time className="text-sm text-gray-500">{formattedDate}</time>
-        </div>
-
-        {imgUrl && (
-          <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-6">
-            <Image
-              src={imgUrl}
-              alt={post.mainImage?.alt ?? post.title}
-              fill
-              className="object-cover"
-              priority
-            />
+      <section className="block">
+        <div className="article-container">
+          <div className="article-meta">
+            <Badge category={post.category} />
+            <span>{formattedDate}</span>
           </div>
-        )}
 
-        <p className="text-lg text-gray-600 font-medium border-l-4 border-police-red pl-4 mb-6">
-          {post.excerpt}
-        </p>
+          {imgUrl && (
+            <div className="article-cover" style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden" }}>
+              <Image
+                src={imgUrl}
+                alt={post.mainImage?.alt ?? post.title}
+                fill
+                style={{ objectFit: "cover" }}
+                priority
+              />
+            </div>
+          )}
 
-        <div className="prose prose-gray max-w-none prose-headings:text-police-navy prose-a:text-police-red">
-          <PortableText value={post.body} />
+          {post.excerpt && (
+            <p className="article-lede">{post.excerpt}</p>
+          )}
+
+          <div className="article-body">
+            <PortableText value={post.body} />
+          </div>
+
+          <div className="article-foot">
+            <div className="tag-list" />
+            <div className="share-btns">
+              <button title="Facebook">
+                <svg width="14" height="14"><use href="#i-fb" /></svg>
+              </button>
+              <button title="Chia sẻ">
+                <svg width="14" height="14"><use href="#i-share" /></svg>
+              </button>
+              <PrintButton />
+            </div>
+          </div>
         </div>
-      </article>
+      </section>
     </>
   );
 }

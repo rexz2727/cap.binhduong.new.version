@@ -29,3 +29,7 @@ yarn-error.log*
 # === TYPESCRIPT BUILD ===
 *.tsbuildinfo
 next-env.d.ts
+
+# === CONG CU CLI ===
+# Artifact cua cong cu, khong dong bo
+.antigravitycli/

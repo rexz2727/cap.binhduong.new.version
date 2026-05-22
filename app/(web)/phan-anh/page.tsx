@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import PageHeader from "@/components/ui/PageHeader";
-import Button from "@/components/ui/Button";
-import { SITE } from "@/constants/site";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -48,112 +46,322 @@ export default function FeedbackPage() {
   return (
     <>
       <PageHeader
-        title="Phản ánh Trực tuyến"
+        title="Phản ánh trực tuyến"
         breadcrumbs={[{ label: "Phản ánh trực tuyến" }]}
-        description="Gửi tin báo tội phạm hoặc kiến nghị đến Công an phường"
+        description="Gửi tin báo tội phạm, kiến nghị, phản ánh đến Công an phường Bình Dương. Mọi thông tin được bảo mật theo Luật Tố cáo 2018."
       />
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-6 text-sm text-yellow-800">
-          <strong>Lưu ý:</strong> Đây là kênh tiếp nhận thông tin phi khẩn cấp. Trong
-          trường hợp nguy hiểm tính mạng, hãy gọi ngay <strong>{SITE.hotline}</strong>.
-        </div>
 
-        {status === "success" ? (
-          <div className="bg-green-50 border border-green-300 rounded-lg p-6 text-center">
-            <p className="text-2xl mb-2">✅</p>
-            <h3 className="font-bold text-green-800 text-lg">Gửi phản ánh thành công!</h3>
-            <p className="text-green-700 text-sm mt-1">
-              Chúng tôi đã nhận được thông tin và sẽ xem xét trong thời gian sớm nhất.
-            </p>
-            <button
-              onClick={() => setStatus("idle")}
-              className="mt-4 text-sm text-police-red underline"
-            >
-              Gửi phản ánh khác
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <section className="block">
+        <div
+          className="container"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1.4fr 1fr",
+            gap: "32px",
+            alignItems: "flex-start",
+          }}
+        >
+          <div>
+            <div className="notice">
+              <svg className="ic">
+                <use href="#i-warn" />
+              </svg>
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Họ và tên <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="fullName"
-                  name="fullName"
-                  type="text"
-                  required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-police-red"
-                />
-              </div>
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                  Số điện thoại <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  required
-                  placeholder="0912345678"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-police-red"
-                />
+                <b>Lưu ý quan trọng:</b> Đây là kênh tiếp nhận thông tin{" "}
+                <b>phi khẩn cấp</b>. Trong trường hợp nguy hiểm tính mạng hoặc đang xảy ra
+                tội phạm, hãy gọi ngay <b>113</b>.
               </div>
             </div>
 
-            <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                Chủ đề phản ánh <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="subject"
-                name="subject"
-                type="text"
-                required
-                placeholder="Ví dụ: Tụ điểm nghi buôn bán ma túy tại..."
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-police-red"
-              />
-            </div>
+            {status === "success" ? (
+              <div className="form-card" style={{ textAlign: "center", padding: "40px 24px" }}>
+                <svg width="48" height="48" style={{ color: "var(--green, #16a34a)", margin: "0 auto 12px" }}>
+                  <use href="#i-check" />
+                </svg>
+                <h3 style={{ color: "var(--navy)", marginBottom: "8px" }}>Gửi phản ánh thành công!</h3>
+                <p style={{ color: "var(--ink-2)", fontSize: "14px" }}>
+                  Chúng tôi đã nhận được thông tin và sẽ xem xét trong thời gian sớm nhất.
+                </p>
+                <button
+                  onClick={() => setStatus("idle")}
+                  className="btn btn-secondary"
+                  style={{ marginTop: "16px" }}
+                >
+                  Gửi phản ánh khác
+                </button>
+              </div>
+            ) : (
+              <form className="form-card" onSubmit={handleSubmit}>
+                <div className="form-row">
+                  <div className="field">
+                    <label>
+                      Họ và tên <span className="req">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      placeholder="Nguyễn Văn A"
+                      required
+                    />
+                  </div>
+                  <div className="field">
+                    <label>
+                      Số điện thoại <span className="req">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="0912 345 678"
+                      required
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
-                Nội dung chi tiết <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                id="content"
-                name="content"
-                rows={6}
-                required
-                placeholder="Mô tả chi tiết sự việc, địa điểm, thời gian, đối tượng liên quan (nếu biết)..."
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-police-red resize-none"
-              />
-            </div>
+                <div className="form-row">
+                  <div className="field">
+                    <label>Email (tùy chọn)</label>
+                    <input type="email" name="email" placeholder="email@example.com" />
+                  </div>
+                  <div className="field">
+                    <label>
+                      Loại phản ánh <span className="req">*</span>
+                    </label>
+                    <select name="type" required>
+                      <option value="">-- Chọn loại phản ánh --</option>
+                      <option value="toi-pham">Tin báo tội phạm</option>
+                      <option value="te-nan">Tệ nạn xã hội</option>
+                      <option value="giao-thong">An toàn giao thông</option>
+                      <option value="thai-do">Phản ánh thái độ phục vụ</option>
+                      <option value="kien-nghi">Kiến nghị khác</option>
+                    </select>
+                  </div>
+                </div>
 
-            <div className="flex items-center gap-2">
-              <input
-                id="anonymous"
-                name="anonymous"
-                type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-police-red focus:ring-police-red"
-              />
-              <label htmlFor="anonymous" className="text-sm text-gray-600">
-                Gửi ẩn danh (không hiển thị tên và số điện thoại)
-              </label>
-            </div>
+                <div className="field">
+                  <label>
+                    Chủ đề phản ánh <span className="req">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    placeholder="Ví dụ: Tụ điểm nghi buôn bán ma túy tại khu phố Hòa Phú 3"
+                    required
+                  />
+                </div>
 
-            {status === "error" && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-3">
-                {errorMsg}
-              </p>
+                <div className="field">
+                  <label>Địa điểm cụ thể</label>
+                  <input
+                    type="text"
+                    name="location"
+                    placeholder="Số nhà, đường, khu phố…"
+                  />
+                  <span className="help">
+                    Cung cấp địa chỉ chi tiết giúp lực lượng chức năng xử lý nhanh chóng.
+                  </span>
+                </div>
+
+                <div className="field">
+                  <label>
+                    Nội dung chi tiết <span className="req">*</span>
+                  </label>
+                  <textarea
+                    name="content"
+                    placeholder="Mô tả chi tiết sự việc: thời gian xảy ra, đối tượng liên quan, hành vi vi phạm…"
+                    required
+                  />
+                  <span className="help">
+                    Hạn chế: tối đa 2000 ký tự. Cung cấp càng nhiều thông tin càng tốt.
+                  </span>
+                </div>
+
+                <div className="checkbox-row">
+                  <input type="checkbox" id="anonymous" name="anonymous" />
+                  <label htmlFor="anonymous">
+                    Gửi ẩn danh (không hiển thị tên và số điện thoại trong hồ sơ công khai)
+                  </label>
+                </div>
+
+                <div className="checkbox-row">
+                  <input type="checkbox" id="agree" name="agree" required />
+                  <label htmlFor="agree">
+                    Tôi cam đoan thông tin cung cấp là đúng sự thật và chịu trách nhiệm trước
+                    pháp luật về tố cáo sai sự thật.
+                  </label>
+                </div>
+
+                {status === "error" && (
+                  <div className="notice" style={{ marginTop: "4px" }}>
+                    <div>{errorMsg}</div>
+                  </div>
+                )}
+
+                <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={status === "loading"}
+                    style={{ flex: 1, justifyContent: "center" }}
+                  >
+                    {status === "loading" ? "Đang gửi..." : "Gửi phản ánh"}
+                  </button>
+                  <button type="reset" className="btn btn-secondary">
+                    Làm mới
+                  </button>
+                </div>
+              </form>
             )}
+          </div>
 
-            <Button type="submit" disabled={status === "loading"} className="w-full">
-              {status === "loading" ? "Đang gửi..." : "Gửi phản ánh"}
-            </Button>
-          </form>
-        )}
-      </div>
+          <aside style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div
+              className="form-card"
+              style={{
+                background: "var(--navy)",
+                color: "white",
+                border: "none",
+                padding: "24px",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "11.5px",
+                  color: "var(--gold)",
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  marginBottom: "6px",
+                }}
+              >
+                Khẩn cấp
+              </div>
+              <div
+                style={{
+                  fontSize: "48px",
+                  fontWeight: 800,
+                  color: "var(--gold)",
+                  lineHeight: 1,
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                113
+              </div>
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "rgba(255,255,255,0.75)",
+                  marginTop: "6px",
+                }}
+              >
+                Gọi ngay khi có sự việc đang xảy ra hoặc cần can thiệp trực tiếp.
+              </div>
+            </div>
+
+            <div className="form-card" style={{ padding: "22px" }}>
+              <h3
+                style={{
+                  margin: "0 0 14px",
+                  color: "var(--navy)",
+                  fontSize: "15px",
+                  fontWeight: 700,
+                }}
+              >
+                Quy trình xử lý phản ánh
+              </h3>
+              <ol
+                style={{
+                  margin: 0,
+                  paddingLeft: 0,
+                  listStyle: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "14px",
+                  fontSize: "13.5px",
+                  color: "var(--ink-2)",
+                }}
+              >
+                {[
+                  {
+                    n: 1,
+                    title: "Tiếp nhận",
+                    body: "Ngay khi gửi, hệ thống cấp mã hồ sơ. Trong 4 giờ làm việc cán bộ trực sẽ xem xét.",
+                  },
+                  {
+                    n: 2,
+                    title: "Phân loại",
+                    body: "Hồ sơ được chuyển đến bộ phận nghiệp vụ phù hợp xử lý theo thẩm quyền.",
+                  },
+                  {
+                    n: 3,
+                    title: "Phản hồi",
+                    body: "Trong 24 giờ làm việc, người phản ánh sẽ nhận tin nhắn/email phản hồi tiến độ.",
+                  },
+                  {
+                    n: 4,
+                    title: "Xử lý",
+                    body: "Lực lượng chức năng kiểm tra, xác minh và xử lý theo đúng quy định pháp luật.",
+                  },
+                ].map(({ n, title, body }) => (
+                  <li
+                    key={n}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "24px 1fr",
+                      gap: "10px",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <span
+                      style={{
+                        background: "var(--navy)",
+                        color: "white",
+                        width: "22px",
+                        height: "22px",
+                        borderRadius: "50%",
+                        display: "grid",
+                        placeItems: "center",
+                        fontSize: "11px",
+                        fontWeight: 700,
+                      }}
+                    >
+                      {n}
+                    </span>
+                    <span>
+                      <b style={{ color: "var(--navy)" }}>{title}</b> · {body}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="form-card" style={{ padding: "22px" }}>
+              <h3
+                style={{
+                  margin: "0 0 12px",
+                  color: "var(--navy)",
+                  fontSize: "15px",
+                  fontWeight: 700,
+                }}
+              >
+                Tra cứu hồ sơ đã gửi
+              </h3>
+              <div className="field" style={{ marginBottom: "10px" }}>
+                <input
+                  type="text"
+                  placeholder="Nhập mã hồ sơ (VD: PA-2026-00123)"
+                />
+              </div>
+              <button
+                type="button"
+                className="btn btn-navy"
+                style={{ width: "100%", justifyContent: "center" }}
+              >
+                Tra cứu
+              </button>
+            </div>
+          </aside>
+        </div>
+      </section>
     </>
   );
 }

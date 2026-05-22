@@ -78,30 +78,24 @@ export default function SoDoTrangPage() {
         breadcrumbs={[{ label: "Sơ đồ trang" }]}
         description="Danh mục toàn bộ các trang trên cổng thông tin"
       />
-      <div className="max-w-5xl mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SITEMAP.map((group) => (
-            <div key={group.section} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-              <h2 className="font-bold text-police-navy text-sm mb-3 pb-2 border-b border-gray-100 uppercase tracking-wider">
-                {group.section}
-              </h2>
-              <ul className="space-y-1.5">
-                {group.links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="flex items-center gap-2 text-sm text-gray-600 hover:text-police-red transition-colors"
-                    >
-                      <span className="w-1 h-1 rounded-full bg-police-red shrink-0" />
+      <section className="block">
+        <div className="container">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {SITEMAP.map((group) => (
+              <div key={group.section} className="aside-card">
+                <h4>{group.section}</h4>
+                <div className="aside-list">
+                  {group.links.map((link) => (
+                    <Link key={link.href} href={link.href}>
                       {link.label}
                     </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

@@ -5,14 +5,7 @@ import ValuesStrip from "@/components/sections/ValuesStrip";
 import QuickLinks from "@/components/sections/QuickLinks";
 import LatestNews from "@/components/sections/LatestNews";
 import NguoiTotViecTot from "@/components/sections/NguoiTotViecTot";
-import PhotoAlbumPreview from "@/components/sections/PhotoAlbumPreview";
-import VideoPreview from "@/components/sections/VideoPreview";
-import {
-  getLatestNews,
-  getNguoiTotViecTot,
-  getPhotoAlbums,
-  getVideos,
-} from "@/sanity/lib/queries";
+import { getLatestNews, getNguoiTotViecTot, getHeroStats } from "@/sanity/lib/queries";
 import { SITE } from "@/constants/site";
 
 export const metadata: Metadata = {
@@ -21,23 +14,20 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [latestNews, nguoiTotViecTot, photoAlbums, videos] = await Promise.all([
+  const [latestNews, nguoiTotViecTot, heroStats] = await Promise.all([
     getLatestNews(6),
     getNguoiTotViecTot(6),
-    getPhotoAlbums(4),
-    getVideos("all", 4),
+    getHeroStats(),
   ]);
 
   return (
     <>
-      <HeroSection />
+      <HeroSection stats={heroStats} />
       <EmergencyRow />
       <ValuesStrip />
       <QuickLinks />
       <LatestNews posts={latestNews} />
       <NguoiTotViecTot posts={nguoiTotViecTot} />
-      <PhotoAlbumPreview albums={photoAlbums} />
-      <VideoPreview videos={videos} />
     </>
   );
 }

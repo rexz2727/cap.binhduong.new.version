@@ -1,9 +1,10 @@
 "use client";
 
 import { useI18n } from "@/lib/i18n";
+import type { HeroStats } from "@/sanity/lib/queries";
 import HeroSearch from "./HeroSearch";
 
-export default function HeroSection() {
+export default function HeroSection({ stats }: { stats: HeroStats }) {
   const { t } = useI18n();
 
   return (
@@ -40,7 +41,7 @@ export default function HeroSection() {
             <svg className="ic">
               <use href="#i-news" />
             </svg>
-            <div className="v">1.247</div>
+            <div className="v">{stats.newsCount.toLocaleString("vi-VN")}</div>
             <div className="l" data-i18n="stat1">
               {t("stat1", "Tin tức & thông báo đã đăng")}
             </div>
@@ -49,7 +50,7 @@ export default function HeroSection() {
             <svg className="ic">
               <use href="#i-doc" />
             </svg>
-            <div className="v">89</div>
+            <div className="v">{stats.procedureCount}</div>
             <div className="l" data-i18n="stat2">
               {t("stat2", "Thủ tục hành chính trực tuyến")}
             </div>

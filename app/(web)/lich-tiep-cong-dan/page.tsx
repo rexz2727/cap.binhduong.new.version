@@ -44,6 +44,16 @@ function groupByDate(schedules: CitizenSchedule[]): Record<string, CitizenSchedu
   }, {});
 }
 
+function formatDayNum(dateStr: string): string {
+  const [, month, day] = dateStr.split("-");
+  return `${day}/${month}`;
+}
+
+function formatDayLabel(dateStr: string): string {
+  const dateObj = new Date(dateStr + "T00:00:00");
+  return dateObj.toLocaleDateString("vi-VN", { weekday: "long" });
+}
+
 export default async function LichTiepCongDanPage({ searchParams }: Props) {
   const { month } = await searchParams;
   const now = new Date();
@@ -62,102 +72,87 @@ export default async function LichTiepCongDanPage({ searchParams }: Props) {
       <PageHeader
         title="Lịch tiếp công dân"
         breadcrumbs={[{ label: "Lịch tiếp công dân" }]}
-        description="Lịch tiếp công dân định kỳ của cán bộ Công an phường Bình Dương"
+        description="Lịch tiếp công dân định kỳ của Ban lãnh đạo và cán bộ Công an phường Bình Dương."
       />
-      <div className="max-w-5xl mx-auto px-4 py-10">
-        {/* Month navigation */}
-        <div className="flex items-center justify-between mb-8">
-          <Link
-            href={`/lich-tiep-cong-dan?month=${prevMonth(currentMonth)}`}
-            className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium transition-colors"
-          >
-            ← Tháng trước
-          </Link>
-          <h2 className="text-xl font-bold text-police-navy capitalize">{label}</h2>
-          <Link
-            href={`/lich-tiep-cong-dan?month=${nextMonth(currentMonth)}`}
-            className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium transition-colors"
-          >
-            Tháng sau →
-          </Link>
-        </div>
-
-        {/* Info banner */}
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-8 text-sm text-blue-800">
-          <p className="font-semibold mb-0.5">Thông tin tiếp công dân</p>
-          <p>
-            Địa điểm: Trụ sở Công an phường Bình Dương — Số 01, Đường D27, KP. Hòa Phú 1.
-            Công dân cần mang theo CCCD/CMND và giấy tờ liên quan.
-          </p>
-        </div>
-
-        {sortedDates.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
-            <p className="text-5xl mb-3">📅</p>
-            <p>Chưa có lịch tiếp công dân trong tháng này.</p>
+      <section className="block">
+        <div className="container" style={{ maxWidth: "960px" }}>
+          <div className="schedule-nav">
+            <Link
+              href={`/lich-tiep-cong-dan?month=${prevMonth(currentMonth)}`}
+              className="btn btn-secondary"
+            >
+              <svg width="14" height="14"><use href="#i-chev-left" /></svg> Tháng trước
+            </Link>
+            <h2 style={{ margin: 0 }}>{label}</h2>
+            <Link
+              href={`/lich-tiep-cong-dan?month=${nextMonth(currentMonth)}`}
+              className="btn btn-secondary"
+            >
+              Tháng sau <svg width="14" height="14"><use href="#i-chev-right" /></svg>
+            </Link>
           </div>
-        ) : (
-          <div className="space-y-6">
-            {sortedDates.map((date) => {
-              const daySchedules = grouped[date];
-              const dateObj = new Date(date + "T00:00:00");
-              const dayLabel = dateObj.toLocaleDateString("vi-VN", {
-                weekday: "long",
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              });
 
+          <div className="notice" style={{ marginBottom: "24px" }}>
+            <svg className="ic"><use href="#i-warn" /></svg>
+            <div>
+              <b>Thông tin tiếp công dân:</b> Địa điểm tại Trụ sở Công an phường Bình Dương — Số 01, Đường D27, KP. Hòa Phú 1. Công dân vui lòng mang theo <b>CCCD/CMND</b> và giấy tờ liên quan. Liên hệ đặt lịch trước qua số <b>0274 3515 097</b>.
+            </div>
+          </div>
+
+          {sortedDates.length === 0 ? (
+            <div className="schedule-day">
+              <div className="day-head">
+                <span className="day-num">—</span>
+                Chưa có lịch trong tháng này
+              </div>
+              <div className="schedule-slot" style={{ justifyContent: "center", color: "var(--muted)" }}>
+                Không có dữ liệu lịch tiếp công dân cho tháng này.
+              </div>
+            </div>
+          ) : (
+            sortedDates.map((date) => {
+              const daySchedules = grouped[date];
               return (
-                <div key={date} className="border border-gray-200 rounded-2xl overflow-hidden">
-                  <div className="bg-police-navy text-white px-5 py-3">
-                    <span className="font-semibold capitalize">{dayLabel}</span>
+                <div key={date} className="schedule-day">
+                  <div className="day-head">
+                    <span className="day-num">{formatDayNum(date)}</span>
+                    {formatDayLabel(date)} · Tiếp công dân định kỳ
                   </div>
-                  <div className="divide-y divide-gray-100">
-                    {daySchedules.map((item) => (
-                      <div
-                        key={item._id}
-                        className="px-5 py-4 flex flex-col sm:flex-row sm:items-start gap-3"
-                      >
-                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
-                          <div>
-                            <span className="text-gray-500 font-medium">Giờ tiếp: </span>
-                            <span className="text-police-navy font-semibold">{item.timeSlot}</span>
-                            {item.isRegular && (
-                              <span className="ml-2 inline-block px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs">
-                                Thường kỳ
-                              </span>
-                            )}
-                          </div>
-                          <div>
-                            <span className="text-gray-500 font-medium">Cán bộ trực: </span>
-                            <span>
-                              {item.officer.rank && `${item.officer.rank} `}
-                              <span className="font-medium">{item.officer.fullName}</span>
-                              {item.officer.position && (
-                                <span className="text-gray-500"> — {item.officer.position}</span>
-                              )}
-                            </span>
-                          </div>
-                          {item.location && (
-                            <div>
-                              <span className="text-gray-500 font-medium">Địa điểm: </span>
-                              <span>{item.location}</span>
-                            </div>
-                          )}
-                        </div>
-                        {item.note && (
-                          <p className="text-sm text-gray-500 italic sm:w-48 shrink-0">{item.note}</p>
+                  {daySchedules.map((item) => (
+                    <div key={item._id} className="schedule-slot">
+                      <span className="time">{item.timeSlot}</span>
+                      <div>
+                        <div className="lbl">Cán bộ trực</div>
+                        <b>
+                          {item.officer.rank && `${item.officer.rank} `}
+                          {item.officer.fullName}
+                        </b>
+                        {item.officer.position && (
+                          <><br />{item.officer.position}</>
                         )}
                       </div>
-                    ))}
-                  </div>
+                      <div>
+                        <div className="lbl">Nội dung</div>
+                        {item.note ?? "Tiếp công dân chung"}
+                      </div>
+                      <div>
+                        <div className="lbl">Trạng thái</div>
+                        {item.isRegular ? (
+                          <span className="recurring">Thường kỳ</span>
+                        ) : (
+                          <span style={{ fontSize: "11px", background: "var(--gold-soft)", color: "var(--gold-deep)", padding: "2px 8px", borderRadius: "99px", fontWeight: 600 }}>
+                            Chuyên đề
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               );
-            })}
-          </div>
-        )}
-      </div>
+            })
+          )}
+        </div>
+      </section>
     </>
   );
 }

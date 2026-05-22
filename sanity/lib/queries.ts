@@ -114,7 +114,7 @@ export async function getProcedures(category?: string): Promise<Procedure[]> {
     : groq`*[_type == "procedure"]`;
   return safeFetch(
     () => client.fetch(
-      groq`${filter} | order(title asc) { _id, title, slug, category, processingTime, fee }`,
+      groq`${filter} | order(title asc) { _id, title, slug, category, processingTime, fee, onlineServiceUrl }`,
       { category: category ?? "" },
       noCache
     ),
@@ -356,6 +356,25 @@ export async function getAllSlugsForSitemap() {
       { slug: string }[],
       { slug: string }[],
     ]
+  );
+}
+
+// ─── Hero Stats ───────────────────────────────────────────────────────────────
+
+export type HeroStats = { newsCount: number; procedureCount: number };
+
+export async function getHeroStats(): Promise<HeroStats> {
+  return safeFetch(
+    () => client.fetch<HeroStats>(
+      groq`{
+        "newsCount": count(*[_type == "newsPost" && !(_id in path("drafts.**"))])
+          + count(*[_type == "announcement" && !(_id in path("drafts.**"))]),
+        "procedureCount": count(*[_type == "procedure" && !(_id in path("drafts.**"))])
+      }`,
+      {},
+      noCache
+    ),
+    { newsCount: 0, procedureCount: 0 }
   );
 }
 

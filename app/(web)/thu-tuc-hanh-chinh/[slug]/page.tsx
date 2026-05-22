@@ -3,11 +3,17 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { getProcedureBySlug } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
-import Badge from "@/components/ui/Badge";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
+
+const CATEGORY_LABEL: Record<string, string> = {
+  "cu-tru": "Cư trú",
+  "cmnd-cccd": "Căn cước công dân",
+  "xe-co": "Phương tiện",
+  "khac": "Khác",
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -30,61 +36,99 @@ export default async function ProcedureDetailPage({ params }: Props) {
           { label: proc.title },
         ]}
       />
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-        <div className="bg-blue-50 rounded-lg p-4 grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <span className="font-medium text-gray-600">Lĩnh vực: </span>
-            <Badge category={proc.category} />
-          </div>
-          <div>
-            <span className="font-medium text-gray-600">Thời gian: </span>
-            <span>{proc.processingTime}</span>
-          </div>
-          <div>
-            <span className="font-medium text-gray-600">Lệ phí: </span>
-            <span>{proc.fee}</span>
-          </div>
-        </div>
 
-        {proc.requirements && (
-          <div>
-            <h2 className="text-lg font-bold text-police-navy mb-3">Thành phần hồ sơ</h2>
-            <div className="prose prose-gray max-w-none">
-              <PortableText value={proc.requirements} />
+      <section className="block">
+        <div className="container-narrow">
+          <div className="org-card" style={{ marginBottom: "32px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div>
+                <div className="lbl">Lĩnh vực</div>
+                <b>{CATEGORY_LABEL[proc.category] ?? proc.category}</b>
+              </div>
+              <div>
+                <div className="lbl">Thời gian xử lý</div>
+                <b>{proc.processingTime}</b>
+              </div>
+              <div>
+                <div className="lbl">Phí, lệ phí</div>
+                <b>{proc.fee}</b>
+              </div>
+              <div>
+                <div className="lbl">Hình thức</div>
+                <b>{proc.onlineServiceUrl ? "Trực tuyến" : "Trực tiếp"}</b>
+              </div>
             </div>
-          </div>
-        )}
 
-        {proc.steps && (
-          <div>
-            <h2 className="text-lg font-bold text-police-navy mb-3">Các bước thực hiện</h2>
-            <div className="prose prose-gray max-w-none">
-              <PortableText value={proc.steps} />
-            </div>
-          </div>
-        )}
-
-        {proc.forms && proc.forms.length > 0 && (
-          <div>
-            <h2 className="text-lg font-bold text-police-navy mb-3">Biểu mẫu tải về</h2>
-            <div className="space-y-2">
-              {proc.forms.map((form, i) => (
+            {proc.onlineServiceUrl && (
+              <div style={{ marginTop: "20px" }}>
                 <a
-                  key={i}
-                  href={form.fileUrl}
-                  download
+                  href={proc.onlineServiceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg border border-gray-200 hover:border-police-navy hover:bg-blue-50 transition-colors text-sm"
+                  className="badge online"
                 >
-                  <span className="text-xl">📥</span>
-                  <span className="text-police-navy font-medium">{form.title}</span>
+                  Thực hiện trực tuyến →
                 </a>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+
+          <div className="article-body">
+            {proc.requirements && (
+              <>
+                <h2>Thành phần hồ sơ</h2>
+                <PortableText value={proc.requirements} />
+              </>
+            )}
+
+            {proc.steps && (
+              <>
+                <h2>Các bước thực hiện</h2>
+                <PortableText value={proc.steps} />
+              </>
+            )}
+
+            {proc.legalBasis && proc.legalBasis.length > 0 && (
+              <>
+                <h2>Căn cứ pháp lý</h2>
+                <ul>
+                  {proc.legalBasis.map((basis, i) => (
+                    <li key={i}>{basis}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+
+          {proc.forms && proc.forms.length > 0 && (
+            <div style={{ marginTop: "32px" }}>
+              <h3 style={{ fontWeight: 700, marginBottom: "12px" }}>Biểu mẫu tải về</h3>
+              <div className="doc-grid">
+                {proc.forms.map((form, i) => (
+                  <div className="doc-card" key={i}>
+                    <div className="doc-icon">
+                      <svg aria-hidden="true"><use href="#i-doc" /></svg>
+                    </div>
+                    <div className="b">
+                      <h4>{form.title}</h4>
+                    </div>
+                    <a
+                      href={form.fileUrl}
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="doc-download"
+                      title="Tải xuống"
+                    >
+                      <svg width="18" height="18"><use href="#i-download" /></svg>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 }

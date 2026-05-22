@@ -13,24 +13,28 @@ export default function GuiCauHoiPage() {
       <PageHeader
         title="Gửi câu hỏi"
         breadcrumbs={[
-          { label: "Hỏi đáp", href: "/hoi-dap" },
+          { label: "Hỏi đáp pháp luật", href: "/hoi-dap" },
           { label: "Gửi câu hỏi" },
         ]}
-        description="Đặt câu hỏi về pháp luật, thủ tục hành chính — chúng tôi sẽ trả lời trong 1–3 ngày làm việc"
+        description="Đặt câu hỏi về pháp luật, thủ tục hành chính — chúng tôi sẽ trả lời trong 1–3 ngày làm việc."
       />
-      <div className="max-w-2xl mx-auto px-4 py-10">
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
-          <div className="mb-6">
-            <h2 className="text-lg font-bold text-police-navy mb-2">Lưu ý khi gửi câu hỏi</h2>
-            <ul className="text-sm text-gray-600 space-y-1 list-disc list-inside">
-              <li>Câu hỏi sẽ được xem xét và trả lời bởi cán bộ có thẩm quyền</li>
-              <li>Câu hỏi và trả lời sẽ được đăng công khai (ẩn thông tin cá nhân nếu cần)</li>
-              <li>Không sử dụng để báo cáo khẩn cấp — hãy gọi <strong>113</strong></li>
-            </ul>
+
+      <section className="block">
+        <div className="container" style={{ maxWidth: "640px" }}>
+          <div className="notice" style={{ marginBottom: "24px" }}>
+            <svg className="ic">
+              <use href="#i-info" />
+            </svg>
+            <div>
+              <b>Lưu ý khi gửi câu hỏi:</b> Câu hỏi sẽ được xem xét và trả lời bởi cán bộ có thẩm
+              quyền. Câu hỏi và trả lời có thể được đăng công khai (ẩn thông tin cá nhân nếu cần).
+              Không sử dụng để báo cáo khẩn cấp — hãy gọi <b>113</b>.
+            </div>
           </div>
+
           <QnaForm />
         </div>
-      </div>
+      </section>
     </>
   );
 }

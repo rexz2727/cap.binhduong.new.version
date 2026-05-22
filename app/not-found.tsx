@@ -11,30 +11,32 @@ const QUICK_LINKS = [
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4 text-center">
-      <div className="mb-6 text-police-navy">
-        <span className="text-8xl font-black tracking-tight select-none">404</span>
-      </div>
+    <div
+      className="min-h-screen flex flex-col items-center justify-center px-4 text-center"
+      style={{ background: "var(--bg)" }}
+    >
+      <span className="text-8xl font-black tracking-tight select-none text-navy mb-6">
+        404
+      </span>
 
-      <h1 className="text-xl font-bold text-police-navy mb-2">Trang không tồn tại</h1>
-      <p className="text-gray-500 text-sm max-w-sm mb-8">
-        Địa chỉ bạn truy cập không tìm thấy hoặc đã được di chuyển.
-        Vui lòng kiểm tra lại đường dẫn.
+      <h1 className="text-xl font-bold text-navy mb-2">Trang không tồn tại</h1>
+      <p className="text-muted text-sm max-w-sm mb-8">
+        Địa chỉ bạn truy cập không tìm thấy hoặc đã được di chuyển. Vui lòng
+        kiểm tra lại đường dẫn.
       </p>
 
       <div className="flex flex-wrap justify-center gap-2 mb-10">
         {QUICK_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="px-4 py-2 rounded-full border border-gray-300 text-sm text-gray-700 hover:border-police-navy hover:text-police-navy transition-colors"
-          >
+          <Link key={link.href} href={link.href} className="chip">
             {link.label}
           </Link>
         ))}
       </div>
 
-      <div className="bg-police-red/10 border border-police-red/20 rounded-2xl px-6 py-4 text-sm text-police-red">
+      <div
+        className="rounded-2xl border border-red px-6 py-4 text-sm"
+        style={{ background: "var(--red-soft)", color: "var(--red-deep)" }}
+      >
         <p className="font-semibold mb-0.5">Cần hỗ trợ khẩn cấp?</p>
         <p>
           Gọi ngay{" "}

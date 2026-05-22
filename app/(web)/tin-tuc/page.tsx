@@ -10,9 +10,11 @@ export const metadata: Metadata = {
 
 const CATEGORIES = [
   { value: "", label: "Tất cả" },
-  { value: "tin-tuc", label: "Tin tức" },
+  { value: "an-ninh-trat-tu", label: "An ninh trật tự" },
   { value: "thong-bao", label: "Thông báo" },
   { value: "canh-bao", label: "Cảnh báo" },
+  { value: "hoat-dong-don-vi", label: "Hoạt động đơn vị" },
+  { value: "nguoi-tot-viec-tot", label: "Người tốt việc tốt" },
 ];
 
 export default async function NewsPage({
@@ -29,39 +31,41 @@ export default async function NewsPage({
     <>
       <PageHeader
         title="Tin tức & Thông báo"
-        breadcrumbs={[{ label: "Tin tức" }]}
-        description="Cập nhật tình hình an ninh trật tự và thông báo từ đơn vị"
+        breadcrumbs={[{ label: "Tin tức & Thông báo" }]}
+        description="Cập nhật tình hình an ninh trật tự và thông báo chính thức từ Công an phường Bình Dương."
       />
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex flex-wrap gap-2 mb-8">
-          {CATEGORIES.map((cat) => {
-            const isActive = (cat.value === "" && !category) || cat.value === category;
-            return (
-              <a
-                key={cat.value}
-                href={cat.value ? `/tin-tuc?category=${cat.value}` : "/tin-tuc"}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
-                  isActive
-                    ? "bg-police-red text-white border-police-red"
-                    : "text-gray-600 border-gray-300 hover:border-police-red hover:text-police-red"
-                }`}
-              >
-                {cat.label}
-              </a>
-            );
-          })}
-        </div>
-
-        {posts.length === 0 ? (
-          <p className="text-center text-gray-500 py-16">Chưa có tin tức nào.</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post) => (
-              <NewsCard key={post._id} post={post} />
-            ))}
+      <section className="block">
+        <div className="container">
+          <div className="filter-row">
+            {CATEGORIES.map((cat) => {
+              const isActive = (cat.value === "" && !category) || cat.value === category;
+              return (
+                <a
+                  key={cat.value}
+                  href={cat.value ? `/tin-tuc?category=${cat.value}` : "/tin-tuc"}
+                  className={isActive ? "chip active" : "chip"}
+                >
+                  {cat.label}
+                </a>
+              );
+            })}
+            <div className="search-box">
+              <svg className="ic"><use href="#i-search" /></svg>
+              <input type="text" placeholder="Tìm tin tức theo từ khóa…" />
+            </div>
           </div>
-        )}
-      </div>
+
+          {posts.length === 0 ? (
+            <p style={{ textAlign: "center", padding: "64px 0" }}>Chưa có tin tức nào.</p>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "24px" }}>
+              {posts.map((post) => (
+                <NewsCard key={post._id} post={post} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 }
