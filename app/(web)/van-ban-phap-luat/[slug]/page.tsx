@@ -2,18 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLegalDocBySlug } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
+import { LEGAL_CATEGORY_LABELS } from "@/constants/legal";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
-
-const CATEGORY_LABEL: Record<string, string> = {
-  "nghi-quyet": "Nghị quyết",
-  "ke-hoach": "Kế hoạch",
-  "quyet-dinh": "Quyết định",
-  "thong-tu": "Thông tư",
-  "khac": "Khác",
-};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -49,7 +42,7 @@ export default async function LegalDocDetailPage({ params }: Props) {
               <div className="doc-icon" style={{ flexShrink: 0 }}>
                 <svg aria-hidden="true"><use href="#i-doc" /></svg>
               </div>
-              <span className="badge-type">{CATEGORY_LABEL[doc.category] ?? doc.category}</span>
+              <span className="badge-type">{LEGAL_CATEGORY_LABELS[doc.category] ?? doc.category}</span>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>

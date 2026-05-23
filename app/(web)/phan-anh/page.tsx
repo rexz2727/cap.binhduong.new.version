@@ -1,54 +1,58 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import PageHeader from "@/components/ui/PageHeader";
+import FeedbackForm from "@/components/forms/FeedbackForm";
+import { getFeedbackProcess } from "@/sanity/lib/queries";
 
-type Status = "idle" | "loading" | "success" | "error";
+export const metadata: Metadata = {
+  title: "Phản ánh trực tuyến | Công an phường Bình Dương",
+};
 
-export default function FeedbackPage() {
-  const [status, setStatus] = useState<Status>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
+const DEFAULT_PROCESS_STEPS = [
+  {
+    _key: "1",
+    title: "Tiếp nhận",
+    body: "Ngay khi gửi, hệ thống cấp mã hồ sơ. Trong 4 giờ làm việc cán bộ trực sẽ xem xét.",
+  },
+  {
+    _key: "2",
+    title: "Phân loại",
+    body: "Hồ sơ được chuyển đến bộ phận nghiệp vụ phù hợp xử lý theo thẩm quyền.",
+  },
+  {
+    _key: "3",
+    title: "Phản hồi",
+    body: "Trong 24 giờ làm việc, người phản ánh sẽ nhận tin nhắn/email phản hồi tiến độ.",
+  },
+  {
+    _key: "4",
+    title: "Xử lý",
+    body: "Lực lượng chức năng kiểm tra, xác minh và xử lý theo đúng quy định pháp luật.",
+  },
+];
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("loading");
-    setErrorMsg("");
+export default async function FeedbackPage() {
+  const feedbackProcess = await getFeedbackProcess();
 
-    const form = e.currentTarget;
-    const data = {
-      fullName: (form.elements.namedItem("fullName") as HTMLInputElement).value,
-      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
-      subject: (form.elements.namedItem("subject") as HTMLInputElement).value,
-      content: (form.elements.namedItem("content") as HTMLTextAreaElement).value,
-      anonymous: (form.elements.namedItem("anonymous") as HTMLInputElement).checked,
-    };
-
-    try {
-      const res = await fetch("/api/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const json = await res.json();
-      if (!res.ok) {
-        setErrorMsg(json.error ?? "Có lỗi xảy ra");
-        setStatus("error");
-        return;
-      }
-      setStatus("success");
-      form.reset();
-    } catch {
-      setErrorMsg("Không thể kết nối máy chủ. Vui lòng thử lại.");
-      setStatus("error");
-    }
-  }
+  const pageDescription =
+    feedbackProcess?.pageDescription ??
+    "Gửi tin báo tội phạm, kiến nghị, phản ánh đến Công an phường Bình Dương. Mọi thông tin được bảo mật theo Luật Tố cáo 2018.";
+  const warningNotice =
+    feedbackProcess?.warningNotice ??
+    "Đây là kênh tiếp nhận thông tin phi khẩn cấp. Trong trường hợp nguy hiểm tính mạng hoặc đang xảy ra tội phạm, hãy gọi ngay 113.";
+  const emergencyDesc =
+    feedbackProcess?.emergencyDesc ??
+    "Gọi ngay khi có sự việc đang xảy ra hoặc cần can thiệp trực tiếp.";
+  const processSteps =
+    feedbackProcess?.processSteps && feedbackProcess.processSteps.length > 0
+      ? feedbackProcess.processSteps
+      : DEFAULT_PROCESS_STEPS;
 
   return (
     <>
       <PageHeader
         title="Phản ánh trực tuyến"
         breadcrumbs={[{ label: "Phản ánh trực tuyến" }]}
-        description="Gửi tin báo tội phạm, kiến nghị, phản ánh đến Công an phường Bình Dương. Mọi thông tin được bảo mật theo Luật Tố cáo 2018."
+        description={pageDescription}
       />
 
       <section className="block">
@@ -67,150 +71,11 @@ export default function FeedbackPage() {
                 <use href="#i-warn" />
               </svg>
               <div>
-                <b>Lưu ý quan trọng:</b> Đây là kênh tiếp nhận thông tin{" "}
-                <b>phi khẩn cấp</b>. Trong trường hợp nguy hiểm tính mạng hoặc đang xảy ra
-                tội phạm, hãy gọi ngay <b>113</b>.
+                <b>Lưu ý quan trọng:</b> {warningNotice}
               </div>
             </div>
 
-            {status === "success" ? (
-              <div className="form-card" style={{ textAlign: "center", padding: "40px 24px" }}>
-                <svg width="48" height="48" style={{ color: "var(--green, #16a34a)", margin: "0 auto 12px" }}>
-                  <use href="#i-check" />
-                </svg>
-                <h3 style={{ color: "var(--navy)", marginBottom: "8px" }}>Gửi phản ánh thành công!</h3>
-                <p style={{ color: "var(--ink-2)", fontSize: "14px" }}>
-                  Chúng tôi đã nhận được thông tin và sẽ xem xét trong thời gian sớm nhất.
-                </p>
-                <button
-                  onClick={() => setStatus("idle")}
-                  className="btn btn-secondary"
-                  style={{ marginTop: "16px" }}
-                >
-                  Gửi phản ánh khác
-                </button>
-              </div>
-            ) : (
-              <form className="form-card" onSubmit={handleSubmit}>
-                <div className="form-row">
-                  <div className="field">
-                    <label>
-                      Họ và tên <span className="req">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="fullName"
-                      placeholder="Nguyễn Văn A"
-                      required
-                    />
-                  </div>
-                  <div className="field">
-                    <label>
-                      Số điện thoại <span className="req">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      placeholder="0912 345 678"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="form-row">
-                  <div className="field">
-                    <label>Email (tùy chọn)</label>
-                    <input type="email" name="email" placeholder="email@example.com" />
-                  </div>
-                  <div className="field">
-                    <label>
-                      Loại phản ánh <span className="req">*</span>
-                    </label>
-                    <select name="type" required>
-                      <option value="">-- Chọn loại phản ánh --</option>
-                      <option value="toi-pham">Tin báo tội phạm</option>
-                      <option value="te-nan">Tệ nạn xã hội</option>
-                      <option value="giao-thong">An toàn giao thông</option>
-                      <option value="thai-do">Phản ánh thái độ phục vụ</option>
-                      <option value="kien-nghi">Kiến nghị khác</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="field">
-                  <label>
-                    Chủ đề phản ánh <span className="req">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="subject"
-                    placeholder="Ví dụ: Tụ điểm nghi buôn bán ma túy tại khu phố Hòa Phú 3"
-                    required
-                  />
-                </div>
-
-                <div className="field">
-                  <label>Địa điểm cụ thể</label>
-                  <input
-                    type="text"
-                    name="location"
-                    placeholder="Số nhà, đường, khu phố…"
-                  />
-                  <span className="help">
-                    Cung cấp địa chỉ chi tiết giúp lực lượng chức năng xử lý nhanh chóng.
-                  </span>
-                </div>
-
-                <div className="field">
-                  <label>
-                    Nội dung chi tiết <span className="req">*</span>
-                  </label>
-                  <textarea
-                    name="content"
-                    placeholder="Mô tả chi tiết sự việc: thời gian xảy ra, đối tượng liên quan, hành vi vi phạm…"
-                    required
-                  />
-                  <span className="help">
-                    Hạn chế: tối đa 2000 ký tự. Cung cấp càng nhiều thông tin càng tốt.
-                  </span>
-                </div>
-
-                <div className="checkbox-row">
-                  <input type="checkbox" id="anonymous" name="anonymous" />
-                  <label htmlFor="anonymous">
-                    Gửi ẩn danh (không hiển thị tên và số điện thoại trong hồ sơ công khai)
-                  </label>
-                </div>
-
-                <div className="checkbox-row">
-                  <input type="checkbox" id="agree" name="agree" required />
-                  <label htmlFor="agree">
-                    Tôi cam đoan thông tin cung cấp là đúng sự thật và chịu trách nhiệm trước
-                    pháp luật về tố cáo sai sự thật.
-                  </label>
-                </div>
-
-                {status === "error" && (
-                  <div className="notice" style={{ marginTop: "4px" }}>
-                    <div>{errorMsg}</div>
-                  </div>
-                )}
-
-                <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={status === "loading"}
-                    style={{ flex: 1, justifyContent: "center" }}
-                  >
-                    {status === "loading" ? "Đang gửi..." : "Gửi phản ánh"}
-                  </button>
-                  <button type="reset" className="btn btn-secondary">
-                    Làm mới
-                  </button>
-                </div>
-              </form>
-            )}
+            <FeedbackForm />
           </div>
 
           <aside style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -253,7 +118,7 @@ export default function FeedbackPage() {
                   marginTop: "6px",
                 }}
               >
-                Gọi ngay khi có sự việc đang xảy ra hoặc cần can thiệp trực tiếp.
+                {emergencyDesc}
               </div>
             </div>
 
@@ -280,30 +145,9 @@ export default function FeedbackPage() {
                   color: "var(--ink-2)",
                 }}
               >
-                {[
-                  {
-                    n: 1,
-                    title: "Tiếp nhận",
-                    body: "Ngay khi gửi, hệ thống cấp mã hồ sơ. Trong 4 giờ làm việc cán bộ trực sẽ xem xét.",
-                  },
-                  {
-                    n: 2,
-                    title: "Phân loại",
-                    body: "Hồ sơ được chuyển đến bộ phận nghiệp vụ phù hợp xử lý theo thẩm quyền.",
-                  },
-                  {
-                    n: 3,
-                    title: "Phản hồi",
-                    body: "Trong 24 giờ làm việc, người phản ánh sẽ nhận tin nhắn/email phản hồi tiến độ.",
-                  },
-                  {
-                    n: 4,
-                    title: "Xử lý",
-                    body: "Lực lượng chức năng kiểm tra, xác minh và xử lý theo đúng quy định pháp luật.",
-                  },
-                ].map(({ n, title, body }) => (
+                {processSteps.map((step, i) => (
                   <li
-                    key={n}
+                    key={step._key}
                     style={{
                       display: "grid",
                       gridTemplateColumns: "24px 1fr",
@@ -324,10 +168,10 @@ export default function FeedbackPage() {
                         fontWeight: 700,
                       }}
                     >
-                      {n}
+                      {i + 1}
                     </span>
                     <span>
-                      <b style={{ color: "var(--navy)" }}>{title}</b> · {body}
+                      <b style={{ color: "var(--navy)" }}>{step.title}</b> · {step.body}
                     </span>
                   </li>
                 ))}

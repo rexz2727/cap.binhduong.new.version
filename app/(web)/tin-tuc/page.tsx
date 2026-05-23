@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { getLatestNews, getNewsByCategory } from "@/sanity/lib/queries";
+import { getLatestNews, getNewsByCategory, getPageContent } from "@/sanity/lib/queries";
 import NewsCard from "@/components/ui/NewsCard";
 import PageHeader from "@/components/ui/PageHeader";
+import { NEWS_CATEGORY_OPTIONS } from "@/constants/news";
 
 export const metadata: Metadata = {
   title: "Tin tức",
@@ -10,11 +11,7 @@ export const metadata: Metadata = {
 
 const CATEGORIES = [
   { value: "", label: "Tất cả" },
-  { value: "an-ninh-trat-tu", label: "An ninh trật tự" },
-  { value: "thong-bao", label: "Thông báo" },
-  { value: "canh-bao", label: "Cảnh báo" },
-  { value: "hoat-dong-don-vi", label: "Hoạt động đơn vị" },
-  { value: "nguoi-tot-viec-tot", label: "Người tốt việc tốt" },
+  ...NEWS_CATEGORY_OPTIONS,
 ];
 
 export default async function NewsPage({
@@ -23,16 +20,17 @@ export default async function NewsPage({
   searchParams: Promise<{ category?: string }>;
 }) {
   const { category } = await searchParams;
-  const posts = category
-    ? await getNewsByCategory(category, 20)
-    : await getLatestNews(20);
+  const [posts, pageContent] = await Promise.all([
+    category ? getNewsByCategory(category, 20) : getLatestNews(20),
+    getPageContent(),
+  ]);
 
   return (
     <>
       <PageHeader
         title="Tin tức & Thông báo"
         breadcrumbs={[{ label: "Tin tức & Thông báo" }]}
-        description="Cập nhật tình hình an ninh trật tự và thông báo chính thức từ Công an phường Bình Dương."
+        description={pageContent?.tin_tuc ?? "Cập nhật tình hình an ninh trật tự và thông báo chính thức từ Công an phường Bình Dương."}
       />
       <section className="block">
         <div className="container">

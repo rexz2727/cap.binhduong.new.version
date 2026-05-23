@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SITE } from "@/constants/site";
+import { getSiteSettings } from "@/sanity/lib/queries";
 
 const QUICK_LINKS = [
   { label: "Thủ tục hành chính", href: "/thu-tuc-hanh-chinh" },
@@ -11,7 +12,13 @@ const QUICK_LINKS = [
   { label: "Phản ánh trực tuyến", href: "/phan-anh" },
 ];
 
-export default function Sidebar() {
+export default async function Sidebar() {
+  const siteSettings = await getSiteSettings();
+  const address = siteSettings?.address ?? SITE.address;
+  const phone = siteSettings?.phone ?? SITE.phone;
+  const email = siteSettings?.email ?? SITE.email;
+  const workingHours = siteSettings?.workingHours ?? SITE.workingHours;
+
   return (
     <aside>
       <div className="aside-card">
@@ -26,10 +33,10 @@ export default function Sidebar() {
       <div className="aside-card">
         <h4>Liên hệ</h4>
         <div className="aside-list">
-          <a href="#">{SITE.address}</a>
-          <a href={`tel:${SITE.phone.replace(/\s/g, "")}`}>{SITE.phone}</a>
-          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-          <a href="#">{SITE.workingHours}</a>
+          <a href="#">{address}</a>
+          <a href={`tel:${phone.replace(/\s/g, "")}`}>{phone}</a>
+          <a href={`mailto:${email}`}>{email}</a>
+          <a href="#">{workingHours}</a>
         </div>
       </div>
     </aside>

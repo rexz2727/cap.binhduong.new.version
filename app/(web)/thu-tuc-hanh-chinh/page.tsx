@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getProcedures } from "@/sanity/lib/queries";
+import { getPageContent, getProcedures } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
+import { PROCEDURE_CATEGORY_LABELS, PROCEDURE_CATEGORY_OPTIONS } from "@/constants/procedure";
 
 export const metadata: Metadata = {
   title: "Thủ tục hành chính",
@@ -10,18 +11,8 @@ export const metadata: Metadata = {
 
 const CATEGORIES = [
   { value: "", label: "Tất cả" },
-  { value: "cu-tru", label: "Cư trú" },
-  { value: "cmnd-cccd", label: "Căn cước công dân" },
-  { value: "xe-co", label: "Phương tiện" },
-  { value: "khac", label: "An ninh trật tự" },
+  ...PROCEDURE_CATEGORY_OPTIONS,
 ];
-
-const CATEGORY_LABEL: Record<string, string> = {
-  "cu-tru": "Cư trú",
-  "cmnd-cccd": "Căn cước công dân",
-  "xe-co": "Phương tiện",
-  "khac": "Khác",
-};
 
 export default async function ProceduresPage({
   searchParams,
@@ -30,13 +21,14 @@ export default async function ProceduresPage({
 }) {
   const { category } = await searchParams;
   const procedures = await getProcedures(category);
+  const pageContent = await getPageContent();
 
   return (
     <>
       <PageHeader
         title="Thủ tục hành chính"
         breadcrumbs={[{ label: "Thủ tục hành chính" }]}
-        description="Hướng dẫn chi tiết các thủ tục thuộc thẩm quyền Công an phường — minh bạch, công khai, thực hiện trực tuyến."
+        description={pageContent?.thu_tuc_hanh_chinh ?? "Hướng dẫn chi tiết các thủ tục thuộc thẩm quyền Công an phường — minh bạch, công khai, thực hiện trực tuyến."}
       />
 
       <section className="block">
@@ -78,7 +70,7 @@ export default async function ProceduresPage({
                       <h4>{proc.title}</h4>
                     </Link>
                     <div className="sub">
-                      Lĩnh vực: {CATEGORY_LABEL[proc.category] ?? proc.category}
+                      Lĩnh vực: {PROCEDURE_CATEGORY_LABELS[proc.category] ?? proc.category}
                     </div>
                   </div>
                   <div className="field">

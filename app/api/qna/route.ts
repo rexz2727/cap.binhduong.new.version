@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { QNA_CATEGORY_LABELS } from "@/constants/qna";
 
 function escapeHtml(str: string) {
   return str
@@ -11,15 +12,6 @@ function escapeHtml(str: string) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
-
-const CATEGORY_LABELS: Record<string, string> = {
-  "cu-tru": "Cư trú",
-  "cccd": "CCCD",
-  "vneid": "VNeID",
-  "xe-may": "Xe máy",
-  "hanh-chinh": "Hành chính",
-  "khac": "Khác",
-};
 
 const qnaSchema = z.object({
   question: z.string().min(10, "Câu hỏi cần ít nhất 10 ký tự").max(1000),
@@ -54,7 +46,7 @@ export async function POST(request: Request) {
   }
 
   const { question, askerName, phone, category } = result.data;
-  const categoryLabel = category ? (CATEGORY_LABELS[category] ?? category) : "Chưa phân loại";
+  const categoryLabel = category ? (QNA_CATEGORY_LABELS[category] ?? category) : "Chưa phân loại";
   const senderInfo = askerName
     ? `${escapeHtml(askerName)}${phone ? ` — ${escapeHtml(phone)}` : ""}`
     : "Ẩn danh";

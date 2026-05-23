@@ -11,6 +11,12 @@ import { draftDocumentSchema } from "./draftDocument";
 import { wantedPersonSchema } from "./wantedPerson";
 import { citizenScheduleSchema } from "./citizenSchedule";
 import { goodDeedSchema } from "./goodDeed";
+import { siteSettingsSchema } from "./siteSettings";
+import { homeContentSchema } from "./homeContent";
+import { unitProfileSchema } from "./unitProfile";
+import { feedbackProcessSchema } from "./feedbackProcess";
+import { emergencyContentSchema } from "./emergencyContent";
+import { pageContentSchema } from "./pageContent";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   newsSchema,
@@ -25,4 +31,10 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   wantedPersonSchema,
   citizenScheduleSchema,
   goodDeedSchema,
+  siteSettingsSchema,
+  homeContentSchema,
+  unitProfileSchema,
+  feedbackProcessSchema,
+  emergencyContentSchema,
+  pageContentSchema,
 ];

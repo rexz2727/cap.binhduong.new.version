@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { urlFor } from "@/sanity/lib/image";
-import { getPersonnel } from "@/sanity/lib/queries";
+import { getPageContent, getPersonnel, getUnitProfile } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
 import GioiThieuTabs from "@/components/sections/GioiThieuTabs";
 
@@ -11,6 +11,8 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const personnel = await getPersonnel();
+  const unitProfile = await getUnitProfile();
+  const pageContent = await getPageContent();
 
   const mappedPersonnel = personnel.map((p) => ({
     _id: p._id,
@@ -25,11 +27,11 @@ export default async function AboutPage() {
       <PageHeader
         title="Giới thiệu Công an phường Bình Dương"
         breadcrumbs={[{ label: "Giới thiệu đơn vị" }]}
-        description="Đơn vị trực thuộc Công an Thành phố Hồ Chí Minh — vì an ninh Tổ quốc, vì hạnh phúc nhân dân."
+        description={pageContent?.gioi_thieu ?? "Tìm hiểu về đơn vị, chức năng nhiệm vụ và ban lãnh đạo Công an phường Bình Dương."}
       />
       <section className="block">
         <div className="container">
-          <GioiThieuTabs personnel={mappedPersonnel} />
+          <GioiThieuTabs personnel={mappedPersonnel} unitProfile={unitProfile} />
         </div>
       </section>
     </>

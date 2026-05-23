@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/ui/PageHeader";
+import { getPageContent } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "Sơ đồ trang | Công an phường Bình Dương",
@@ -26,8 +27,8 @@ const SITEMAP = [
     links: [
       { label: "Tất cả tin tức", href: "/tin-tuc" },
       { label: "Thông báo", href: "/tin-tuc?category=thong-bao" },
-      { label: "Cảnh báo", href: "/tin-tuc?category=canh-bao" },
-      { label: "Điển hình tiên tiến", href: "/tin-tuc?category=dien-hinh" },
+      { label: "An ninh trật tự", href: "/tin-tuc?category=an-ninh-trat-tu" },
+      { label: "Người tốt việc tốt", href: "/tin-tuc?category=nguoi-tot-viec-tot" },
     ],
   },
   {
@@ -70,13 +71,14 @@ const SITEMAP = [
   },
 ];
 
-export default function SoDoTrangPage() {
+export default async function SoDoTrangPage() {
+  const pageContent = await getPageContent();
   return (
     <>
       <PageHeader
         title="Sơ đồ trang"
         breadcrumbs={[{ label: "Sơ đồ trang" }]}
-        description="Danh mục toàn bộ các trang trên cổng thông tin"
+        description={pageContent?.so_do_trang ?? "Danh mục toàn bộ các trang trên cổng thông tin"}
       />
       <section className="block">
         <div className="container">

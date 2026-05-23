@@ -5,19 +5,11 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import type { NewsPostPreview, NewsCategory } from "@/types/news";
 import { useI18n } from "@/lib/i18n";
-
-const CATEGORY_LABEL: Record<NewsCategory, string> = {
-  "an-ninh-trat-tu": "An ninh trật tự",
-  "hoat-dong-don-vi": "Hoạt động đơn vị",
-  "nguoi-tot-viec-tot": "Người tốt việc tốt",
-  "thong-bao": "Thông báo",
-  "chi-dao-dieu-hanh": "Chỉ đạo điều hành",
-};
+import { NEWS_CATEGORY_LABELS, NEWS_CATEGORY_CONFIG } from "@/constants/news";
 
 function catPillClass(category: NewsCategory) {
-  if (category === "thong-bao") return "cat-pill info";
-  if (category === "chi-dao-dieu-hanh") return "cat-pill warning";
-  return "cat-pill";
+  const modifier = NEWS_CATEGORY_CONFIG[category]?.modifier;
+  return modifier ? `cat-pill ${modifier}` : "cat-pill";
 }
 
 export default function LatestNews({ posts }: { posts: NewsPostPreview[] }) {
@@ -78,7 +70,7 @@ export default function LatestNews({ posts }: { posts: NewsPostPreview[] }) {
             <div className="body">
               <div className="news-meta">
                 <span className={catPillClass(mainPost.category)}>
-                  {CATEGORY_LABEL[mainPost.category]}
+                  {NEWS_CATEGORY_LABELS[mainPost.category]}
                 </span>
                 <span>{fullDate(mainPost.publishedAt)}</span>
               </div>
@@ -115,7 +107,7 @@ export default function LatestNews({ posts }: { posts: NewsPostPreview[] }) {
                 <div>
                   <div className="news-meta">
                     <span className={catPillClass(post.category)}>
-                      {CATEGORY_LABEL[post.category]}
+                      {NEWS_CATEGORY_LABELS[post.category]}
                     </span>
                     <span>{shortDate(post.publishedAt)}</span>
                   </div>

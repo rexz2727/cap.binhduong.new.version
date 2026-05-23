@@ -3,17 +3,11 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { getProcedureBySlug } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
+import { PROCEDURE_CATEGORY_LABELS } from "@/constants/procedure";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
-
-const CATEGORY_LABEL: Record<string, string> = {
-  "cu-tru": "Cư trú",
-  "cmnd-cccd": "Căn cước công dân",
-  "xe-co": "Phương tiện",
-  "khac": "Khác",
-};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -43,7 +37,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
               <div>
                 <div className="lbl">Lĩnh vực</div>
-                <b>{CATEGORY_LABEL[proc.category] ?? proc.category}</b>
+                <b>{PROCEDURE_CATEGORY_LABELS[proc.category] ?? proc.category}</b>
               </div>
               <div>
                 <div className="lbl">Thời gian xử lý</div>

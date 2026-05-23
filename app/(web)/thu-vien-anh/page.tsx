@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getPhotoAlbums } from "@/sanity/lib/queries";
+import { getPhotoAlbums, getPageContent } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import PageHeader from "@/components/ui/PageHeader";
 
@@ -11,14 +11,17 @@ export const metadata: Metadata = {
 };
 
 export default async function ThuVienAnhPage() {
-  const albums = await getPhotoAlbums(24);
+  const [albums, pageContent] = await Promise.all([
+    getPhotoAlbums(24),
+    getPageContent(),
+  ]);
 
   return (
     <>
       <PageHeader
         title="Thư viện ảnh"
         breadcrumbs={[{ label: "Thư viện ảnh" }]}
-        description="Album ảnh hoạt động và sự kiện của Công an phường Bình Dương."
+        description={pageContent?.thu_vien_anh ?? "Album ảnh hoạt động và sự kiện của Công an phường Bình Dương."}
       />
       <section className="block">
         <div className="container">

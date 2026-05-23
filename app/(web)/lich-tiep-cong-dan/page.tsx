@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getScheduleByMonth } from "@/sanity/lib/queries";
+import { getScheduleByMonth, getSiteSettings, getPageContent } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
 import type { CitizenSchedule } from "@/types/citizenSchedule";
+import { SITE } from "@/constants/site";
 
 export const metadata: Metadata = {
   title: "Lịch tiếp công dân | Công an phường Bình Dương",
@@ -63,7 +64,11 @@ export default async function LichTiepCongDanPage({ searchParams }: Props) {
       : `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
 
   const { startDate, endDate, label } = getMonthBounds(currentMonth);
-  const schedules = await getScheduleByMonth(startDate, endDate);
+  const [schedules, siteSettings, pageContent] = await Promise.all([
+    getScheduleByMonth(startDate, endDate),
+    getSiteSettings(),
+    getPageContent(),
+  ]);
   const grouped = groupByDate(schedules);
   const sortedDates = Object.keys(grouped).sort();
 
@@ -72,7 +77,7 @@ export default async function LichTiepCongDanPage({ searchParams }: Props) {
       <PageHeader
         title="Lịch tiếp công dân"
         breadcrumbs={[{ label: "Lịch tiếp công dân" }]}
-        description="Lịch tiếp công dân định kỳ của Ban lãnh đạo và cán bộ Công an phường Bình Dương."
+        description={pageContent?.lich_tiep_cong_dan ?? "Lịch tiếp công dân định kỳ của Ban lãnh đạo và cán bộ Công an phường Bình Dương."}
       />
       <section className="block">
         <div className="container" style={{ maxWidth: "960px" }}>
@@ -95,7 +100,7 @@ export default async function LichTiepCongDanPage({ searchParams }: Props) {
           <div className="notice" style={{ marginBottom: "24px" }}>
             <svg className="ic"><use href="#i-warn" /></svg>
             <div>
-              <b>Thông tin tiếp công dân:</b> Địa điểm tại Trụ sở Công an phường Bình Dương — Số 01, Đường D27, KP. Hòa Phú 1. Công dân vui lòng mang theo <b>CCCD/CMND</b> và giấy tờ liên quan. Liên hệ đặt lịch trước qua số <b>0274 3515 097</b>.
+              <b>Thông tin tiếp công dân:</b> Địa điểm tại Trụ sở Công an phường Bình Dương — {siteSettings?.address ?? SITE.address}. Công dân vui lòng mang theo <b>CCCD/CMND</b> và giấy tờ liên quan. Liên hệ đặt lịch trước qua số <b>{siteSettings?.phone ?? SITE.phone}</b>.
             </div>
           </div>
 

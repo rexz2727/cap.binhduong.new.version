@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/constants/site";
+import { getSiteSettings } from "@/sanity/lib/queries";
 
 const inter = Inter({
   subsets: ["latin", "vietnamese"],
@@ -17,20 +18,27 @@ const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-bvp",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: SITE.name,
-    template: `%s | ${SITE.shortName}`,
-  },
-  description: SITE.description,
-  keywords: ["công an", "phường Bình Dương", "an ninh trật tự", "thủ tục hành chính"],
-  openGraph: {
-    type: "website",
-    locale: "vi_VN",
-    url: SITE.url,
-    siteName: SITE.name,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const siteSettings = await getSiteSettings();
+  const siteName = siteSettings?.name ?? SITE.name;
+  const description = siteSettings?.description ?? SITE.description;
+
+  return {
+    title: {
+      default: siteName,
+      template: `%s | ${SITE.shortName}`,
+    },
+    description,
+    keywords: ["công an", "phường Bình Dương", "an ninh trật tự", "thủ tục hành chính"],
+    openGraph: {
+      type: "website",
+      locale: "vi_VN",
+      url: SITE.url,
+      siteName,
+      description,
+    },
+  };
+}
 
 import { LanguageProvider } from "@/lib/i18n";
 

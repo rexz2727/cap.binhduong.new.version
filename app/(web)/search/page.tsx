@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { searchAll } from "@/sanity/lib/queries";
+import { searchAll, getPageContent } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
 
 interface Props {
@@ -26,13 +26,14 @@ export default async function SearchPage({ searchParams }: Props) {
   const { q } = await searchParams;
   const query = q?.trim() ?? "";
   const results = query ? await searchAll(query) : [];
+  const pageContent = await getPageContent();
 
   return (
     <>
       <PageHeader
         title="Tìm kiếm"
         breadcrumbs={[{ label: "Tìm kiếm" }]}
-        description="Tìm kiếm trong tin tức, thủ tục hành chính và văn bản pháp luật"
+        description={pageContent?.search ?? "Tìm kiếm trong tin tức, thủ tục hành chính và văn bản pháp luật"}
       />
       <section className="block">
         <div className="container-narrow">

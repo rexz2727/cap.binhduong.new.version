@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getDraftDocuments } from "@/sanity/lib/queries";
+import { getDraftDocuments, getPageContent } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
 
 export const metadata: Metadata = {
@@ -10,13 +10,14 @@ export const metadata: Metadata = {
 
 export default async function ChinhSachPhapLuatPage() {
   const docs = await getDraftDocuments();
+  const pageContent = await getPageContent();
 
   return (
     <>
       <PageHeader
         title="Chính sách pháp luật"
         breadcrumbs={[{ label: "Chính sách pháp luật" }]}
-        description="Dự thảo văn bản đang lấy ý kiến và chính sách pháp luật mới ban hành"
+        description={pageContent?.chinh_sach_phap_luat ?? "Dự thảo văn bản đang lấy ý kiến và chính sách pháp luật mới ban hành"}
       />
 
       <section className="block">

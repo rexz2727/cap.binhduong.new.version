@@ -2,37 +2,60 @@
 
 import { useI18n } from "@/lib/i18n";
 import type { HeroStats } from "@/sanity/lib/queries";
+import type { HomeContent } from "@/types/homeContent";
 import HeroSearch from "./HeroSearch";
 
-export default function HeroSection({ stats }: { stats: HeroStats }) {
+export default function HeroSection({
+  stats,
+  homeContent,
+}: {
+  stats: HeroStats;
+  homeContent?: HomeContent | null;
+}) {
   const { t } = useI18n();
+
+  const quickTags = homeContent?.heroQuickTags;
+  const hasQuickTags = Array.isArray(quickTags) && quickTags.length > 0;
 
   return (
     <section className="hero">
       <div className="container hero-inner">
         <div>
           <div className="hero-eyebrow" data-i18n="hero.eyebrow">
-            {t("hero.eyebrow", "Cổng thông tin chính thống")}
+            {homeContent?.heroEyebrow ?? t("hero.eyebrow", "Cổng thông tin chính thống")}
           </div>
           <h1>
-            <span data-i18n="hero.h1.1">{t("hero.h1.1", "Vì an ninh trật tự —")}</span>{" "}
+            <span data-i18n="hero.h1.1">
+              {homeContent?.heroH1Part1 ?? t("hero.h1.1", "Vì an ninh trật tự —")}
+            </span>{" "}
             <span className="accent" data-i18n="hero.h1.2">
-              {t("hero.h1.2", "vì nhân dân phục vụ.")}
+              {homeContent?.heroH1Part2 ?? t("hero.h1.2", "vì nhân dân phục vụ.")}
             </span>
           </h1>
           <p className="hero-lead" data-i18n="hero.lead">
-            {t(
-              "hero.lead",
-              "Cổng thông tin điện tử của Công an phường Bình Dương, TP. Hồ Chí Minh. Tra cứu thủ tục hành chính, gửi phản ánh trực tuyến, tiếp cận thông tin pháp luật mọi lúc — minh bạch, nhanh chóng, đúng pháp luật."
-            )}
+            {homeContent?.heroLead ??
+              t(
+                "hero.lead",
+                "Cổng thông tin điện tử của Công an phường Bình Dương, TP. Hồ Chí Minh. Tra cứu thủ tục hành chính, gửi phản ánh trực tuyến, tiếp cận thông tin pháp luật mọi lúc — minh bạch, nhanh chóng, đúng pháp luật."
+              )}
           </p>
           <HeroSearch />
           <div className="hero-quick-tags">
             <span data-i18n="hero.quicktags">{t("hero.quicktags", "Tra cứu nhanh:")}</span>
-            <a href="#">Cấp CCCD</a>
-            <a href="#">Đăng ký tạm trú</a>
-            <a href="#">Xe máy điện</a>
-            <a href="#">Hộ chiếu</a>
+            {hasQuickTags ? (
+              quickTags!.map((tag) => (
+                <a key={tag._key} href={tag.href}>
+                  {tag.label}
+                </a>
+              ))
+            ) : (
+              <>
+                <a href="#">Cấp CCCD</a>
+                <a href="#">Đăng ký tạm trú</a>
+                <a href="#">Xe máy điện</a>
+                <a href="#">Hộ chiếu</a>
+              </>
+            )}
           </div>
         </div>
 

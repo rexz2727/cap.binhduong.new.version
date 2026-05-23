@@ -2,36 +2,41 @@
 
 import { SITE } from "@/constants/site";
 import { useI18n, type I18nKey } from "@/lib/i18n";
+import type { SiteSettings } from "@/types/siteSettings";
 
-const CONTACT_ITEMS = [
-  {
-    icon: "#i-pin",
-    label: "Địa chỉ",
-    value: SITE.address,
-    i18nLabel: "contact.address.label",
-  },
-  {
-    icon: "#i-phone",
-    label: "Điện thoại",
-    value: SITE.phone,
-    i18nLabel: "contact.phone.label",
-  },
-  {
-    icon: "#i-mail",
-    label: "Email",
-    value: SITE.email,
-    i18nLabel: "contact.email.label",
-  },
-  {
-    icon: "#i-clock",
-    label: "Giờ làm việc",
-    value: SITE.workingHours,
-    i18nLabel: "contact.hours.label",
-  },
-];
+interface ContactInfoProps {
+  siteSettings?: SiteSettings | null;
+}
 
-export default function ContactInfo() {
+export default function ContactInfo({ siteSettings }: ContactInfoProps = {}) {
   const { t } = useI18n();
+
+  const contactItems = [
+    {
+      icon: "#i-pin",
+      label: "Địa chỉ",
+      value: siteSettings?.address ?? SITE.address,
+      i18nLabel: "contact.address.label",
+    },
+    {
+      icon: "#i-phone",
+      label: "Điện thoại",
+      value: siteSettings?.phone ?? SITE.phone,
+      i18nLabel: "contact.phone.label",
+    },
+    {
+      icon: "#i-mail",
+      label: "Email",
+      value: siteSettings?.email ?? SITE.email,
+      i18nLabel: "contact.email.label",
+    },
+    {
+      icon: "#i-clock",
+      label: "Giờ làm việc",
+      value: siteSettings?.workingHours ?? SITE.workingHours,
+      i18nLabel: "contact.hours.label",
+    },
+  ];
 
   return (
     <section className="contact-panel">
@@ -43,7 +48,7 @@ export default function ContactInfo() {
               <h2>Thông tin liên hệ</h2>
             </hgroup>
             <ul className="contact-list">
-              {CONTACT_ITEMS.map((item) => (
+              {contactItems.map((item) => (
                 <li key={item.label}>
                   <svg className="ic">
                     <use href={item.icon} />
@@ -60,7 +65,7 @@ export default function ContactInfo() {
           </div>
           <div className="hotline-block">
             <h3 className="hotline-title">Đường dây nóng 24/7</h3>
-            <div className="hotline-num">{SITE.hotline}</div>
+            <div className="hotline-num">{siteSettings?.hotline ?? SITE.hotline}</div>
             <div className="emergency-links">
               <a href="tel:113">
                 Cảnh sát <b>113</b>

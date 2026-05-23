@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SITE } from "@/constants/site";
+import type { UnitProfile } from "@/types/unitProfile";
 
 type Tab = "function" | "org" | "leaders" | "schedule" | "contact";
 
@@ -24,10 +25,38 @@ interface PersonnelItem {
 
 interface Props {
   personnel: PersonnelItem[];
+  unitProfile?: UnitProfile | null;
 }
 
-export default function GioiThieuTabs({ personnel }: Props) {
+export default function GioiThieuTabs({ personnel, unitProfile }: Props) {
   const [active, setActive] = useState<Tab>("function");
+
+  const dutyItems = (unitProfile?.duties && unitProfile.duties.length > 0)
+    ? unitProfile.duties.map((d, i) => ({ n: i + 1, title: d.title, body: d.body }))
+    : [
+        { n: 1, title: "Đảm bảo an ninh trật tự", body: "Phòng ngừa, đấu tranh chống các loại tội phạm, tệ nạn xã hội trên địa bàn phường." },
+        { n: 2, title: "Quản lý cư trú & CCCD", body: "Đăng ký thường trú, tạm trú, cấp Căn cước công dân, khai báo lưu trú." },
+        { n: 3, title: "Quản lý phương tiện", body: "Đăng ký xe mô tô, xe gắn máy và phương tiện thuộc thẩm quyền cấp phường." },
+        { n: 4, title: "Phục vụ nhân dân", body: "Tiếp công dân, giải quyết khiếu nại, tố cáo, hỗ trợ thủ tục hành chính." },
+      ];
+
+  const deptItems = (unitProfile?.departments && unitProfile.departments.length > 0)
+    ? unitProfile.departments
+    : [
+        { _key: "1", label: "Đội Cảnh sát ANTT", sub: "12 cán bộ chiến sĩ" },
+        { _key: "2", label: "Đội Cảnh sát Hình sự", sub: "8 cán bộ chiến sĩ" },
+        { _key: "3", label: "Đội Quản lý hành chính", sub: "10 cán bộ chiến sĩ" },
+        { _key: "4", label: "Cảnh sát Khu vực", sub: "4 cán bộ phụ trách 4 KP" },
+      ];
+
+  const statItems = (unitProfile?.orgStats && unitProfile.orgStats.length > 0)
+    ? unitProfile.orgStats
+    : [
+        { _key: "1", label: "Tổng quân số:", value: "38 cán bộ chiến sĩ" },
+        { _key: "2", label: "Địa bàn:", value: "4 khu phố · ~112.500 dân" },
+        { _key: "3", label: "Trụ sở:", value: "01 trụ sở chính" },
+        { _key: "4", label: "Hoạt động:", value: "24/7 với đường dây nóng" },
+      ];
 
   return (
     <>
@@ -47,12 +76,20 @@ export default function GioiThieuTabs({ personnel }: Props) {
       <div className="tab-pane" style={{ display: active === "function" ? undefined : "none" }}>
         <div className="org-card">
           <h3>Về đơn vị</h3>
-          <p>
-            <b>Công an phường Bình Dương</b> là đơn vị trực thuộc Công an Thành phố Hồ Chí Minh. Đơn vị được thành lập trên cơ sở sáp nhập các phường Hòa Phú, Phú Mỹ, Phú Tân và Phú Chánh theo chủ trương sắp xếp đơn vị hành chính của tỉnh Bình Dương cũ (nay là TP.HCM).
-          </p>
-          <p>
-            Nhiệm vụ chính: <b>bảo đảm an ninh trật tự</b>, phòng chống tội phạm, quản lý hành chính về trật tự xã hội, đăng ký cư trú, cấp Căn cước công dân, và phục vụ nhân dân trên địa bàn phường.
-          </p>
+          {unitProfile?.unitDescription1 ? (
+            <p>{unitProfile.unitDescription1}</p>
+          ) : (
+            <p>
+              <b>Công an phường Bình Dương</b> là đơn vị trực thuộc Công an Thành phố Hồ Chí Minh. Đơn vị được thành lập trên cơ sở sáp nhập các phường Hòa Phú, Phú Mỹ, Phú Tân và Phú Chánh theo chủ trương sắp xếp đơn vị hành chính của tỉnh Bình Dương cũ (nay là TP.HCM).
+            </p>
+          )}
+          {unitProfile?.unitDescription2 ? (
+            <p>{unitProfile.unitDescription2}</p>
+          ) : (
+            <p>
+              Nhiệm vụ chính: <b>bảo đảm an ninh trật tự</b>, phòng chống tội phạm, quản lý hành chính về trật tự xã hội, đăng ký cư trú, cấp Căn cước công dân, và phục vụ nhân dân trên địa bàn phường.
+            </p>
+          )}
 
           <div className="ward-grid">
             <div className="ward-cell"><b>Hòa Phú</b><div className="lbl">Đơn vị sáp nhập</div></div>
@@ -65,12 +102,7 @@ export default function GioiThieuTabs({ personnel }: Props) {
         <div className="org-card">
           <h3>Chức năng &amp; nhiệm vụ chính</h3>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "16px", marginTop: "8px" }}>
-            {[
-              { n: 1, title: "Đảm bảo an ninh trật tự", body: "Phòng ngừa, đấu tranh chống các loại tội phạm, tệ nạn xã hội trên địa bàn phường." },
-              { n: 2, title: "Quản lý cư trú & CCCD", body: "Đăng ký thường trú, tạm trú, cấp Căn cước công dân, khai báo lưu trú." },
-              { n: 3, title: "Quản lý phương tiện", body: "Đăng ký xe mô tô, xe gắn máy và phương tiện thuộc thẩm quyền cấp phường." },
-              { n: 4, title: "Phục vụ nhân dân", body: "Tiếp công dân, giải quyết khiếu nại, tố cáo, hỗ trợ thủ tục hành chính." },
-            ].map((item) => (
+            {dutyItems.map((item) => (
               <div key={item.n} style={{ display: "flex", gap: "14px", padding: "18px", background: "var(--surface-2)", borderRadius: "var(--radius)" }}>
                 <div style={{ width: "36px", height: "36px", background: "var(--gold)", color: "var(--navy-deep)", borderRadius: "8px", display: "grid", placeItems: "center", fontWeight: 700, flexShrink: 0 }}>{item.n}</div>
                 <div>
@@ -101,13 +133,8 @@ export default function GioiThieuTabs({ personnel }: Props) {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "16px", position: "relative" }}>
               <div style={{ position: "absolute", top: "-16px", left: "12.5%", right: "12.5%", height: "2px", background: "var(--gold)" }}></div>
-              {[
-                { label: "Đội Cảnh sát ANTT", sub: "12 cán bộ chiến sĩ" },
-                { label: "Đội Cảnh sát Hình sự", sub: "8 cán bộ chiến sĩ" },
-                { label: "Đội Quản lý hành chính", sub: "10 cán bộ chiến sĩ" },
-                { label: "Cảnh sát Khu vực", sub: "4 cán bộ phụ trách 4 KP" },
-              ].map((branch) => (
-                <div key={branch.label} className="ward-cell" style={{ background: "var(--surface)", borderColor: "var(--navy)", position: "relative" }}>
+              {deptItems.map((branch) => (
+                <div key={branch._key} className="ward-cell" style={{ background: "var(--surface)", borderColor: "var(--navy)", position: "relative" }}>
                   <div style={{ position: "absolute", top: "-16px", left: "50%", width: "2px", height: "16px", background: "var(--gold)" }}></div>
                   <b style={{ color: "var(--navy)" }}>{branch.label}</b>
                   <div className="lbl">{branch.sub}</div>
@@ -116,10 +143,9 @@ export default function GioiThieuTabs({ personnel }: Props) {
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "14px", marginTop: "32px", fontSize: "13px", color: "var(--muted)" }}>
-              <div><b style={{ color: "var(--ink-2)" }}>Tổng quân số:</b> 38 cán bộ chiến sĩ</div>
-              <div><b style={{ color: "var(--ink-2)" }}>Địa bàn:</b> 4 khu phố · ~112.500 dân</div>
-              <div><b style={{ color: "var(--ink-2)" }}>Trụ sở:</b> 01 trụ sở chính</div>
-              <div><b style={{ color: "var(--ink-2)" }}>Hoạt động:</b> 24/7 với đường dây nóng</div>
+              {statItems.map((stat) => (
+                <div key={stat._key}><b style={{ color: "var(--ink-2)" }}>{stat.label}</b> {stat.value}</div>
+              ))}
             </div>
           </div>
         </div>
@@ -197,8 +223,9 @@ export default function GioiThieuTabs({ personnel }: Props) {
               <svg width="20" height="20" style={{ color: "var(--red)", flexShrink: 0, marginTop: "2px" }}><use href="#i-clock" /></svg>
               <div>
                 <div style={{ fontSize: "11.5px", color: "var(--subtle)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Giờ làm việc</div>
-                <div style={{ fontSize: "14px", color: "var(--ink)", marginTop: "2px" }}>Thứ Hai – Thứ Sáu: 7:00 – 11:30, 13:30 – 17:00</div>
-                <div style={{ fontSize: "14px", color: "var(--ink)" }}>Thứ Bảy: 7:30 – 11:30</div>
+                {SITE.workingHours.split(" | ").map((line, i) => (
+                  <div key={i} style={{ fontSize: "14px", color: "var(--ink)", marginTop: i === 0 ? "2px" : 0 }}>{line}</div>
+                ))}
               </div>
             </div>
           </div>

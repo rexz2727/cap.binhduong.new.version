@@ -1,3 +1,5 @@
+import type { HomeContent } from "@/types/homeContent";
+
 const VALUES = [
   {
     icon: "#i-shield",
@@ -21,21 +23,25 @@ const VALUES = [
   },
 ];
 
-export default function ValuesStrip() {
+export default function ValuesStrip({ homeContent }: { homeContent?: HomeContent | null }) {
+  const items =
+    homeContent?.valuesItems && homeContent.valuesItems.length > 0
+      ? homeContent.valuesItems
+      : VALUES;
   return (
     <section className="values-strip">
       <div className="container">
         <div className="values-grid">
-          {VALUES.map((value) => (
-            <div className="value-cell" key={value.title}>
+          {items.map((item, i) => (
+            <div className="value-cell" key={i}>
               <div className="ic">
                 <svg>
-                  <use href={value.icon} />
+                  <use href={item.icon} />
                 </svg>
               </div>
               <div>
-                <h4>{value.title}</h4>
-                <p>{value.desc}</p>
+                <h4>{item.title}</h4>
+                <p>{item.desc}</p>
               </div>
             </div>
           ))}

@@ -1,15 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-const CATEGORIES = [
-  { value: "cu-tru", label: "Cư trú" },
-  { value: "cccd", label: "CCCD" },
-  { value: "vneid", label: "VNeID" },
-  { value: "xe-may", label: "Xe máy" },
-  { value: "hanh-chinh", label: "Hành chính" },
-  { value: "khac", label: "Khác" },
-];
+import { QNA_CATEGORY_OPTIONS } from "@/constants/qna";
 
 export default function QnaForm() {
   const [form, setForm] = useState({
@@ -111,7 +103,7 @@ export default function QnaForm() {
       <div className="field">
         <label>Lĩnh vực</label>
         <select name="category" value={form.category} onChange={handleChange}>
-          {CATEGORIES.map((c) => (
+          {QNA_CATEGORY_OPTIONS.map((c) => (
             <option key={c.value} value={c.value}>
               {c.label}
             </option>

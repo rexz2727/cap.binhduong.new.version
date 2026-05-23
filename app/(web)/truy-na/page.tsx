@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getWantedPersons } from "@/sanity/lib/queries";
+import { getWantedPersons, getSiteSettings, getPageContent } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
 import WantedCard from "@/components/ui/WantedCard";
+import { SITE } from "@/constants/site";
 
 export const metadata: Metadata = {
   title: "Truy nã | Công an phường Bình Dương",
@@ -16,14 +17,18 @@ interface Props {
 export default async function TruyNaPage({ searchParams }: Props) {
   const { status } = await searchParams;
   const activeStatus = status === "da-bat" ? "da-bat" : "dang-truy-na";
-  const persons = await getWantedPersons(activeStatus);
+  const [persons, siteSettings, pageContent] = await Promise.all([
+    getWantedPersons(activeStatus),
+    getSiteSettings(),
+    getPageContent(),
+  ]);
 
   return (
     <>
       <PageHeader
         title="Thông báo truy nã"
         breadcrumbs={[{ label: "Thông báo truy nã" }]}
-        description="Danh sách các đối tượng đang bị truy nã theo thông báo của cơ quan điều tra."
+        description={pageContent?.truy_na ?? "Danh sách các đối tượng đang bị truy nã theo thông báo của cơ quan điều tra."}
       />
       <section className="block">
         <div className="container">
@@ -34,7 +39,7 @@ export default async function TruyNaPage({ searchParams }: Props) {
             <div>
               <div className="t">Lưu ý an toàn — Không tự ý tiếp cận đối tượng</div>
               <div className="s">
-                Nếu phát hiện các đối tượng này, vui lòng <b>gọi ngay 113</b> hoặc liên hệ Công an phường Bình Dương theo số <b>0274 3515 097</b>. Mọi thông tin tố giác đều được bảo mật theo Luật Tố cáo 2018.
+                Nếu phát hiện các đối tượng này, vui lòng <b>gọi ngay 113</b> hoặc liên hệ Công an phường Bình Dương theo số <b>{siteSettings?.phone ?? SITE.phone}</b>. Mọi thông tin tố giác đều được bảo mật theo Luật Tố cáo 2018.
               </div>
             </div>
           </div>

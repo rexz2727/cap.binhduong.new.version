@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getLegalDocuments } from "@/sanity/lib/queries";
+import { getLegalDocuments, getPageContent } from "@/sanity/lib/queries";
 import LegalDocCard from "@/components/ui/LegalDocCard";
 import PageHeader from "@/components/ui/PageHeader";
+import { LEGAL_CATEGORY_OPTIONS } from "@/constants/legal";
 
 export const metadata: Metadata = {
   title: "Văn bản pháp luật",
@@ -11,11 +12,7 @@ export const metadata: Metadata = {
 
 const CATEGORIES = [
   { value: "", label: "Tất cả" },
-  { value: "nghi-quyet", label: "Nghị quyết" },
-  { value: "quyet-dinh", label: "Quyết định" },
-  { value: "ke-hoach", label: "Kế hoạch" },
-  { value: "thong-tu", label: "Thông tư" },
-  { value: "khac", label: "Khác" },
+  ...LEGAL_CATEGORY_OPTIONS,
 ];
 
 export default async function LegalDocsPage({
@@ -24,14 +21,17 @@ export default async function LegalDocsPage({
   searchParams: Promise<{ category?: string }>;
 }) {
   const { category } = await searchParams;
-  const docs = await getLegalDocuments(category);
+  const [docs, pageContent] = await Promise.all([
+    getLegalDocuments(category),
+    getPageContent(),
+  ]);
 
   return (
     <>
       <PageHeader
         title="Văn bản pháp luật"
         breadcrumbs={[{ label: "Văn bản pháp luật" }]}
-        description="Thư viện văn bản pháp luật — Nghị quyết, Quyết định, Kế hoạch, Thông tư đang có hiệu lực."
+        description={pageContent?.van_ban_phap_luat ?? "Thư viện văn bản pháp luật — Nghị quyết, Quyết định, Kế hoạch, Thông tư đang có hiệu lực."}
       />
 
       <section className="block">

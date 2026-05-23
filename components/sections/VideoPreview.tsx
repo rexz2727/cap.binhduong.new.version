@@ -5,6 +5,7 @@ import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
 import type { VideoPreviewItem } from "@/types/video";
 import { useI18n } from "@/lib/i18n";
+import { VIDEO_CATEGORY_LABELS } from "@/constants/video";
 
 interface Props {
   videos: VideoPreviewItem[];
@@ -22,14 +23,6 @@ export default function VideoPreview({ videos }: Props) {
       month: "2-digit",
       year: "numeric",
     });
-  };
-
-  const getCategoryLabel = (category?: string) => {
-    if (!category) return "";
-    if (category === "hoat-dong") return "Hoạt động";
-    if (category === "an-ninh") return "An ninh";
-    if (category === "cong-dong") return "Cộng đồng";
-    return category;
   };
 
   return (
@@ -84,7 +77,7 @@ export default function VideoPreview({ videos }: Props) {
                 <div className="meta">
                   {video.category && (
                     <span className="cat-pill">
-                      {getCategoryLabel(video.category)}
+                      {VIDEO_CATEGORY_LABELS[video.category] ?? video.category}
                     </span>
                   )}
                   <span>{formattedDate(video.date)}</span>

@@ -1,16 +1,9 @@
 import Link from "next/link";
 import type { LegalDocumentPreview } from "@/types/legalDocument";
+import { LEGAL_CATEGORY_LABELS } from "@/constants/legal";
 
 export default function LegalDocCard({ doc }: { doc: LegalDocumentPreview }) {
   const formattedDate = new Date(doc.issuedDate).toLocaleDateString("vi-VN");
-
-  const categoryLabel: Record<string, string> = {
-    "nghi-quyet": "Nghị quyết",
-    "ke-hoach": "Kế hoạch",
-    "quyet-dinh": "Quyết định",
-    "thong-tu": "Thông tư",
-    "khac": "Khác",
-  };
 
   return (
     <div className="doc-card">
@@ -18,7 +11,7 @@ export default function LegalDocCard({ doc }: { doc: LegalDocumentPreview }) {
         <svg aria-hidden="true"><use href="#i-doc" /></svg>
       </div>
       <div className="b">
-        <span className="badge-type">{categoryLabel[doc.category] ?? doc.category}</span>
+        <span className="badge-type">{LEGAL_CATEGORY_LABELS[doc.category] ?? doc.category}</span>
         <Link href={`/van-ban-phap-luat/${doc.slug.current}`}>
           <h4>{doc.title}</h4>
         </Link>

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { getQnaAnswered } from "@/sanity/lib/queries";
+import { getPageContent, getQnaAnswered, getSiteSettings } from "@/sanity/lib/queries";
 import PageHeader from "@/components/ui/PageHeader";
 import QnaCard from "@/components/ui/QnaCard";
 import Link from "next/link";
 import { SITE } from "@/constants/site";
+import { QNA_CATEGORY_OPTIONS } from "@/constants/qna";
 
 export const metadata: Metadata = {
   title: "Hỏi đáp pháp luật | Công an phường Bình Dương",
@@ -12,12 +13,7 @@ export const metadata: Metadata = {
 
 const CATEGORIES = [
   { value: "all", label: "Tất cả" },
-  { value: "cu-tru", label: "Cư trú" },
-  { value: "cccd", label: "CCCD" },
-  { value: "vneid", label: "VNeID" },
-  { value: "xe-may", label: "Xe máy" },
-  { value: "hanh-chinh", label: "Hành chính" },
-  { value: "khac", label: "Khác" },
+  ...QNA_CATEGORY_OPTIONS,
 ];
 
 interface Props {
@@ -26,14 +22,18 @@ interface Props {
 
 export default async function HoiDapPage({ searchParams }: Props) {
   const { category } = await searchParams;
-  const items = await getQnaAnswered(category ?? "all", 50);
+  const [items, siteSettings] = await Promise.all([
+    getQnaAnswered(category ?? "all", 50),
+    getSiteSettings(),
+  ]);
+  const pageContent = await getPageContent();
 
   return (
     <>
       <PageHeader
         title="Hỏi đáp pháp luật"
         breadcrumbs={[{ label: "Hỏi đáp pháp luật" }]}
-        description="Tổng hợp câu hỏi thường gặp và giải đáp của cán bộ Công an phường Bình Dương."
+        description={pageContent?.hoi_dap ?? "Tổng hợp câu hỏi thường gặp và giải đáp của cán bộ Công an phường Bình Dương."}
       />
 
       <section className="block">
@@ -99,7 +99,7 @@ export default async function HoiDapPage({ searchParams }: Props) {
                     <svg width="16" height="16" style={{ color: "var(--red)" }}>
                       <use href="#i-phone" />
                     </svg>
-                    {SITE.phone}
+                    {siteSettings?.phone ?? SITE.phone}
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
                     <svg width="16" height="16" style={{ color: "var(--red)" }}>

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getVideos } from "@/sanity/lib/queries";
+import { getVideos, getPageContent } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import PageHeader from "@/components/ui/PageHeader";
+import { VIDEO_CATEGORY_OPTIONS, VIDEO_CATEGORY_LABELS } from "@/constants/video";
 
 export const metadata: Metadata = {
   title: "Video | Công an phường Bình Dương",
@@ -11,16 +12,8 @@ export const metadata: Metadata = {
 
 const CATEGORIES = [
   { value: "all", label: "Tất cả" },
-  { value: "hoat-dong", label: "Hoạt động" },
-  { value: "an-ninh", label: "An ninh" },
-  { value: "cong-dong", label: "Cộng đồng" },
+  ...VIDEO_CATEGORY_OPTIONS,
 ];
-
-const CATEGORY_LABELS: Record<string, string> = {
-  "hoat-dong": "Hoạt động",
-  "an-ninh": "An ninh",
-  "cong-dong": "Cộng đồng",
-};
 
 interface Props {
   searchParams: Promise<{ category?: string }>;
@@ -28,7 +21,10 @@ interface Props {
 
 export default async function VideoPage({ searchParams }: Props) {
   const { category } = await searchParams;
-  const videos = await getVideos(category ?? "all", 24);
+  const [videos, pageContent] = await Promise.all([
+    getVideos(category ?? "all", 24),
+    getPageContent(),
+  ]);
 
   return (
     <>
@@ -38,7 +34,7 @@ export default async function VideoPage({ searchParams }: Props) {
           { label: "Thư viện", href: "/thu-vien-anh" },
           { label: "Video" },
         ]}
-        description="Phim tài liệu và clip hoạt động của đơn vị."
+        description={pageContent?.video ?? "Phim tài liệu và clip hoạt động của đơn vị."}
       />
       <section className="block">
         <div className="container">
@@ -84,7 +80,7 @@ export default async function VideoPage({ searchParams }: Props) {
                     <div className="meta">
                       {video.category && (
                         <span className="cat-pill">
-                          {CATEGORY_LABELS[video.category] ?? video.category}
+                          {VIDEO_CATEGORY_LABELS[video.category] ?? video.category}
                         </span>
                       )}
                       <span>{new Date(video.date).toLocaleDateString("vi-VN")}</span>

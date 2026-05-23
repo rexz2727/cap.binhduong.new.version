@@ -10,9 +10,10 @@ import { NAV_ITEMS } from "@/constants/nav";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  hotline?: string;
 }
 
-export default function MobileMenu({ isOpen, onClose }: Props) {
+export default function MobileMenu({ isOpen, onClose, hotline }: Props) {
   const [newsOpen, setNewsOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const pathname = usePathname();
@@ -107,7 +108,7 @@ export default function MobileMenu({ isOpen, onClose }: Props) {
           Đường dây nóng 24/7
           <div className="hotline-big">
             <span>Khẩn cấp</span>
-            <b>{SITE.hotline}</b>
+            <b>{hotline ?? SITE.hotline}</b>
           </div>
         </div>
       </aside>

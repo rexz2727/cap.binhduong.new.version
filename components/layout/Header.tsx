@@ -7,14 +7,20 @@ import { usePathname, useRouter } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/constants/site";
 import type { Announcement } from "@/types/announcement";
+import type { SiteSettings } from "@/types/siteSettings";
 import MobileMenu from "./MobileMenu";
 import NewsTicker from "./NewsTicker";
 
 interface Props {
   announcements: Announcement[];
+  siteSettings?: SiteSettings | null;
 }
 
-export default function Header({ announcements }: Props) {
+export default function Header({ announcements, siteSettings }: Props) {
+  const hotline = siteSettings?.hotline ?? SITE.hotline;
+  const phone = siteSettings?.phone ?? SITE.phone;
+  const facebook = siteSettings?.facebook ?? SITE.facebook;
+  const youtube = siteSettings?.youtube ?? SITE.youtube;
   const { lang, toggleLang, t } = useI18n();
   const pathname = usePathname();
   const router = useRouter();
@@ -75,10 +81,10 @@ export default function Header({ announcements }: Props) {
           <div className="utility-left">
             <span className="hotline">
               <span data-i18n="hotline">{t("hotline", "Đường dây nóng:")}</span>{" "}
-              <b>{SITE.hotline}</b>
+              <b>{hotline}</b>
             </span>
             <span className="sep">|</span>
-            <a href={`tel:${SITE.phone.replace(/\s/g, "")}`}>{SITE.phone}</a>
+            <a href={`tel:${phone.replace(/\s/g, "")}`}>{phone}</a>
           </div>
           <div className="utility-right">
             {/* Language Switcher */}
@@ -112,7 +118,7 @@ export default function Header({ announcements }: Props) {
 
             {/* Social Icons */}
             <a
-              href={SITE.facebook || "#"}
+              href={facebook || "#"}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -122,7 +128,7 @@ export default function Header({ announcements }: Props) {
               </svg>
             </a>
             <a
-              href={SITE.youtube || "#"}
+              href={youtube || "#"}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
@@ -194,28 +200,28 @@ export default function Header({ announcements }: Props) {
                     <use href="#i-news" />
                   </svg>
                   Tất cả tin tức{" "}
-                  <span className="sub">Mọi danh mục · 1.247 bài</span>
+                  <span className="sub">Mọi danh mục</span>
                 </Link>
                 <Link href="/tin-tuc?category=thong-bao">
                   <svg className="ic">
                     <use href="#i-doc" />
                   </svg>
                   Thông báo{" "}
-                  <span className="sub">Thông báo chính thức · 286 bài</span>
+                  <span className="sub">Thông báo chính thức</span>
                 </Link>
                 <Link href="/tin-tuc?category=canh-bao">
                   <svg className="ic">
                     <use href="#i-warn" />
                   </svg>
                   Cảnh báo{" "}
-                  <span className="sub">An ninh, lừa đảo · 145 bài</span>
+                  <span className="sub">An ninh, lừa đảo</span>
                 </Link>
                 <Link href="/tin-tuc?category=antt">
                   <svg className="ic">
                     <use href="#i-shield" />
                   </svg>
                   An ninh trật tự{" "}
-                  <span className="sub">Tin nghiệp vụ · 412 bài</span>
+                  <span className="sub">Tin nghiệp vụ</span>
                 </Link>
               </div>
             </div>
@@ -267,13 +273,13 @@ export default function Header({ announcements }: Props) {
                     <use href="#i-image" />
                   </svg>
                   Thư viện ảnh{" "}
-                  <span className="sub">Album hoạt động · 48 album</span>
+                  <span className="sub">Album hoạt động</span>
                 </Link>
                 <Link href="/video">
                   <svg className="ic">
                     <use href="#i-news" />
                   </svg>
-                  Video <span className="sub">Phim tài liệu · 6 video</span>
+                  Video <span className="sub">Phim tài liệu</span>
                 </Link>
               </div>
             </div>
@@ -320,7 +326,7 @@ export default function Header({ announcements }: Props) {
               <line x1="3" y1="18" x2="21" y2="18" />
             </svg>
           </button>
-          <MobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
+          <MobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} hotline={hotline} />
         </div>
       </header>
 

@@ -12,6 +12,12 @@ import type { DraftDocument } from "@/types/draftDocument";
 import type { WantedPerson } from "@/types/wantedPerson";
 import type { CitizenSchedule } from "@/types/citizenSchedule";
 import type { GoodDeed, GoodDeedPreview } from "@/types/goodDeed";
+import type { SiteSettings } from "@/types/siteSettings";
+import type { HomeContent } from "@/types/homeContent";
+import type { UnitProfile } from "@/types/unitProfile";
+import type { FeedbackProcess } from "@/types/feedbackProcess";
+import type { EmergencyContent } from "@/types/emergencyContent";
+import type { PageContent } from "@/types/pageContent";
 
 const isConfigured = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID !== "placeholder";
 
@@ -397,6 +403,24 @@ export async function getHeroStats(): Promise<HeroStats> {
   );
 }
 
+// ─── Site Settings (Singleton) ────────────────────────────────────────────────
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "siteSettings"][0] {
+        _id, name, address, phone, email, hotline, workingHours, workingHoursSat,
+        description, facebook, youtube, zalo,
+        relatedAgencies[]{ _key, label, href },
+        emergencyNumbers[]{ _key, label, number }
+      }`,
+      {},
+      noCache
+    ),
+    null
+  );
+}
+
 // ─── Legal Docs Filtered ──────────────────────────────────────────────────────
 
 export async function getLegalDocsFiltered(
@@ -416,5 +440,90 @@ export async function getLegalDocsFiltered(
       noCache
     ),
     []
+  );
+}
+
+// ─── Home Content (Singleton) ─────────────────────────────────────────────────
+
+export async function getHomeContent(): Promise<HomeContent | null> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "homeContent" && _id == "homeContent"][0]{
+        _id, heroEyebrow, heroH1Part1, heroH1Part2, heroLead,
+        heroQuickTags[]{ _key, label, href },
+        valuesItems[]{ _key, icon, title, desc }
+      }`,
+      {},
+      { next: { revalidate: 3600 } }
+    ),
+    null
+  );
+}
+
+// ─── Unit Profile (Singleton) ─────────────────────────────────────────────────
+
+export async function getUnitProfile(): Promise<UnitProfile | null> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "unitProfile" && _id == "unitProfile"][0]{
+        _id, unitDescription1, unitDescription2,
+        duties[]{ _key, title, body },
+        departments[]{ _key, label, sub },
+        orgStats[]{ _key, label, value }
+      }`,
+      {},
+      { next: { revalidate: 86400 } }
+    ),
+    null
+  );
+}
+
+// ─── Feedback Process (Singleton) ─────────────────────────────────────────────
+
+export async function getFeedbackProcess(): Promise<FeedbackProcess | null> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "feedbackProcess" && _id == "feedbackProcess"][0]{
+        _id, pageDescription, warningNotice, emergencyDesc,
+        processSteps[]{ _key, title, body }
+      }`,
+      {},
+      { next: { revalidate: 86400 } }
+    ),
+    null
+  );
+}
+
+// ─── Emergency Content (Singleton) ────────────────────────────────────────────
+
+export async function getEmergencyContent(): Promise<EmergencyContent | null> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "emergencyContent" && _id == "emergencyContent"][0]{
+        _id, title,
+        emergencyNumbers[]{ _key, number, label, href },
+        externalLinks[]{ _key, label, href }
+      }`,
+      {},
+      { next: { revalidate: 86400 } }
+    ),
+    null
+  );
+}
+
+// ─── Page Content (Singleton) ─────────────────────────────────────────────────
+
+export async function getPageContent(): Promise<PageContent | null> {
+  return safeFetch(
+    () => client.fetch(
+      groq`*[_type == "pageContent" && _id == "pageContent"][0]{
+        _id, gioi_thieu, tin_tuc, van_ban_phap_luat, thu_tuc_hanh_chinh,
+        hoi_dap, thu_vien_anh, video, lich_tiep_cong_dan, truy_na,
+        nguoi_tot_viec_tot, chinh_sach_phap_luat, search, so_do_trang
+      }`,
+      {},
+      { next: { revalidate: 86400 } }
+    ),
+    null
   );
 }

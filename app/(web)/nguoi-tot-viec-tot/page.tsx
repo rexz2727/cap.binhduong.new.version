@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getGoodDeeds } from "@/sanity/lib/queries";
+import { getGoodDeeds, getPageContent } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import PageHeader from "@/components/ui/PageHeader";
 
@@ -12,13 +12,14 @@ export const metadata: Metadata = {
 
 export default async function GoodDeedPage() {
   const deeds = await getGoodDeeds(100);
+  const pageContent = await getPageContent();
 
   return (
     <>
       <PageHeader
         title="Người tốt — Việc tốt"
         breadcrumbs={[{ label: "Người tốt việc tốt" }]}
-        description="Vinh danh cán bộ, chiến sĩ và quần chúng nhân dân có thành tích xuất sắc trong phong trào Toàn dân bảo vệ an ninh Tổ quốc."
+        description={pageContent?.nguoi_tot_viec_tot ?? "Vinh danh cán bộ, chiến sĩ và quần chúng nhân dân có thành tích xuất sắc trong phong trào Toàn dân bảo vệ an ninh Tổ quốc."}
       />
       <section className="block">
         <div className="container">

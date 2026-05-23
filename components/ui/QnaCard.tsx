@@ -3,15 +3,7 @@
 import { useState } from "react";
 import { PortableText } from "@portabletext/react";
 import type { QnaPreview } from "@/types/qna";
-
-const CATEGORY_LABELS: Record<string, string> = {
-  "cu-tru": "Cư trú",
-  "cccd": "CCCD",
-  "vneid": "VNeID",
-  "xe-may": "Xe máy",
-  "hanh-chinh": "Hành chính",
-  "khac": "Khác",
-};
+import { QNA_CATEGORY_LABELS } from "@/constants/qna";
 
 interface Props {
   qna: QnaPreview;
@@ -38,7 +30,7 @@ export default function QnaCard({ qna }: Props) {
       )}
 
       <div className="meta">
-        <span className="tag">{CATEGORY_LABELS[qna.category] ?? qna.category}</span>
+        <span className="tag">{QNA_CATEGORY_LABELS[qna.category] ?? qna.category}</span>
         {qna.answeredAt && (
           <span>Đã trả lời · {new Date(qna.answeredAt).toLocaleDateString("vi-VN")}</span>
         )}
