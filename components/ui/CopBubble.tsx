@@ -99,7 +99,7 @@ export default function CopBubble() {
             </Link>
           </div>
 
-          <div className="support-msg" style={{ marginTop: "16px" }}>
+          <div className="support-msg mt-4">
             Hoặc đặt câu hỏi trực tiếp ở khung bên dưới — tôi sẽ trả lời nhanh nhất có thể.
           </div>
         </div>

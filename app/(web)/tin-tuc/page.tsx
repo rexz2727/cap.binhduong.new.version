@@ -54,9 +54,9 @@ export default async function NewsPage({
           </div>
 
           {posts.length === 0 ? (
-            <p style={{ textAlign: "center", padding: "64px 0" }}>Chưa có tin tức nào.</p>
+            <p className="text-center py-16">Chưa có tin tức nào.</p>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "24px" }}>
+            <div className="grid grid-cols-3 gap-6">
               {posts.map((post) => (
                 <NewsCard key={post._id} post={post} />
               ))}

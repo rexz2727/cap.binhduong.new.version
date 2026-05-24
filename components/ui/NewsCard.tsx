@@ -16,7 +16,7 @@ export default function NewsCard({ post }: { post: NewsPostPreview }) {
   });
 
   return (
-    <Link href={`/tin-tuc/${post.slug.current}`} style={{ textDecoration: "none" }}>
+    <Link href={`/tin-tuc/${post.slug.current}`} className="no-underline">
       <article className="news-card">
         <div className="thumb">
           {imgUrl ? (
@@ -24,7 +24,7 @@ export default function NewsCard({ post }: { post: NewsPostPreview }) {
               src={imgUrl}
               alt={post.mainImage?.alt ?? post.title}
               fill
-              style={{ objectFit: "cover" }}
+              className="object-cover"
             />
           ) : (
             <div className="placeholder-img" />

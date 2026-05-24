@@ -49,7 +49,7 @@ export default function EmergencyRow({
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ opacity: 0.85, fontSize: "13px" }}
+                className="opacity-85 text-[13px]"
               >
                 {link.label} →
               </a>
@@ -59,7 +59,7 @@ export default function EmergencyRow({
               href="https://dichvucong.gov.vn"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ opacity: 0.85, fontSize: "13px" }}
+              className="opacity-85 text-[13px]"
             >
               Cổng dịch vụ công Quốc gia →
             </a>

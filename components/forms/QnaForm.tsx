@@ -38,16 +38,15 @@ export default function QnaForm() {
 
   if (status === "success") {
     return (
-      <div className="form-card" style={{ textAlign: "center", padding: "40px 24px" }}>
-        <h3 style={{ color: "var(--navy)", marginBottom: "8px" }}>Câu hỏi đã được gửi!</h3>
-        <p style={{ color: "var(--ink-2)", fontSize: "14px" }}>
+      <div className="form-card text-center px-6 py-10">
+        <h3 className="text-[var(--navy)] mb-2">Câu hỏi đã được gửi!</h3>
+        <p className="text-[var(--ink-2)] text-sm">
           Chúng tôi sẽ trả lời trong thời gian sớm nhất. Câu hỏi sẽ được đăng công khai sau khi
           có câu trả lời.
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="btn btn-secondary"
-          style={{ marginTop: "16px" }}
+          className="btn btn-secondary mt-4"
         >
           Gửi câu hỏi khác
         </button>
@@ -70,7 +69,7 @@ export default function QnaForm() {
           maxLength={1000}
           placeholder="Nhập câu hỏi của bạn..."
         />
-        <span className="help" style={{ textAlign: "right", display: "block" }}>
+        <span className="help text-right block">
           {form.question.length}/1000 ký tự
         </span>
       </div>
@@ -117,12 +116,11 @@ export default function QnaForm() {
         </div>
       )}
 
-      <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
+      <div className="flex gap-[10px] mt-2">
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary flex-1 justify-center"
           disabled={status === "loading" || !form.question.trim()}
-          style={{ flex: 1, justifyContent: "center" }}
         >
           {status === "loading" ? "Đang gửi..." : "Gửi câu hỏi"}
         </button>

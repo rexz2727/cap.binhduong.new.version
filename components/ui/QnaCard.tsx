@@ -16,7 +16,7 @@ export default function QnaCard({ qna }: Props) {
     <div className="qna-card">
       <button
         onClick={() => setOpen(!open)}
-        style={{ background: "none", border: "none", padding: 0, width: "100%", textAlign: "left", cursor: "pointer" }}
+        className="bg-transparent border-none p-0 w-full text-left cursor-pointer"
       >
         <div className="q">{qna.question}</div>
       </button>

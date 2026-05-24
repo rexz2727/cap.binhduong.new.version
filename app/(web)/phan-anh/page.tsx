@@ -56,15 +56,7 @@ export default async function FeedbackPage() {
       />
 
       <section className="block">
-        <div
-          className="container"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.4fr 1fr",
-            gap: "32px",
-            alignItems: "flex-start",
-          }}
-        >
+        <div className="container grid grid-cols-[1.4fr_1fr] gap-8 items-start">
           <div>
             <div className="notice">
               <svg className="ic">
@@ -78,118 +70,45 @@ export default async function FeedbackPage() {
             <FeedbackForm />
           </div>
 
-          <aside style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            <div
-              className="form-card"
-              style={{
-                background: "var(--navy)",
-                color: "white",
-                border: "none",
-                padding: "24px",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: "11.5px",
-                  color: "var(--gold)",
-                  fontWeight: 600,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  marginBottom: "6px",
-                }}
-              >
+          <aside className="flex flex-col gap-4">
+            <div className="form-card bg-[var(--navy)] text-white border-none p-6">
+              <div className="text-[11.5px] text-[var(--gold)] font-semibold uppercase tracking-[0.06em] mb-[6px]">
                 Khẩn cấp
               </div>
-              <div
-                style={{
-                  fontSize: "48px",
-                  fontWeight: 800,
-                  color: "var(--gold)",
-                  lineHeight: 1,
-                  fontVariantNumeric: "tabular-nums",
-                }}
-              >
+              <div className="text-[48px] font-extrabold text-[var(--gold)] leading-none tabular-nums">
                 113
               </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "rgba(255,255,255,0.75)",
-                  marginTop: "6px",
-                }}
-              >
+              <div className="text-[13px] text-white/75 mt-[6px]">
                 {emergencyDesc}
               </div>
             </div>
 
-            <div className="form-card" style={{ padding: "22px" }}>
-              <h3
-                style={{
-                  margin: "0 0 14px",
-                  color: "var(--navy)",
-                  fontSize: "15px",
-                  fontWeight: 700,
-                }}
-              >
+            <div className="form-card p-[22px]">
+              <h3 className="mx-0 mt-0 mb-[14px] text-[var(--navy)] text-[15px] font-bold">
                 Quy trình xử lý phản ánh
               </h3>
-              <ol
-                style={{
-                  margin: 0,
-                  paddingLeft: 0,
-                  listStyle: "none",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "14px",
-                  fontSize: "13.5px",
-                  color: "var(--ink-2)",
-                }}
-              >
+              <ol className="m-0 pl-0 list-none flex flex-col gap-[14px] text-[13.5px] text-[var(--ink-2)]">
                 {processSteps.map((step, i) => (
                   <li
                     key={step._key}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "24px 1fr",
-                      gap: "10px",
-                      alignItems: "flex-start",
-                    }}
+                    className="grid grid-cols-[24px_1fr] gap-[10px] items-start"
                   >
-                    <span
-                      style={{
-                        background: "var(--navy)",
-                        color: "white",
-                        width: "22px",
-                        height: "22px",
-                        borderRadius: "50%",
-                        display: "grid",
-                        placeItems: "center",
-                        fontSize: "11px",
-                        fontWeight: 700,
-                      }}
-                    >
+                    <span className="bg-[var(--navy)] text-white w-[22px] h-[22px] rounded-full grid place-items-center text-[11px] font-bold">
                       {i + 1}
                     </span>
                     <span>
-                      <b style={{ color: "var(--navy)" }}>{step.title}</b> · {step.body}
+                      <b className="text-[var(--navy)]">{step.title}</b> · {step.body}
                     </span>
                   </li>
                 ))}
               </ol>
             </div>
 
-            <div className="form-card" style={{ padding: "22px" }}>
-              <h3
-                style={{
-                  margin: "0 0 12px",
-                  color: "var(--navy)",
-                  fontSize: "15px",
-                  fontWeight: 700,
-                }}
-              >
+            <div className="form-card p-[22px]">
+              <h3 className="mx-0 mt-0 mb-3 text-[var(--navy)] text-[15px] font-bold">
                 Tra cứu hồ sơ đã gửi
               </h3>
-              <div className="field" style={{ marginBottom: "10px" }}>
+              <div className="field mb-[10px]">
                 <input
                   type="text"
                   placeholder="Nhập mã hồ sơ (VD: PA-2026-00123)"
@@ -197,8 +116,7 @@ export default async function FeedbackPage() {
               </div>
               <button
                 type="button"
-                className="btn btn-navy"
-                style={{ width: "100%", justifyContent: "center" }}
+                className="btn btn-navy w-full justify-center"
               >
                 Tra cứu
               </button>

@@ -22,7 +22,7 @@ export default function HeroSearch() {
         <svg
           width="18"
           height="18"
-          style={{ marginLeft: "14px", color: "var(--subtle)" }}
+          className="ml-[14px] text-[var(--subtle)]"
         >
           <use href="#i-search" />
         </svg>

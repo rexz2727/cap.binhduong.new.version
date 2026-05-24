@@ -70,7 +70,14 @@
       "Bash(sed -n '1,12p' \"app/\\(web\\)/phan-anh/page.tsx\")",
       "Bash(sed -n '128,145p' \"components/sections/GioiThieuTabs.tsx\")",
       "Bash(awk 'NR>=1000')",
-      "Bash(git check-ignore *)"
+      "Bash(git check-ignore *)",
+      "Bash(git commit *)",
+      "Bash(gh api *)",
+      "Bash(npm audit *)",
+      "Bash(grep -v \"^$\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(echo \"BUILD_EXIT:$?\")",
+      "Bash(sort -t: -k1,1)"
     ]
   }
 }

@@ -26,28 +26,21 @@ export default function PhotoLightbox({ photos, columns = 3 }: Props) {
     [photos.length]
   );
 
-  const gridStyle: React.CSSProperties = {
-    display: "grid",
-    gap: "8px",
-    gridTemplateColumns: `repeat(${columns}, 1fr)`,
-  };
+  const gridColsClass =
+    columns === 2
+      ? "grid-cols-2"
+      : columns === 4
+      ? "grid-cols-4"
+      : "grid-cols-3";
 
   return (
     <>
-      <div style={gridStyle}>
+      <div className={`grid gap-2 ${gridColsClass}`}>
         {photos.map((photo, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
-            style={{
-              position: "relative",
-              aspectRatio: "1",
-              overflow: "hidden",
-              border: "none",
-              padding: 0,
-              cursor: "pointer",
-              background: "var(--surface-2)",
-            }}
+            className="relative aspect-square overflow-hidden border-none p-0 cursor-pointer bg-[var(--surface-2)]"
           >
             <Image
               src={photo.src}
@@ -63,22 +56,13 @@ export default function PhotoLightbox({ photos, columns = 3 }: Props) {
       {active !== null && (
         <div
           onClick={close}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.92)",
-            zIndex: 9999,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "16px",
-          }}
+          className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            style={{ position: "relative", maxWidth: "900px", width: "100%" }}
+            className="relative max-w-[900px] w-full"
           >
-            <div style={{ position: "relative", width: "100%", aspectRatio: "16/10" }}>
+            <div className="relative w-full aspect-[16/10]">
               <Image
                 src={photos[active].src}
                 alt={photos[active].caption ?? `Ảnh ${active + 1}`}
@@ -89,11 +73,11 @@ export default function PhotoLightbox({ photos, columns = 3 }: Props) {
               />
             </div>
             {photos[active].caption && (
-              <p style={{ textAlign: "center", color: "rgba(255,255,255,0.7)", fontSize: "13px", marginTop: "12px" }}>
+              <p className="text-center text-white/70 text-[13px] mt-3">
                 {photos[active].caption}
               </p>
             )}
-            <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: "12px", marginTop: "4px" }}>
+            <p className="text-center text-white/40 text-xs mt-1">
               {active + 1} / {photos.length}
             </p>
           </div>
@@ -101,68 +85,21 @@ export default function PhotoLightbox({ photos, columns = 3 }: Props) {
           <button
             onClick={(e) => { e.stopPropagation(); prev(); }}
             aria-label="Ảnh trước"
-            style={{
-              position: "absolute",
-              left: "16px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              background: "rgba(255,255,255,0.12)",
-              border: "none",
-              color: "white",
-              width: "44px",
-              height: "44px",
-              borderRadius: "50%",
-              fontSize: "24px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 border-none text-white w-11 h-11 rounded-full text-2xl cursor-pointer flex items-center justify-center"
           >
             ‹
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); next(); }}
             aria-label="Ảnh tiếp"
-            style={{
-              position: "absolute",
-              right: "16px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              background: "rgba(255,255,255,0.12)",
-              border: "none",
-              color: "white",
-              width: "44px",
-              height: "44px",
-              borderRadius: "50%",
-              fontSize: "24px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 border-none text-white w-11 h-11 rounded-full text-2xl cursor-pointer flex items-center justify-center"
           >
             ›
           </button>
           <button
             onClick={close}
             aria-label="Đóng"
-            style={{
-              position: "absolute",
-              top: "16px",
-              right: "16px",
-              background: "rgba(255,255,255,0.12)",
-              border: "none",
-              color: "white",
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              fontSize: "20px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            className="absolute top-4 right-4 bg-white/10 border-none text-white w-9 h-9 rounded-full text-xl cursor-pointer flex items-center justify-center"
           >
             ×
           </button>

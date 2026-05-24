@@ -11,10 +11,7 @@ const QUICK_LINKS = [
 
 export default function NotFound() {
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center px-4 text-center"
-      style={{ background: "var(--bg)" }}
-    >
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 text-center bg-[var(--bg)]">
       <span className="text-8xl font-black tracking-tight select-none text-navy mb-6">
         404
       </span>
@@ -33,10 +30,7 @@ export default function NotFound() {
         ))}
       </div>
 
-      <div
-        className="rounded-2xl border border-red px-6 py-4 text-sm"
-        style={{ background: "var(--red-soft)", color: "var(--red-deep)" }}
-      >
+      <div className="rounded-2xl border border-red px-6 py-4 text-sm bg-[var(--red-soft)] text-[var(--red-deep)]">
         <p className="font-semibold mb-0.5">Cần hỗ trợ khẩn cấp?</p>
         <p>
           Gọi ngay{" "}

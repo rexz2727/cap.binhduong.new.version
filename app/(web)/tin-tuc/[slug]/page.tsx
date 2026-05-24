@@ -52,7 +52,7 @@ export default async function NewsDetailPage({ params }: Props) {
           </div>
 
           {imgUrl && (
-            <div className="article-cover" style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden" }}>
+            <div className="article-cover relative aspect-video overflow-hidden">
               <Image
                 src={imgUrl}
                 alt={post.mainImage?.alt ?? post.title}

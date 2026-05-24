@@ -37,15 +37,15 @@ export default async function LegalDocDetailPage({ params }: Props) {
 
       <section className="block">
         <div className="container-narrow">
-          <div className="org-card" style={{ marginBottom: "32px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
-              <div className="doc-icon" style={{ flexShrink: 0 }}>
+          <div className="org-card mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="doc-icon shrink-0">
                 <svg aria-hidden="true"><use href="#i-doc" /></svg>
               </div>
               <span className="badge-type">{LEGAL_CATEGORY_LABELS[doc.category] ?? doc.category}</span>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <div className="lbl">Số hiệu</div>
                 <b>{doc.documentNumber}</b>
@@ -67,14 +67,13 @@ export default async function LegalDocDetailPage({ params }: Props) {
             </div>
 
             {doc.fileUrl && (
-              <div style={{ marginTop: "20px" }}>
+              <div className="mt-5">
                 <a
                   href={doc.fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="doc-download"
+                  className="doc-download inline-flex items-center gap-2"
                   title="Tải xuống PDF"
-                  style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
                 >
                   <svg width="18" height="18"><use href="#i-download" /></svg>
                   Tải văn bản (PDF)

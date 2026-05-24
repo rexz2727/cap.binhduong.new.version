@@ -44,18 +44,17 @@ export default function FeedbackForm() {
 
   if (status === "success") {
     return (
-      <div className="form-card" style={{ textAlign: "center", padding: "40px 24px" }}>
-        <svg width="48" height="48" style={{ color: "var(--green, #16a34a)", margin: "0 auto 12px" }}>
+      <div className="form-card text-center px-6 py-10">
+        <svg width="48" height="48" className="text-[var(--green,#16a34a)] mx-auto mb-3">
           <use href="#i-check" />
         </svg>
-        <h3 style={{ color: "var(--navy)", marginBottom: "8px" }}>Gửi phản ánh thành công!</h3>
-        <p style={{ color: "var(--ink-2)", fontSize: "14px" }}>
+        <h3 className="text-[var(--navy)] mb-2">Gửi phản ánh thành công!</h3>
+        <p className="text-[var(--ink-2)] text-sm">
           Chúng tôi đã nhận được thông tin và sẽ xem xét trong thời gian sớm nhất.
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="btn btn-secondary"
-          style={{ marginTop: "16px" }}
+          className="btn btn-secondary mt-4"
         >
           Gửi phản ánh khác
         </button>
@@ -164,17 +163,16 @@ export default function FeedbackForm() {
       </div>
 
       {status === "error" && (
-        <div className="notice" style={{ marginTop: "4px" }}>
+        <div className="notice mt-1">
           <div>{errorMsg}</div>
         </div>
       )}
 
-      <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
+      <div className="flex gap-[10px] mt-2">
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary flex-1 justify-center"
           disabled={status === "loading"}
-          style={{ flex: 1, justifyContent: "center" }}
         >
           {status === "loading" ? "Đang gửi..." : "Gửi phản ánh"}
         </button>

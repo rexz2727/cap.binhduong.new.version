@@ -2763,6 +2763,8 @@ html[data-theme="dark"] .org-card p { color: var(--ink-2); }
 html[data-theme="dark"] .ward-cell { background: var(--surface-2); border-color: var(--gold); }
 html[data-theme="dark"] .ward-cell b { color: var(--gold); }
 html[data-theme="dark"] .about-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+html[data-theme="dark"] .duty-item { background: var(--surface-2); }
+html[data-theme="dark"] .org-top-card { background: var(--navy-deep); }
 
 /* Person */
 html[data-theme="dark"] .person-card { background: var(--surface); border-color: var(--border); }
@@ -2863,3 +2865,7 @@ html[data-theme="dark"] .qna-callout .s { color: var(--ink-2); }
 
 /* Hero feature stat cards stay dark — bump contrast slightly */
 html[data-theme="dark"] .hero-stat { background: rgba(255,255,255,0.04); }
+
+/* Footer social buttons */
+html[data-theme="dark"] .footer-social-btn { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+html[data-theme="dark"] .footer-social-btn:hover { background: rgba(255,255,255,0.15); }

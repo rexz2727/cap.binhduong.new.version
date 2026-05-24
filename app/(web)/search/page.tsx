@@ -44,14 +44,7 @@ export default async function SearchPage({ searchParams }: Props) {
               defaultValue={query}
               placeholder="Nhập từ khóa tìm kiếm..."
               autoFocus
-              className="flex-1 text-sm outline-none"
-              style={{
-                border: "1px solid var(--border-strong)",
-                borderRadius: "var(--radius)",
-                padding: "12px 16px",
-                background: "var(--surface)",
-                color: "var(--ink)",
-              }}
+              className="flex-1 text-sm outline-none border border-[var(--border-strong)] rounded-[var(--radius)] px-4 py-3 bg-[var(--surface)] text-[var(--ink)]"
               aria-label="Từ khóa tìm kiếm"
             />
             <button type="submit" className="btn btn-primary">

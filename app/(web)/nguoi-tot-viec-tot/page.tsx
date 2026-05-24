@@ -24,11 +24,11 @@ export default async function GoodDeedPage() {
       <section className="block">
         <div className="container">
           {deeds.length === 0 ? (
-            <p style={{ color: "var(--subtle)", textAlign: "center", padding: "64px 0" }}>
+            <p className="text-center text-[var(--subtle)] py-16">
               Chưa có gương người tốt việc tốt nào.
             </p>
           ) : (
-            <div className="honor-grid" style={{ paddingTop: "16px" }}>
+            <div className="honor-grid pt-4">
               {deeds.map((deed) => {
                 const imgUrl = deed.photo
                   ? urlFor(deed.photo).width(240).height(240).url()
@@ -45,7 +45,7 @@ export default async function GoodDeedPage() {
                           src={imgUrl}
                           alt={deed.name}
                           fill
-                          style={{ objectFit: "cover" }}
+                          className="object-cover"
                           sizes="120px"
                         />
                       ) : null}

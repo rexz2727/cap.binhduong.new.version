@@ -54,7 +54,7 @@ export default async function VideoPage({ searchParams }: Props) {
           </div>
 
           {videos.length === 0 ? (
-            <p style={{ color: "var(--subtle)", textAlign: "center", padding: "64px 0" }}>
+            <p className="text-center text-[var(--subtle)] py-16">
               Chưa có video nào.
             </p>
           ) : (
