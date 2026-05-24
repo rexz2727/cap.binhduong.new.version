@@ -50,10 +50,10 @@ export default function HeroSection({
               ))
             ) : (
               <>
-                <a href="#">Cấp CCCD</a>
-                <a href="#">Đăng ký tạm trú</a>
-                <a href="#">Xe máy điện</a>
-                <a href="#">Hộ chiếu</a>
+                <a href="/search?q=CCCD">Cấp CCCD</a>
+                <a href="/search?q=tạm trú">Đăng ký tạm trú</a>
+                <a href="/search?q=xe máy điện">Xe máy điện</a>
+                <a href="/search?q=hộ chiếu">Hộ chiếu</a>
               </>
             )}
           </div>
