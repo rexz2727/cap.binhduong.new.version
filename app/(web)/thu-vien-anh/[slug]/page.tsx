@@ -40,13 +40,13 @@ export default async function AlbumDetailPage({ params }: Props) {
       />
       <section className="block">
         <div className="container">
-          <p style={{ fontSize: "13px", color: "var(--subtle)", marginBottom: "24px" }}>
+          <p className="text-[13px] text-[var(--subtle)] mb-6">
             {album.date && new Date(album.date).toLocaleDateString("vi-VN")}
             {photos.length > 0 && ` · ${photos.length} ảnh`}
           </p>
 
           {photos.length === 0 ? (
-            <p style={{ color: "var(--subtle)", textAlign: "center", padding: "64px 0" }}>
+            <p className="text-center text-[var(--subtle)] py-16">
               Album chưa có ảnh.
             </p>
           ) : (

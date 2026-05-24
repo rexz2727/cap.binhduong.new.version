@@ -23,7 +23,7 @@ export default async function ChinhSachPhapLuatPage() {
       <section className="block">
         <div className="container">
           {docs.length === 0 ? (
-            <p style={{ textAlign: "center", color: "var(--muted)", padding: "64px 0" }}>
+            <p className="text-center text-[var(--muted)] py-16">
               Chưa có văn bản dự thảo nào.
             </p>
           ) : (

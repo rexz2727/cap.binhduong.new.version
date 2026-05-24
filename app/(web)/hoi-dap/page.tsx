@@ -63,7 +63,7 @@ export default async function HoiDapPage({ searchParams }: Props) {
               </div>
 
               {items.length === 0 ? (
-                <div className="qna-list" style={{ textAlign: "center", padding: "48px 0", color: "var(--muted)" }}>
+                <div className="qna-list text-center py-12 text-[var(--muted)]">
                   <p>Chưa có câu hỏi nào trong danh mục này.</p>
                 </div>
               ) : (
@@ -87,28 +87,25 @@ export default async function HoiDapPage({ searchParams }: Props) {
                 </div>
               </div>
 
-              <div
-                className="aside-card"
-                style={{ background: "var(--navy-soft)", borderColor: "var(--gold)" }}
-              >
-                <h4 style={{ color: "var(--red-deep)", borderColor: "var(--gold)" }}>
+              <div className="aside-card bg-[var(--navy-soft)] border-[var(--gold)]">
+                <h4 className="text-[var(--red-deep)] border-[var(--gold)]">
                   Liên hệ trực tiếp
                 </h4>
-                <div style={{ fontSize: "13.5px", color: "var(--ink-2)", lineHeight: 1.6 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-                    <svg width="16" height="16" style={{ color: "var(--red)" }}>
+                <div className="text-[13.5px] text-[var(--ink-2)] leading-[1.6]">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <svg width="16" height="16" className="text-[var(--red)]">
                       <use href="#i-phone" />
                     </svg>
                     {siteSettings?.phone ?? SITE.phone}
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-                    <svg width="16" height="16" style={{ color: "var(--red)" }}>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <svg width="16" height="16" className="text-[var(--red)]">
                       <use href="#i-mail" />
                     </svg>
                     {SITE.email}
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <svg width="16" height="16" style={{ color: "var(--red)" }}>
+                  <div className="flex items-center gap-2">
+                    <svg width="16" height="16" className="text-[var(--red)]">
                       <use href="#i-clock" />
                     </svg>
                     T2–T6: 7:00–17:00

@@ -73,7 +73,7 @@ export default function GioiThieuTabs({ personnel, unitProfile }: Props) {
       </div>
 
       {/* Chức năng & nhiệm vụ */}
-      <div className="tab-pane" style={{ display: active === "function" ? undefined : "none" }}>
+      <div className={active === "function" ? "tab-pane is-active" : "tab-pane"}>
         <div className="org-card">
           <h3>Về đơn vị</h3>
           {unitProfile?.unitDescription1 ? (
@@ -101,13 +101,13 @@ export default function GioiThieuTabs({ personnel, unitProfile }: Props) {
 
         <div className="org-card">
           <h3>Chức năng &amp; nhiệm vụ chính</h3>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "16px", marginTop: "8px" }}>
+          <div className="grid grid-cols-2 gap-4 mt-2">
             {dutyItems.map((item) => (
-              <div key={item.n} style={{ display: "flex", gap: "14px", padding: "18px", background: "var(--surface-2)", borderRadius: "var(--radius)" }}>
-                <div style={{ width: "36px", height: "36px", background: "var(--gold)", color: "var(--navy-deep)", borderRadius: "8px", display: "grid", placeItems: "center", fontWeight: 700, flexShrink: 0 }}>{item.n}</div>
+              <div key={item.n} className="duty-item">
+                <div className="duty-num">{item.n}</div>
                 <div>
-                  <b style={{ color: "var(--navy)", fontSize: "14.5px" }}>{item.title}</b>
-                  <div style={{ fontSize: "13px", color: "var(--muted)", marginTop: "4px" }}>{item.body}</div>
+                  <b className="text-[var(--navy)] text-[14.5px] font-bold">{item.title}</b>
+                  <div className="text-[13px] text-[var(--muted)] mt-1">{item.body}</div>
                 </div>
               </div>
             ))}
@@ -116,35 +116,35 @@ export default function GioiThieuTabs({ personnel, unitProfile }: Props) {
       </div>
 
       {/* Sơ đồ tổ chức */}
-      <div className="tab-pane" style={{ display: active === "org" ? undefined : "none" }}>
+      <div className={active === "org" ? "tab-pane is-active" : "tab-pane"}>
         <div className="org-card">
           <h3>Sơ đồ tổ chức</h3>
           <p>Bộ máy tổ chức Công an phường Bình Dương được thiết kế theo nguyên tắc tinh gọn, hiệu quả — phù hợp với địa bàn dân cư sau sáp nhập.</p>
 
-          <div style={{ marginTop: "24px" }}>
-            <div style={{ display: "grid", placeItems: "center", marginBottom: "32px" }}>
-              <div style={{ background: "var(--navy)", color: "white", padding: "18px 28px", borderRadius: "var(--radius-lg)", textAlign: "center", minWidth: "280px", boxShadow: "var(--shadow)" }}>
-                <div style={{ fontSize: "11.5px", color: "var(--gold)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600 }}>Cấp lãnh đạo</div>
-                <div style={{ fontSize: "16px", fontWeight: 700, marginTop: "4px" }}>Ban Chỉ huy</div>
-                <div style={{ fontSize: "12px", opacity: 0.75, marginTop: "2px" }}>1 Trưởng + 3 Phó Trưởng</div>
+          <div className="mt-6">
+            <div className="grid place-items-center mb-8">
+              <div className="org-top-card">
+                <div className="text-[11.5px] text-[var(--gold)] uppercase tracking-widest font-semibold">Cấp lãnh đạo</div>
+                <div className="text-base font-bold mt-1">Ban Chỉ huy</div>
+                <div className="text-xs opacity-75 mt-0.5">1 Trưởng + 3 Phó Trưởng</div>
               </div>
-              <div style={{ width: "2px", height: "32px", background: "var(--gold)", marginTop: "-2px" }}></div>
+              <div className="w-0.5 h-8 bg-[var(--gold)] -mt-0.5"></div>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "16px", position: "relative" }}>
-              <div style={{ position: "absolute", top: "-16px", left: "12.5%", right: "12.5%", height: "2px", background: "var(--gold)" }}></div>
+            <div className="grid grid-cols-4 gap-4 relative">
+              <div className="absolute -top-4 left-[12.5%] right-[12.5%] h-0.5 bg-[var(--gold)]"></div>
               {deptItems.map((branch) => (
-                <div key={branch._key} className="ward-cell" style={{ background: "var(--surface)", borderColor: "var(--navy)", position: "relative" }}>
-                  <div style={{ position: "absolute", top: "-16px", left: "50%", width: "2px", height: "16px", background: "var(--gold)" }}></div>
-                  <b style={{ color: "var(--navy)" }}>{branch.label}</b>
+                <div key={branch._key} className="ward-cell relative bg-[var(--surface)] border-[var(--navy)]">
+                  <div className="absolute -top-4 left-1/2 w-0.5 h-4 bg-[var(--gold)]"></div>
+                  <b className="text-[var(--navy)]">{branch.label}</b>
                   <div className="lbl">{branch.sub}</div>
                 </div>
               ))}
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "14px", marginTop: "32px", fontSize: "13px", color: "var(--muted)" }}>
+            <div className="grid grid-cols-4 gap-[14px] mt-8 text-[13px] text-[var(--muted)]">
               {statItems.map((stat) => (
-                <div key={stat._key}><b style={{ color: "var(--ink-2)" }}>{stat.label}</b> {stat.value}</div>
+                <div key={stat._key}><b className="text-[var(--ink-2)]">{stat.label}</b> {stat.value}</div>
               ))}
             </div>
           </div>
@@ -152,10 +152,10 @@ export default function GioiThieuTabs({ personnel, unitProfile }: Props) {
       </div>
 
       {/* Ban lãnh đạo */}
-      <div className="tab-pane" style={{ display: active === "leaders" ? undefined : "none" }}>
+      <div className={active === "leaders" ? "tab-pane is-active" : "tab-pane"}>
         <div className="org-card">
           <h3>Ban Lãnh đạo</h3>
-          <p style={{ marginBottom: "24px" }}>Đội ngũ cán bộ chỉ huy giàu kinh nghiệm, được đào tạo bài bản, cam kết phục vụ nhân dân.</p>
+          <p className="mb-6">Đội ngũ cán bộ chỉ huy giàu kinh nghiệm, được đào tạo bài bản, cam kết phục vụ nhân dân.</p>
           {personnel.length > 0 ? (
             <div className="personnel-grid">
               {personnel.map((person) => (
@@ -177,54 +177,54 @@ export default function GioiThieuTabs({ personnel, unitProfile }: Props) {
               ))}
             </div>
           ) : (
-            <p style={{ color: "var(--muted)", fontSize: "14px" }}>Chưa có thông tin nhân sự.</p>
+            <p className="text-[var(--muted)] text-sm">Chưa có thông tin nhân sự.</p>
           )}
         </div>
       </div>
 
       {/* Lịch tiếp công dân */}
-      <div className="tab-pane" style={{ display: active === "schedule" ? undefined : "none" }}>
-        <div className="org-card" style={{ textAlign: "center", padding: "48px 32px" }}>
-          <svg width="48" height="48" style={{ color: "var(--gold-deep)", marginBottom: "14px" }}><use href="#i-cal" /></svg>
-          <h3 style={{ justifyContent: "center", display: "inline-flex" }}>Lịch tiếp công dân</h3>
-          <p style={{ maxWidth: "520px", margin: "8px auto 24px" }}>Xem chi tiết lịch tiếp công dân định kỳ hàng tháng — gồm thời gian, cán bộ trực và nội dung tiếp.</p>
-          <Link href="/lich-tiep-cong-dan" className="btn btn-red" style={{ fontSize: "14px" }}>Xem lịch tháng này →</Link>
+      <div className={active === "schedule" ? "tab-pane is-active" : "tab-pane"}>
+        <div className="org-card text-center px-8 py-12">
+          <svg width="48" height="48" className="text-[var(--gold-deep)] mb-[14px]"><use href="#i-cal" /></svg>
+          <h3 className="justify-center inline-flex">Lịch tiếp công dân</h3>
+          <p className="max-w-[520px] mx-auto mt-2 mb-6">Xem chi tiết lịch tiếp công dân định kỳ hàng tháng — gồm thời gian, cán bộ trực và nội dung tiếp.</p>
+          <Link href="/lich-tiep-cong-dan" className="btn btn-red text-sm">Xem lịch tháng này →</Link>
         </div>
       </div>
 
       {/* Liên hệ */}
-      <div className="tab-pane" style={{ display: active === "contact" ? undefined : "none" }}>
+      <div className={active === "contact" ? "tab-pane is-active" : "tab-pane"}>
         <div className="org-card">
           <h3>Thông tin liên hệ</h3>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginTop: "8px" }}>
-            <div style={{ display: "flex", gap: "14px" }}>
-              <svg width="20" height="20" style={{ color: "var(--red)", flexShrink: 0, marginTop: "2px" }}><use href="#i-pin" /></svg>
+          <div className="grid grid-cols-2 gap-6 mt-2">
+            <div className="flex gap-[14px]">
+              <svg width="20" height="20" className="text-[var(--red)] shrink-0 mt-0.5"><use href="#i-pin" /></svg>
               <div>
-                <div style={{ fontSize: "11.5px", color: "var(--subtle)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Địa chỉ</div>
-                <div style={{ fontSize: "14px", color: "var(--ink)", marginTop: "2px" }}>{SITE.address}</div>
+                <div className="text-[11.5px] text-[var(--subtle)] uppercase tracking-[0.04em] font-semibold">Địa chỉ</div>
+                <div className="text-sm text-[var(--ink)] mt-0.5">{SITE.address}</div>
               </div>
             </div>
-            <div style={{ display: "flex", gap: "14px" }}>
-              <svg width="20" height="20" style={{ color: "var(--red)", flexShrink: 0, marginTop: "2px" }}><use href="#i-phone" /></svg>
+            <div className="flex gap-[14px]">
+              <svg width="20" height="20" className="text-[var(--red)] shrink-0 mt-0.5"><use href="#i-phone" /></svg>
               <div>
-                <div style={{ fontSize: "11.5px", color: "var(--subtle)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Điện thoại</div>
-                <div style={{ fontSize: "14px", color: "var(--ink)", marginTop: "2px", fontVariantNumeric: "tabular-nums" }}>{SITE.phone}</div>
-                <div style={{ fontSize: "12.5px", color: "var(--muted)", marginTop: "2px" }}>Đường dây nóng: <b style={{ color: "var(--red)" }}>113</b></div>
+                <div className="text-[11.5px] text-[var(--subtle)] uppercase tracking-[0.04em] font-semibold">Điện thoại</div>
+                <div className="text-sm text-[var(--ink)] mt-0.5 tabular-nums">{SITE.phone}</div>
+                <div className="text-[12.5px] text-[var(--muted)] mt-0.5">Đường dây nóng: <b className="text-[var(--red)]">113</b></div>
               </div>
             </div>
-            <div style={{ display: "flex", gap: "14px" }}>
-              <svg width="20" height="20" style={{ color: "var(--red)", flexShrink: 0, marginTop: "2px" }}><use href="#i-mail" /></svg>
+            <div className="flex gap-[14px]">
+              <svg width="20" height="20" className="text-[var(--red)] shrink-0 mt-0.5"><use href="#i-mail" /></svg>
               <div>
-                <div style={{ fontSize: "11.5px", color: "var(--subtle)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Email</div>
-                <div style={{ fontSize: "14px", color: "var(--ink)", marginTop: "2px" }}>{SITE.email}</div>
+                <div className="text-[11.5px] text-[var(--subtle)] uppercase tracking-[0.04em] font-semibold">Email</div>
+                <div className="text-sm text-[var(--ink)] mt-0.5">{SITE.email}</div>
               </div>
             </div>
-            <div style={{ display: "flex", gap: "14px" }}>
-              <svg width="20" height="20" style={{ color: "var(--red)", flexShrink: 0, marginTop: "2px" }}><use href="#i-clock" /></svg>
+            <div className="flex gap-[14px]">
+              <svg width="20" height="20" className="text-[var(--red)] shrink-0 mt-0.5"><use href="#i-clock" /></svg>
               <div>
-                <div style={{ fontSize: "11.5px", color: "var(--subtle)", textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Giờ làm việc</div>
+                <div className="text-[11.5px] text-[var(--subtle)] uppercase tracking-[0.04em] font-semibold">Giờ làm việc</div>
                 {SITE.workingHours.split(" | ").map((line, i) => (
-                  <div key={i} style={{ fontSize: "14px", color: "var(--ink)", marginTop: i === 0 ? "2px" : 0 }}>{line}</div>
+                  <div key={i} className={`text-sm text-[var(--ink)]${i === 0 ? " mt-0.5" : ""}`}>{line}</div>
                 ))}
               </div>
             </div>

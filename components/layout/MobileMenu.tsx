@@ -42,11 +42,11 @@ export default function MobileMenu({ isOpen, onClose, hotline }: Props) {
       {/* Mobile drawer */}
       <aside className={`mobile-drawer ${isOpen ? "open" : ""}`}>
         <div className="drawer-head">
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div className="emblem" style={{ width: "36px", height: "36px" }}></div>
+          <div className="flex items-center gap-3">
+            <div className="emblem w-9 h-9"></div>
             <div className="brand-text">
               <div className="brand-line2">{t("brand2", "Công an phường Bình Dương")}</div>
-              <div style={{ fontSize: "11px", opacity: 0.65 }}>{t("brand3", "TP. Hồ Chí Minh")}</div>
+              <div className="text-[11px] opacity-65">{t("brand3", "TP. Hồ Chí Minh")}</div>
             </div>
           </div>
           <button className="drawer-close" onClick={handleLinkClick} aria-label="Đóng menu">
@@ -71,7 +71,7 @@ export default function MobileMenu({ isOpen, onClose, hotline }: Props) {
                     className={`drawer-nav-item ${isParentActive ? "active" : ""}`}
                   >
                     {item.label}
-                    <svg className="chev" style={{ transform: isOpen ? 'rotate(180deg)' : ''}}><use href="#i-chev-down" /></svg>
+                    <svg className={`chev${isOpen ? " rotate-180" : ""}`}><use href="#i-chev-down" /></svg>
                   </button>
                   <div
                     className="drawer-sub"

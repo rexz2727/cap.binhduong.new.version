@@ -34,41 +34,32 @@ export default async function VideoDetailPage({ params }: Props) {
       <section className="block">
         <div className="container-narrow">
           <VideoPlayer youtubeId={video.youtubeId} title={video.title} />
-          <h2 style={{ marginTop: "24px", marginBottom: "8px" }}>{video.title}</h2>
-          <p style={{ fontSize: "13px", color: "var(--subtle)" }}>
+          <h2 className="mt-6 mb-2">{video.title}</h2>
+          <p className="text-[13px] text-[var(--subtle)]">
             {new Date(video.date).toLocaleDateString("vi-VN")}
           </p>
 
           {related.length > 0 && (
-            <div style={{ marginTop: "48px" }}>
-              <h3 style={{ fontSize: "14px", fontWeight: 700, marginBottom: "16px", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--navy)" }}>
+            <div className="mt-12">
+              <h3 className="text-sm font-bold mb-4 uppercase tracking-[0.06em] text-[var(--navy)]">
                 Video liên quan
               </h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              <div className="flex flex-col gap-3">
                 {related.map((v) => (
                   <Link
                     key={v._id}
                     href={`/video/${v.slug.current}`}
-                    style={{ display: "flex", gap: "12px", alignItems: "center", textDecoration: "none" }}
+                    className="flex gap-3 items-center no-underline"
                   >
-                    <div
-                      className="video-card"
-                      style={{ flex: 1, display: "flex", gap: "12px", alignItems: "flex-start" }}
-                    >
+                    <div className="video-card flex-1 flex gap-3 items-start">
                       <div
-                        className="thumb"
-                        style={{
-                          width: "120px",
-                          minWidth: "120px",
-                          height: "80px",
-                          backgroundImage: `url(https://i.ytimg.com/vi/${v.youtubeId}/mqdefault.jpg)`,
-                          flex: "none",
-                        }}
+                        className="thumb w-[120px] min-w-[120px] h-20 flex-none bg-cover bg-center"
+                        style={{ backgroundImage: `url(https://i.ytimg.com/vi/${v.youtubeId}/mqdefault.jpg)` }}
                       >
-                        <div className="play" style={{ transform: "translate(-50%, -50%) scale(0.6)" }} />
+                        <div className="play [transform:translate(-50%,-50%)_scale(0.6)]" />
                       </div>
-                      <div className="body" style={{ padding: "4px 0" }}>
-                        <h4 style={{ fontSize: "13px", WebkitLineClamp: 2 }}>{v.title}</h4>
+                      <div className="body py-1">
+                        <h4 className="text-[13px] line-clamp-2">{v.title}</h4>
                         <div className="meta">
                           <span>{new Date(v.date).toLocaleDateString("vi-VN")}</span>
                         </div>

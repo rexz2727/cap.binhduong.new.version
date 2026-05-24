@@ -61,7 +61,7 @@ export default function LatestNews({ posts }: { posts: NewsPostPreview[] }) {
                   src={urlFor(mainPost.mainImage).width(800).height(500).url()!}
                   alt={mainPost.mainImage.alt ?? mainPost.title}
                   fill
-                  style={{ objectFit: "cover" }}
+                  className="object-cover"
                 />
               ) : (
                 <div className="placeholder-img">Ảnh tin nổi bật</div>
@@ -98,7 +98,7 @@ export default function LatestNews({ posts }: { posts: NewsPostPreview[] }) {
                       src={urlFor(post.mainImage).width(200).height(200).url()!}
                       alt={post.mainImage.alt ?? post.title}
                       fill
-                      style={{ objectFit: "cover" }}
+                      className="object-cover"
                     />
                   ) : (
                     <div className="placeholder-img">img</div>

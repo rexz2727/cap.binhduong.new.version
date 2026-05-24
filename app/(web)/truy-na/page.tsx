@@ -60,7 +60,7 @@ export default async function TruyNaPage({ searchParams }: Props) {
           </div>
 
           {persons.length === 0 ? (
-            <p style={{ color: "var(--subtle)", textAlign: "center", padding: "64px 0" }}>
+            <p className="text-center text-[var(--subtle)] py-16">
               Không có đối tượng nào trong danh sách này.
             </p>
           ) : (

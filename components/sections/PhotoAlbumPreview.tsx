@@ -57,7 +57,7 @@ export default function PhotoAlbumPreview({ albums }: Props) {
                     src={urlFor(album.coverImage).width(400).height(300).url()!}
                     alt={album.title}
                     fill
-                    style={{ objectFit: "cover" }}
+                    className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   />
                 )}

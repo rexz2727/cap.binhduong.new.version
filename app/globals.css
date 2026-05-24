@@ -41,15 +41,10 @@
   --shadow: var(--shadow);
   --shadow-lg: var(--shadow-lg);
 
-  --animate-fade-up: fade-up 0.6s ease-out forwards;
   --animate-fade-in: fade-in 0.5s ease-out forwards;
   --animate-ticker: ticker-scroll 40s linear infinite;
 }
 
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -73,8 +68,7 @@
 
 
 /* ============================================================
-   CAP Bình Dương — Redesign Demo
-   Design System
+   CAP Bình Dương — Design System
    ============================================================ */
 
 :root {
@@ -1151,6 +1145,9 @@ section.block.navy .section-eyebrow::before { background: var(--gold); }
 .footer-other-nums div { background: rgba(255,255,255,0.04); padding: 8px; border-radius: 6px; text-align: center; }
 .footer-other-nums b { display: block; color: white; font-size: 14px; margin-top: 2px; }
 
+.footer-social-btn { width: 36px; height: 36px; display: grid; place-items: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: rgba(255,255,255,0.85); transition: background 0.15s, color 0.15s; }
+.footer-social-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
   padding: 18px 0;
@@ -1467,8 +1464,17 @@ section.block.navy .section-eyebrow::before { background: var(--gold); }
 .person-card .rank { font-size: 12.5px; color: var(--red); font-weight: 600; }
 .person-card .position { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 
+/* Tab panes */
+.tab-pane { display: none; }
+.tab-pane.is-active { display: block; }
+
+.duty-item { display: flex; gap: 14px; padding: 18px; background: var(--surface-2); border-radius: var(--radius); }
+.duty-num { width: 36px; height: 36px; background: var(--gold); color: var(--navy-deep); border-radius: 8px; display: grid; place-items: center; font-weight: 700; flex-shrink: 0; }
+
+.org-top-card { background: var(--navy); color: white; padding: 18px 28px; border-radius: var(--radius-lg); text-align: center; min-width: 280px; box-shadow: var(--shadow); }
+
 /* ============================================================
-   Page navigator (demo only — switching pages)
+   Page navigator
    ============================================================ */
 .page-hide { display: none; }
 

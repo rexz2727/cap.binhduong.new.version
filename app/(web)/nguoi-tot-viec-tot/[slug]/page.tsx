@@ -50,28 +50,13 @@ export default async function GoodDeedDetailPage({ params }: Props) {
           </div>
 
           {imgUrl && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: "24px",
-              }}
-            >
-              <div
-                style={{
-                  position: "relative",
-                  width: "200px",
-                  height: "200px",
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  flexShrink: 0,
-                }}
-              >
+            <div className="flex justify-center mb-6">
+              <div className="relative w-[200px] h-[200px] rounded-full overflow-hidden shrink-0">
                 <Image
                   src={imgUrl}
                   alt={deed.name}
                   fill
-                  style={{ objectFit: "cover" }}
+                  className="object-cover"
                   priority
                 />
               </div>

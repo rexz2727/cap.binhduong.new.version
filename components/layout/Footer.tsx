@@ -45,13 +45,13 @@ export default function Footer({ siteSettings }: FooterProps = {}) {
               className="emblem-img"
             />
             <div className="brand-text">
-              <span className="brand-line1" style={{ color: "var(--gold)" }}>Cổng thông tin chính thống</span>
+              <span className="brand-line1 text-[var(--gold)]">Cổng thông tin chính thống</span>
               <span className="brand-line2">{siteSettings?.name ?? SITE.name}</span>
-              <span className="brand-line3" style={{ color: "rgba(255,255,255,0.6)" }}>Thành phố Hồ Chí Minh</span>
+              <span className="brand-line3 text-white/60">Thành phố Hồ Chí Minh</span>
             </div>
           </div>
           <p className="footer-about">{siteSettings?.description ?? SITE.description}</p>
-          <ul className="footer-contact-list" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+          <ul className="footer-contact-list list-none p-0 m-0">
             <li><svg className="ic"><use href="#i-pin" /></svg>{siteSettings?.address ?? SITE.address}</li>
             <li><svg className="ic"><use href="#i-phone" /></svg>{siteSettings?.phone ?? SITE.phone}</li>
             <li><svg className="ic"><use href="#i-mail" /></svg>{siteSettings?.email ?? SITE.email}</li>
@@ -82,12 +82,12 @@ export default function Footer({ siteSettings }: FooterProps = {}) {
             ))}
           </ul>
 
-          <h3 className="footer-h" style={{ marginTop: "24px" }} data-i18n="footer.h.social">Theo dõi chúng tôi</h3>
-          <div style={{ display: "flex", gap: "8px" }}>
-            <a href={siteSettings?.facebook ?? SITE.facebook} style={{ width: "36px", height: "36px", display: "grid", placeItems: "center", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "8px", color: "rgba(255,255,255,0.85)" }} aria-label="Facebook">
+          <h3 className="footer-h mt-6" data-i18n="footer.h.social">Theo dõi chúng tôi</h3>
+          <div className="flex gap-2 mt-4">
+            <a href={siteSettings?.facebook ?? SITE.facebook} className="footer-social-btn" aria-label="Facebook">
               <svg width="14" height="14"><use href="#i-fb" /></svg>
             </a>
-            <a href={siteSettings?.youtube ?? SITE.youtube} style={{ width: "36px", height: "36px", display: "grid", placeItems: "center", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "8px", color: "rgba(255,255,255,0.85)" }} aria-label="YouTube">
+            <a href={siteSettings?.youtube ?? SITE.youtube} className="footer-social-btn" aria-label="YouTube">
               <svg width="14" height="14"><use href="#i-yt" /></svg>
             </a>
           </div>
@@ -111,7 +111,7 @@ export default function Footer({ siteSettings }: FooterProps = {}) {
       <div className="container">
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} {siteSettings?.name ?? SITE.name}. Cổng thông tin điện tử chính thức.</span>
-          <div style={{ display: "flex", gap: "18px" }}>
+          <div className="flex gap-[18px]">
             <Link href="/so-do-trang">Sơ đồ trang</Link>
             <Link href="/chinh-sach-phap-luat">Chính sách bảo mật</Link>
             <a href="#">Điều khoản sử dụng</a>

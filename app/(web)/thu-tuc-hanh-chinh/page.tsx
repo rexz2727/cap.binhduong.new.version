@@ -49,7 +49,7 @@ export default async function ProceduresPage({
           </div>
 
           {procedures.length === 0 ? (
-            <p style={{ textAlign: "center", color: "var(--muted)", padding: "64px 0" }}>
+            <p className="text-center text-[var(--muted)] py-16">
               Chưa có thủ tục nào.
             </p>
           ) : (

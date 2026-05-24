@@ -20,8 +20,8 @@ export default function GuiCauHoiPage() {
       />
 
       <section className="block">
-        <div className="container" style={{ maxWidth: "640px" }}>
-          <div className="notice" style={{ marginBottom: "24px" }}>
+        <div className="container max-w-[640px]">
+          <div className="notice mb-6">
             <svg className="ic">
               <use href="#i-info" />
             </svg>

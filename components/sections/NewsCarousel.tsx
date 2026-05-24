@@ -37,7 +37,7 @@ export default function NewsCarousel({ posts }: Props) {
                   fill
                   sizes="100vw"
                   priority
-                  style={{ objectFit: "cover" }}
+                  className="object-cover"
                 />
               ) : (
                 <div className="w-full h-full bg-police-navy-dark" />

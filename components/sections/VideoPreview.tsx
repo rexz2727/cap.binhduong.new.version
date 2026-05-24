@@ -58,7 +58,7 @@ export default function VideoPreview({ videos }: Props) {
                     src={urlFor(video.thumbnail).width(480).height(270).url()!}
                     alt={video.title}
                     fill
-                    style={{ objectFit: "cover" }}
+                    className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 ) : (
@@ -66,7 +66,7 @@ export default function VideoPreview({ videos }: Props) {
                     src={`https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`}
                     alt={video.title}
                     fill
-                    style={{ objectFit: "cover" }}
+                    className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 )}

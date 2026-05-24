@@ -80,7 +80,7 @@ export default async function LichTiepCongDanPage({ searchParams }: Props) {
         description={pageContent?.lich_tiep_cong_dan ?? "Lịch tiếp công dân định kỳ của Ban lãnh đạo và cán bộ Công an phường Bình Dương."}
       />
       <section className="block">
-        <div className="container" style={{ maxWidth: "960px" }}>
+        <div className="container max-w-[960px]">
           <div className="schedule-nav">
             <Link
               href={`/lich-tiep-cong-dan?month=${prevMonth(currentMonth)}`}
@@ -88,7 +88,7 @@ export default async function LichTiepCongDanPage({ searchParams }: Props) {
             >
               <svg width="14" height="14"><use href="#i-chev-left" /></svg> Tháng trước
             </Link>
-            <h2 style={{ margin: 0 }}>{label}</h2>
+            <h2 className="m-0">{label}</h2>
             <Link
               href={`/lich-tiep-cong-dan?month=${nextMonth(currentMonth)}`}
               className="btn btn-secondary"
@@ -97,7 +97,7 @@ export default async function LichTiepCongDanPage({ searchParams }: Props) {
             </Link>
           </div>
 
-          <div className="notice" style={{ marginBottom: "24px" }}>
+          <div className="notice mb-6">
             <svg className="ic"><use href="#i-warn" /></svg>
             <div>
               <b>Thông tin tiếp công dân:</b> Địa điểm tại Trụ sở Công an phường Bình Dương — {siteSettings?.address ?? SITE.address}. Công dân vui lòng mang theo <b>CCCD/CMND</b> và giấy tờ liên quan. Liên hệ đặt lịch trước qua số <b>{siteSettings?.phone ?? SITE.phone}</b>.
@@ -110,7 +110,7 @@ export default async function LichTiepCongDanPage({ searchParams }: Props) {
                 <span className="day-num">—</span>
                 Chưa có lịch trong tháng này
               </div>
-              <div className="schedule-slot" style={{ justifyContent: "center", color: "var(--muted)" }}>
+              <div className="schedule-slot justify-center text-[var(--muted)]">
                 Không có dữ liệu lịch tiếp công dân cho tháng này.
               </div>
             </div>
@@ -145,7 +145,7 @@ export default async function LichTiepCongDanPage({ searchParams }: Props) {
                         {item.isRegular ? (
                           <span className="recurring">Thường kỳ</span>
                         ) : (
-                          <span style={{ fontSize: "11px", background: "var(--gold-soft)", color: "var(--gold-deep)", padding: "2px 8px", borderRadius: "99px", fontWeight: 600 }}>
+                          <span className="text-[11px] bg-[var(--gold-soft)] text-[var(--gold-deep)] px-2 py-0.5 rounded-full font-semibold">
                             Chuyên đề
                           </span>
                         )}

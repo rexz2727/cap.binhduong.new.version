@@ -33,8 +33,8 @@ export default async function ProcedureDetailPage({ params }: Props) {
 
       <section className="block">
         <div className="container-narrow">
-          <div className="org-card" style={{ marginBottom: "32px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <div className="org-card mb-8">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <div className="lbl">Lĩnh vực</div>
                 <b>{PROCEDURE_CATEGORY_LABELS[proc.category] ?? proc.category}</b>
@@ -54,7 +54,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
             </div>
 
             {proc.onlineServiceUrl && (
-              <div style={{ marginTop: "20px" }}>
+              <div className="mt-5">
                 <a
                   href={proc.onlineServiceUrl}
                   target="_blank"
@@ -95,8 +95,8 @@ export default async function ProcedureDetailPage({ params }: Props) {
           </div>
 
           {proc.forms && proc.forms.length > 0 && (
-            <div style={{ marginTop: "32px" }}>
-              <h3 style={{ fontWeight: 700, marginBottom: "12px" }}>Biểu mẫu tải về</h3>
+            <div className="mt-8">
+              <h3 className="font-bold mb-3">Biểu mẫu tải về</h3>
               <div className="doc-grid">
                 {proc.forms.map((form, i) => (
                   <div className="doc-card" key={i}>

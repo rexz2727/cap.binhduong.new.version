@@ -21,23 +21,20 @@ export default function NguoiTotViecTot({ posts }: Props) {
       <div className="container">
         <div className="section-head-center">
           <div
-            className="section-eyebrow"
-            style={{ color: "var(--gold)" }}
+            className="section-eyebrow text-[var(--gold)]"
             data-i18n="section.honor.eye"
           >
-            <span style={{ "--bg": "var(--gold)" } as React.CSSProperties}></span>
+            <span></span>
             {t("section.honor.eye", "Người tốt — Việc tốt")}
           </div>
           <h2
-            className="section-title"
-            style={{ color: "white" }}
+            className="section-title text-white"
             data-i18n="section.honor.title"
           >
             {t("section.honor.title", "Những tấm gương đáng trân trọng")}
           </h2>
           <p
-            className="section-sub"
-            style={{ color: "rgba(255,255,255,0.7)" }}
+            className="section-sub text-white/70"
             data-i18n="section.honor.sub"
           >
             {t(
@@ -77,11 +74,10 @@ export default function NguoiTotViecTot({ posts }: Props) {
           })}
         </div>
 
-        <div style={{ textAlign: "center", marginTop: "32px" }}>
+        <div className="text-center mt-8">
           <Link
             href="/nguoi-tot-viec-tot"
-            className="btn btn-outline"
-            style={{ color: "white", borderColor: "rgba(255,255,255,0.4)" }}
+            className="btn btn-outline text-white border-white/40"
           >
             {t("section.honor.viewAll", "Xem tất cả")} →
           </Link>
