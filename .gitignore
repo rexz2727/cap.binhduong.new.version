@@ -33,3 +33,6 @@ next-env.d.ts
 # === CONG CU CLI ===
 # Artifact cua cong cu, khong dong bo
 .antigravitycli/
+.codegraph/
+ruvector.db
+.claude/settings.local.json

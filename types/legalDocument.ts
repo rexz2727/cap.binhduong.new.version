@@ -14,6 +14,7 @@ export interface LegalDocument {
   status?: LegalDocStatus;
   summary: string;
   fileUrl?: string;
+  attachedFileUrl?: string;
   body?: import("@portabletext/types").PortableTextBlock[];
 }
 

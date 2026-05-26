@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/constants/site";
-import { NAV_ITEMS } from "@/constants/nav";
+import { HEADER_NAV_ITEMS } from "@/constants/nav";
 
 interface Props {
   isOpen: boolean;
@@ -58,7 +58,7 @@ export default function MobileMenu({ isOpen, onClose, hotline }: Props) {
         </div>
 
         <nav className="drawer-nav">
-          {NAV_ITEMS.map(item => {
+          {HEADER_NAV_ITEMS.map(item => {
             if (item.children) {
               const isOpen = item.href === '/tin-tuc' ? newsOpen : galleryOpen;
               const setIsOpen = item.href === '/tin-tuc' ? setNewsOpen : setGalleryOpen;

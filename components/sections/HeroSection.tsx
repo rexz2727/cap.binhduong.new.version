@@ -4,6 +4,7 @@ import { useI18n } from "@/lib/i18n";
 import type { HeroStats } from "@/sanity/lib/queries";
 import type { HomeContent } from "@/types/homeContent";
 import HeroSearch from "./HeroSearch";
+import ServiceGrid from "./ServiceGrid";
 
 export default function HeroSection({
   stats,
@@ -13,9 +14,6 @@ export default function HeroSection({
   homeContent?: HomeContent | null;
 }) {
   const { t } = useI18n();
-
-  const quickTags = homeContent?.heroQuickTags;
-  const hasQuickTags = Array.isArray(quickTags) && quickTags.length > 0;
 
   return (
     <section className="hero">
@@ -40,23 +38,7 @@ export default function HeroSection({
               )}
           </p>
           <HeroSearch />
-          <div className="hero-quick-tags">
-            <span data-i18n="hero.quicktags">{t("hero.quicktags", "Tra cứu nhanh:")}</span>
-            {hasQuickTags ? (
-              quickTags!.map((tag) => (
-                <a key={tag._key} href={tag.href}>
-                  {tag.label}
-                </a>
-              ))
-            ) : (
-              <>
-                <a href="/search?q=CCCD">Cấp CCCD</a>
-                <a href="/search?q=tạm trú">Đăng ký tạm trú</a>
-                <a href="/search?q=xe máy điện">Xe máy điện</a>
-                <a href="/search?q=hộ chiếu">Hộ chiếu</a>
-              </>
-            )}
-          </div>
+          <ServiceGrid />
         </div>
 
         <div className="hero-stats">

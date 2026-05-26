@@ -37,6 +37,13 @@ export const legalDocumentSchema = defineType({
     }),
     defineField({ name: "summary", title: "Tóm tắt nội dung", type: "text", rows: 4 }),
     defineField({ name: "fileUrl", title: "Link tải file (PDF)", type: "url" }),
+    defineField({
+      name: "attachedFile",
+      title: "File đính kèm (upload trực tiếp)",
+      description: "Upload PDF, Word, TXT... Ưu tiên hơn 'Link tải file' nếu cả hai đều có.",
+      type: "file",
+      options: { accept: ".pdf,.doc,.docx,.txt,.html" },
+    }),
     defineField({ name: "body", title: "Nội dung chi tiết", type: "array", of: [{ type: "block" }] }),
   ],
   preview: {

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/constants/site";
+import { HEADER_NAV_ITEMS, UTILITY_ACTIONS } from "@/constants/nav";
 import type { Announcement } from "@/types/announcement";
 import type { SiteSettings } from "@/types/siteSettings";
 import MobileMenu from "./MobileMenu";
@@ -87,6 +88,19 @@ export default function Header({ announcements, siteSettings }: Props) {
             <a href={`tel:${phone.replace(/\s/g, "")}`}>{phone}</a>
           </div>
           <div className="utility-right">
+            {UTILITY_ACTIONS.map((action) => (
+              <Link
+                key={action.href}
+                href={action.href}
+                className={`util-action${action.highlight ? " highlight" : ""}`}
+              >
+                <svg width="12" height="12" aria-hidden="true">
+                  <use href={action.icon} />
+                </svg>
+                {action.label}
+              </Link>
+            ))}
+            <span className="sep">|</span>
             {/* Language Switcher */}
             <button
               onClick={toggleLang}
@@ -166,147 +180,38 @@ export default function Header({ announcements, siteSettings }: Props) {
             </div>
           </Link>
           <nav className="nav-primary">
-            <Link
-              href="/"
-              className={`nav-link ${isActive("/") ? "active" : ""}`}
-              data-nav="home"
-              data-i18n="nav.home"
-            >
-              {t("nav.home", "Trang chủ")}
-            </Link>
-            <Link
-              href="/gioi-thieu"
-              className={`nav-link ${
-                isActive("/gioi-thieu") ? "active" : ""
-              }`}
-              data-nav="about"
-              data-i18n="nav.about"
-            >
-              {t("nav.about", "Giới thiệu")}
-            </Link>
-            <div className="nav-item">
-              <Link
-                href="/tin-tuc"
-                className={`nav-link ${isActive("/tin-tuc") ? "active" : ""}`}
-              >
-                <span data-i18n="nav.news">{t("nav.news", "Tin tức")}</span>{" "}
-                <svg className="chev">
-                  <use href="#i-chev-down" />
-                </svg>
-              </Link>
-              <div className="nav-dropdown">
-                <Link href="/tin-tuc">
-                  <svg className="ic">
-                    <use href="#i-news" />
-                  </svg>
-                  Tất cả tin tức{" "}
-                  <span className="sub">Mọi danh mục</span>
+            {HEADER_NAV_ITEMS.map((item) => {
+              if (item.children) {
+                return (
+                  <div key={item.href} className="nav-item">
+                    <Link
+                      href={item.href}
+                      className={`nav-link ${isActive(item.href) ? "active" : ""}`}
+                    >
+                      <span>{item.label}</span>{" "}
+                      <svg className="chev"><use href="#i-chev-down" /></svg>
+                    </Link>
+                    <div className="nav-dropdown">
+                      {item.children.map((child) => (
+                        <Link key={child.href} href={child.href}>
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`nav-link ${isActive(item.href) ? "active" : ""}`}
+                >
+                  {item.label}
                 </Link>
-                <Link href="/tin-tuc?category=thong-bao">
-                  <svg className="ic">
-                    <use href="#i-doc" />
-                  </svg>
-                  Thông báo{" "}
-                  <span className="sub">Thông báo chính thức</span>
-                </Link>
-                <Link href="/tin-tuc?category=canh-bao">
-                  <svg className="ic">
-                    <use href="#i-warn" />
-                  </svg>
-                  Cảnh báo{" "}
-                  <span className="sub">An ninh, lừa đảo</span>
-                </Link>
-                <Link href="/tin-tuc?category=antt">
-                  <svg className="ic">
-                    <use href="#i-shield" />
-                  </svg>
-                  An ninh trật tự{" "}
-                  <span className="sub">Tin nghiệp vụ</span>
-                </Link>
-              </div>
-            </div>
-            <Link
-              href="/van-ban-phap-luat"
-              className={`nav-link ${
-                isActive("/van-ban-phap-luat") ? "active" : ""
-              }`}
-              data-nav="legal"
-              data-i18n="nav.legal"
-            >
-              {t("nav.legal", "Văn bản")}
-            </Link>
-            <Link
-              href="/thu-tuc-hanh-chinh"
-              className={`nav-link ${
-                isActive("/thu-tuc-hanh-chinh") ? "active" : ""
-              }`}
-              data-nav="procedures"
-              data-i18n="nav.procedures"
-            >
-              {t("nav.procedures", "Thủ tục")}
-            </Link>
-            <Link
-              href="/hoi-dap"
-              className={`nav-link ${isActive("/hoi-dap") ? "active" : ""}`}
-              data-nav="qna"
-              data-i18n="nav.qna"
-            >
-              {t("nav.qna", "Hỏi đáp")}
-            </Link>
-            <div className="nav-item">
-              <Link
-                href="/thu-vien-anh"
-                className={`nav-link ${
-                  isActive("/thu-vien-anh") || isActive("/video") ? "active" : ""
-                }`}
-              >
-                <span data-i18n="nav.gallery">
-                  {t("nav.gallery", "Thư viện")}
-                </span>{" "}
-                <svg className="chev">
-                  <use href="#i-chev-down" />
-                </svg>
-              </Link>
-              <div className="nav-dropdown">
-                <Link href="/thu-vien-anh">
-                  <svg className="ic">
-                    <use href="#i-image" />
-                  </svg>
-                  Thư viện ảnh{" "}
-                  <span className="sub">Album hoạt động</span>
-                </Link>
-                <Link href="/video">
-                  <svg className="ic">
-                    <use href="#i-news" />
-                  </svg>
-                  Video <span className="sub">Phim tài liệu</span>
-                </Link>
-              </div>
-            </div>
-            <Link
-              href="/lich-tiep-cong-dan"
-              className={`nav-link ${
-                isActive("/lich-tiep-cong-dan") ? "active" : ""
-              }`}
-              data-nav="schedule"
-              data-i18n="nav.schedule"
-            >
-              {t("nav.schedule", "Lịch tiếp dân")}
-            </Link>
-            <Link
-              href="/truy-na"
-              className={`nav-link ${isActive("/truy-na") ? "active" : ""}`}
-              data-nav="wanted"
-              data-i18n="nav.wanted"
-            >
-              {t("nav.wanted", "Truy nã")}
-            </Link>
-            <Link
-              href="/phan-anh"
-              className="nav-cta-btn"
-              data-nav="feedback"
-              data-i18n="nav.cta"
-            >
+              );
+            })}
+            <Link href="/phan-anh" className="nav-cta-btn" data-nav="feedback">
               {t("nav.cta", "Phản ánh ngay")}
             </Link>
             <button

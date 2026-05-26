@@ -31,3 +31,23 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Lịch tiếp công dân", href: "/lich-tiep-cong-dan" },
   { label: "Truy nã", href: "/truy-na" },
 ];
+
+export const HEADER_NAV_ITEMS: NavItem[] = [
+  { label: "Trang chủ", href: "/" },
+  { label: "Tin tức", href: "/tin-tuc" },
+  { label: "Thủ tục hành chính", href: "/thu-tuc-hanh-chinh" },
+  { label: "Văn bản pháp luật", href: "/van-ban-phap-luat" },
+  { label: "Hỏi đáp", href: "/hoi-dap" },
+];
+
+export interface UtilityAction {
+  label: string;
+  href: string;
+  icon: string;
+  highlight?: boolean;
+}
+
+export const UTILITY_ACTIONS: UtilityAction[] = [
+  { label: "Lịch tiếp dân", href: "/lich-tiep-cong-dan", icon: "#i-cal" },
+  { label: "Phản ánh", href: "/phan-anh", icon: "#i-mail", highlight: true },
+];

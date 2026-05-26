@@ -66,20 +66,31 @@ export default async function LegalDocDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {doc.fileUrl && (
-              <div className="mt-5">
-                <a
-                  href={doc.fileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="doc-download inline-flex items-center gap-2"
-                  title="Tải xuống PDF"
-                >
-                  <svg width="18" height="18"><use href="#i-download" /></svg>
-                  Tải văn bản (PDF)
-                </a>
-              </div>
-            )}
+            {(() => {
+              const fileHref = doc.attachedFileUrl ?? doc.fileUrl;
+              if (!fileHref) return null;
+              const isPdf = fileHref.toLowerCase().includes(".pdf");
+              return (
+                <div className="mt-5 space-y-3">
+                  <a
+                    href={fileHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="doc-download inline-flex items-center gap-2"
+                  >
+                    <svg width="18" height="18"><use href="#i-download" /></svg>
+                    {isPdf ? "Xem / Tải văn bản (PDF)" : "Tải văn bản đính kèm"}
+                  </a>
+                  {isPdf && (
+                    <iframe
+                      src={fileHref}
+                      className="doc-pdf-viewer"
+                      title="Xem PDF"
+                    />
+                  )}
+                </div>
+              );
+            })()}
           </div>
 
           {doc.summary && (

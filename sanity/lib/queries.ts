@@ -92,7 +92,10 @@ export async function getLegalDocuments(category?: string): Promise<LegalDocumen
 export async function getLegalDocBySlug(slug: string): Promise<LegalDocument | null> {
   return safeFetch(
     () => client.fetch(
-      groq`*[_type == "legalDocument" && slug.current == $slug][0]`,
+      groq`*[_type == "legalDocument" && slug.current == $slug][0]{
+        ...,
+        "attachedFileUrl": attachedFile.asset->url
+      }`,
       { slug },
       noCache
     ),
