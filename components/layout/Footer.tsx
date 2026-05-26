@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/constants/site";
 import { NAV_ITEMS } from "@/constants/nav";
+import { useI18n } from "@/lib/i18n";
 import type { SiteSettings } from "@/types/siteSettings";
 
 const RELATED_AGENCIES = [
@@ -23,6 +26,7 @@ interface FooterProps {
 }
 
 export default function Footer({ siteSettings }: FooterProps = {}) {
+  const { t } = useI18n();
   const relatedAgencies =
     siteSettings?.relatedAgencies && siteSettings.relatedAgencies.length > 0
       ? siteSettings.relatedAgencies
@@ -60,7 +64,7 @@ export default function Footer({ siteSettings }: FooterProps = {}) {
         </div>
 
         <div>
-          <h3 className="footer-h" data-i18n="footer.h.links">Liên kết nhanh</h3>
+          <h3 className="footer-h" data-i18n="footer.h.links">{t("footer.h.links", "Liên kết nhanh")}</h3>
           <ul className="footer-list">
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>
@@ -71,7 +75,7 @@ export default function Footer({ siteSettings }: FooterProps = {}) {
         </div>
 
         <div>
-          <h3 className="footer-h" data-i18n="footer.h.agencies">Cơ quan liên quan</h3>
+          <h3 className="footer-h" data-i18n="footer.h.agencies">{t("footer.h.agencies", "Cơ quan liên quan")}</h3>
           <ul className="footer-list">
             {relatedAgencies.map((agency) => (
               <li key={agency.label}>
@@ -82,7 +86,7 @@ export default function Footer({ siteSettings }: FooterProps = {}) {
             ))}
           </ul>
 
-          <h3 className="footer-h mt-6" data-i18n="footer.h.social">Theo dõi chúng tôi</h3>
+          <h3 className="footer-h mt-6" data-i18n="footer.h.social">{t("footer.h.social", "Theo dõi chúng tôi")}</h3>
           <div className="flex gap-2 mt-4">
             <a href={siteSettings?.facebook ?? SITE.facebook} className="footer-social-btn" aria-label="Facebook">
               <svg width="14" height="14"><use href="#i-fb" /></svg>
@@ -94,7 +98,7 @@ export default function Footer({ siteSettings }: FooterProps = {}) {
         </div>
 
         <div>
-          <h3 className="footer-h" data-i18n="footer.h.emergency">Đường dây khẩn cấp</h3>
+          <h3 className="footer-h" data-i18n="footer.h.emergency">{t("footer.h.emergency", "Đường dây khẩn cấp")}</h3>
           <div className="footer-emergency">
             <div className="label">Phản ánh tội phạm 24/7</div>
             <div className="number">{siteSettings?.hotline ?? SITE.hotline}</div>

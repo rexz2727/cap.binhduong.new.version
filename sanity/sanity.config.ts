@@ -5,6 +5,13 @@ import { schemaTypes } from "./schemas";
 import { structure } from "./structure";
 import { theme } from "./theme";
 import { StudioLogo } from "./components/StudioLogo";
+import {
+  createTranslateAction,
+  translateNewsAction,
+  translateLegalAction,
+  translateProcedureAction,
+  translatePersonnelAction,
+} from "./actions/translateAction";
 
 export default defineConfig({
   name: "cong-an-binh-duong",
@@ -18,6 +25,18 @@ export default defineConfig({
   studio: {
     components: {
       logo: StudioLogo,
+    },
+  },
+  document: {
+    actions: (prev, { schemaType }) => {
+      const actionMap: Record<string, ReturnType<typeof createTranslateAction>> = {
+        newsPost: translateNewsAction,
+        legalDocument: translateLegalAction,
+        procedure: translateProcedureAction,
+        personnel: translatePersonnelAction,
+      };
+      const translateAction = actionMap[schemaType];
+      return translateAction ? [...prev, translateAction] : prev;
     },
   },
 });

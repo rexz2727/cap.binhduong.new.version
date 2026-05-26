@@ -1,9 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import type { LegalDocumentPreview } from "@/types/legalDocument";
 import { LEGAL_CATEGORY_LABELS } from "@/constants/legal";
+import { useI18n } from "@/lib/i18n";
 
 export default function LegalDocCard({ doc }: { doc: LegalDocumentPreview }) {
+  const { lang } = useI18n();
   const formattedDate = new Date(doc.issuedDate).toLocaleDateString("vi-VN");
+
+  const docI18n = doc as LegalDocumentPreview & { titleEn?: string };
+  const displayTitle =
+    lang === "en" && docI18n.titleEn ? docI18n.titleEn : doc.title;
 
   return (
     <div className="doc-card">
@@ -13,7 +21,7 @@ export default function LegalDocCard({ doc }: { doc: LegalDocumentPreview }) {
       <div className="b">
         <span className="badge-type">{LEGAL_CATEGORY_LABELS[doc.category] ?? doc.category}</span>
         <Link href={`/van-ban-phap-luat/${doc.slug.current}`}>
-          <h4>{doc.title}</h4>
+          <h4>{displayTitle}</h4>
         </Link>
         <div className="meta">
           <b>Số {doc.documentNumber}</b> · {doc.issuingBody} · {formattedDate}

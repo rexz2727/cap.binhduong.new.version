@@ -6,12 +6,16 @@ export const newsSchema = defineType({
   title: "Tin tức",
   type: "document",
   icon: DocumentTextIcon,
+  groups: [
+    { name: "main", title: "Nội dung chính", default: true },
+    { name: "english", title: "🇬🇧 Tiếng Anh" },
+  ],
   fields: [
-    defineField({ name: "title", title: "Tiêu đề", type: "string", validation: (r) => r.required().max(200) }),
-    defineField({ name: "slug", title: "Đường dẫn", type: "slug", options: { source: "title", maxLength: 100 }, validation: (r) => r.required() }),
-    defineField({ name: "publishedAt", title: "Ngày đăng", type: "datetime", validation: (r) => r.required() }),
+    defineField({ name: "title", title: "Tiêu đề", type: "string", group: "main", validation: (r) => r.required().max(200) }),
+    defineField({ name: "slug", title: "Đường dẫn", type: "slug", group: "main", options: { source: "title", maxLength: 100 }, validation: (r) => r.required() }),
+    defineField({ name: "publishedAt", title: "Ngày đăng", type: "datetime", group: "main", validation: (r) => r.required() }),
     defineField({
-      name: "category", title: "Phân loại", type: "string",
+      name: "category", title: "Phân loại", type: "string", group: "main",
       options: {
         list: [
           { title: "An ninh trật tự", value: "an-ninh-trat-tu" },
@@ -24,13 +28,16 @@ export const newsSchema = defineType({
       },
       validation: (r) => r.required(),
     }),
-    defineField({ name: "isFeatured", title: "Ghim lên slider trang chủ", type: "boolean", initialValue: false }),
-    defineField({ name: "excerpt", title: "Tóm tắt", type: "text", rows: 3, validation: (r) => r.required().max(300) }),
+    defineField({ name: "isFeatured", title: "Ghim lên slider trang chủ", type: "boolean", group: "main", initialValue: false }),
+    defineField({ name: "excerpt", title: "Tóm tắt", type: "text", rows: 3, group: "main", validation: (r) => r.required().max(300) }),
     defineField({
-      name: "mainImage", title: "Ảnh đại diện", type: "image", options: { hotspot: true },
+      name: "mainImage", title: "Ảnh đại diện", type: "image", group: "main", options: { hotspot: true },
       fields: [defineField({ name: "alt", title: "Mô tả ảnh", type: "string" })],
     }),
-    defineField({ name: "body", title: "Nội dung", type: "array", of: [{ type: "block" }, { type: "image" }] }),
+    defineField({ name: "body", title: "Nội dung", type: "array", group: "main", of: [{ type: "block" }, { type: "image" }] }),
+    defineField({ name: "titleEn", title: "Tiêu đề (EN)", type: "string", group: "english" }),
+    defineField({ name: "excerptEn", title: "Tóm tắt (EN)", type: "text", rows: 3, group: "english" }),
+    defineField({ name: "bodyEn", title: "Nội dung (EN)", type: "array", of: [{ type: "block" }], group: "english" }),
   ],
   orderings: [{ title: "Mới nhất", name: "publishedAtDesc", by: [{ field: "publishedAt", direction: "desc" }] }],
   preview: {

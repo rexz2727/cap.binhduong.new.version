@@ -20,7 +20,7 @@ export default function NewsCarousel({ posts }: Props) {
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
 
   if (!posts.length) return null;
 
@@ -28,34 +28,39 @@ export default function NewsCarousel({ posts }: Props) {
     <div className="news-carousel">
       <div className="news-carousel-inner" ref={emblaRef}>
         <div className="news-carousel-track">
-          {posts.map((post) => (
-            <div className="carousel-slide" key={post._id}>
-              {post.mainImage ? (
-                <Image
-                  src={urlFor(post.mainImage).width(1200).height(600).url()}
-                  alt={post.title}
-                  fill
-                  sizes="100vw"
-                  priority
-                  className="object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-police-navy-dark" />
-              )}
-              <div className="carousel-caption">
-                <div className="container">
-                  <span className="cat">{post.category ?? "Tin tức"}</span>
-                  <Link href={`/tin-tuc/${post.slug.current}`}>
-                    <h2 className="title">{post.title}</h2>
-                  </Link>
-                  <Link href="/tin-tuc" className="read-more" data-i18n="section.news.link">
-                    {t("section.news.link", "Xem tất cả tin tức")}
-                    <svg width="1em" height="1em"><use href="#i-arrow" /></svg>
-                  </Link>
+          {posts.map((post) => {
+            const postI18n = post as NewsPostPreview & { titleEn?: string };
+            const displayTitle =
+              lang === "en" && postI18n.titleEn ? postI18n.titleEn : post.title;
+            return (
+              <div className="carousel-slide" key={post._id}>
+                {post.mainImage ? (
+                  <Image
+                    src={urlFor(post.mainImage).width(1200).height(600).url()}
+                    alt={displayTitle}
+                    fill
+                    sizes="100vw"
+                    priority
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-police-navy-dark" />
+                )}
+                <div className="carousel-caption">
+                  <div className="container">
+                    <span className="cat">{post.category ?? "Tin tức"}</span>
+                    <Link href={`/tin-tuc/${post.slug.current}`}>
+                      <h2 className="title">{displayTitle}</h2>
+                    </Link>
+                    <Link href="/tin-tuc" className="read-more" data-i18n="section.news.link">
+                      {t("section.news.link", "Xem tất cả tin tức")}
+                      <svg width="1em" height="1em"><use href="#i-arrow" /></svg>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       <div className="carousel-nav">

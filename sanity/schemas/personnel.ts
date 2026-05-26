@@ -11,6 +11,8 @@ export const personnelSchema = defineType({
     defineField({ name: "rank", title: "Cấp bậc", type: "string", validation: (r) => r.required() }),
     defineField({ name: "position", title: "Chức vụ", type: "string", validation: (r) => r.required() }),
     defineField({ name: "unit", title: "Đơn vị", type: "string", initialValue: "Công an phường Bình Dương" }),
+    defineField({ name: "positionEn", title: "Chức vụ (EN)", type: "string" }),
+    defineField({ name: "unitEn", title: "Đơn vị (EN)", type: "string" }),
     defineField({ name: "photo", title: "Ảnh", type: "image", options: { hotspot: true } }),
     defineField({ name: "order", title: "Thứ tự hiển thị", type: "number", initialValue: 99 }),
   ],

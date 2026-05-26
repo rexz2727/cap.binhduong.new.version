@@ -6,6 +6,8 @@ export interface Personnel {
   rank: string;
   position: string;
   unit: string;
+  positionEn?: string;
+  unitEn?: string;
   photo?: SanityImage;
   order: number;
 }

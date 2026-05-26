@@ -8,6 +8,7 @@ export const announcementSchema = defineType({
   icon: BellIcon,
   fields: [
     defineField({ name: "text", title: "Nội dung thông báo", type: "string", validation: (r) => r.required().max(200) }),
+    defineField({ name: "textEn", title: "Nội dung (EN)", type: "string" }),
     defineField({ name: "url", title: "Link khi click (tuỳ chọn)", type: "url" }),
     defineField({ name: "isActive", title: "Đang hiển thị", type: "boolean", initialValue: true }),
     defineField({ name: "expiryDate", title: "Tự ẩn sau ngày", type: "datetime" }),

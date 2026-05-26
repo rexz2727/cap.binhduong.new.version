@@ -40,14 +40,16 @@ export const HEADER_NAV_ITEMS: NavItem[] = [
   { label: "Hỏi đáp", href: "/hoi-dap" },
 ];
 
+import type { I18nKey } from "@/lib/i18n";
+
 export interface UtilityAction {
-  label: string;
+  labelKey: I18nKey;
   href: string;
   icon: string;
   highlight?: boolean;
 }
 
 export const UTILITY_ACTIONS: UtilityAction[] = [
-  { label: "Lịch tiếp dân", href: "/lich-tiep-cong-dan", icon: "#i-cal" },
-  { label: "Phản ánh", href: "/phan-anh", icon: "#i-mail", highlight: true },
-];
+  { labelKey: "util.schedule", href: "/lich-tiep-cong-dan", icon: "#i-cal" },
+  { labelKey: "util.feedback", href: "/phan-anh", icon: "#i-mail", highlight: true },
+] as const;

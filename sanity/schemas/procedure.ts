@@ -30,6 +30,8 @@ export const procedureSchema = defineType({
       }],
     }),
     defineField({ name: "onlineServiceUrl", title: "Link nộp hồ sơ trực tuyến (Cổng DVC)", type: "url" }),
+    defineField({ name: "titleEn", title: "Tên thủ tục (EN)", type: "string" }),
+    defineField({ name: "summaryEn", title: "Mô tả ngắn (EN)", type: "text", rows: 3 }),
   ],
   preview: {
     select: { title: "title", category: "category", processingTime: "processingTime" },

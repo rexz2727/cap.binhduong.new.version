@@ -38,7 +38,7 @@ export async function getLatestNews(limit = 6): Promise<NewsPostPreview[]> {
   return safeFetch(
     () => client.fetch(
       groq`*[_type == "newsPost"] | order(publishedAt desc) [0...$limit] {
-        _id, title, slug, publishedAt, excerpt, mainImage, category
+        _id, title, titleEn, slug, publishedAt, excerpt, excerptEn, mainImage, category
       }`,
       { limit },
       noCache
@@ -51,7 +51,7 @@ export async function getNewsByCategory(category: string, limit = 20): Promise<N
   return safeFetch(
     () => client.fetch(
       groq`*[_type == "newsPost" && category == $category] | order(publishedAt desc) [0...$limit] {
-        _id, title, slug, publishedAt, excerpt, mainImage, category
+        _id, title, titleEn, slug, publishedAt, excerpt, excerptEn, mainImage, category
       }`,
       { category, limit },
       noCache
@@ -64,7 +64,7 @@ export async function getNewsBySlug(slug: string): Promise<NewsPost | null> {
   return safeFetch(
     () => client.fetch(
       groq`*[_type == "newsPost" && slug.current == $slug][0] {
-        _id, title, slug, publishedAt, excerpt, mainImage, category, body
+        _id, title, titleEn, slug, publishedAt, excerpt, excerptEn, mainImage, category, body, bodyEn
       }`,
       { slug },
       noCache
@@ -81,7 +81,7 @@ export async function getLegalDocuments(category?: string): Promise<LegalDocumen
     : groq`*[_type == "legalDocument"]`;
   return safeFetch(
     () => client.fetch(
-      groq`${filter} | order(issuedDate desc) { _id, title, slug, documentNumber, issuedDate, category, issuingBody }`,
+      groq`${filter} | order(issuedDate desc) { _id, title, titleEn, slug, documentNumber, issuedDate, category, issuingBody }`,
       { category: category ?? "" },
       noCache
     ),
@@ -108,7 +108,7 @@ export async function getLegalDocBySlug(slug: string): Promise<LegalDocument | n
 export async function getPersonnel(): Promise<Personnel[]> {
   return safeFetch(
     () => client.fetch(
-      groq`*[_type == "personnel"] | order(order asc) { _id, fullName, rank, position, unit, photo, order }`,
+      groq`*[_type == "personnel"] | order(order asc) { _id, fullName, rank, position, positionEn, unit, unitEn, photo, order }`,
       {},
       noCache
     ),
@@ -124,7 +124,7 @@ export async function getProcedures(category?: string): Promise<Procedure[]> {
     : groq`*[_type == "procedure"]`;
   return safeFetch(
     () => client.fetch(
-      groq`${filter} | order(title asc) { _id, title, slug, category, processingTime, fee, onlineServiceUrl }`,
+      groq`${filter} | order(title asc) { _id, title, titleEn, slug, category, processingTime, fee, onlineServiceUrl }`,
       { category: category ?? "" },
       noCache
     ),
@@ -193,7 +193,7 @@ export async function getActiveAnnouncements(): Promise<Announcement[]> {
     () => client.fetch(
       groq`*[_type == "announcement" && isActive == true && (expiryDate > now() || !defined(expiryDate))]
         | order(priority asc)
-        { _id, text, url }`,
+        { _id, text, textEn, url }`,
       {},
       noCache
     ),
@@ -437,7 +437,7 @@ export async function getLegalDocsFiltered(
         && ($category == null || category == $category)
         && ($status == null || status == $status)]
         | order(issuedDate desc) [0...$limit] {
-        _id, title, slug, documentNumber, issuedDate, category, issuingBody, effectiveDate, status
+        _id, title, titleEn, slug, documentNumber, issuedDate, category, issuingBody, effectiveDate, status
       }`,
       { category: category ?? null, status: status ?? null, limit },
       noCache

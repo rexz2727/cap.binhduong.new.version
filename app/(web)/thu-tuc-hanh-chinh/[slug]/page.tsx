@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { getProcedureBySlug } from "@/sanity/lib/queries";
+import { getLang } from "@/lib/getLang";
 import PageHeader from "@/components/ui/PageHeader";
 import { PROCEDURE_CATEGORY_LABELS } from "@/constants/procedure";
 
@@ -18,16 +19,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProcedureDetailPage({ params }: Props) {
   const { slug } = await params;
-  const proc = await getProcedureBySlug(slug);
+  const [proc, lang] = await Promise.all([
+    getProcedureBySlug(slug),
+    getLang(),
+  ]);
   if (!proc) notFound();
+
+  const pr = proc as typeof proc & { titleEn?: string; summaryEn?: string };
+  const title = lang === "en" && pr.titleEn ? pr.titleEn : proc.title;
 
   return (
     <>
       <PageHeader
-        title={proc.title}
+        title={title}
         breadcrumbs={[
           { label: "Thủ tục hành chính", href: "/thu-tuc-hanh-chinh" },
-          { label: proc.title },
+          { label: title },
         ]}
       />
 

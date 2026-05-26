@@ -64,6 +64,33 @@ export const I18N = {
     "contact.phone.label": "Điện thoại",
     "contact.email.label": "Email",
     "contact.hours.label": "Giờ làm việc",
+    "svc.cccd": "Cấp CCCD",
+    "svc.cccd.desc": "Căn cước công dân",
+    "svc.residence": "Đăng ký cư trú",
+    "svc.residence.desc": "Thường trú, tạm trú",
+    "svc.vehicle": "Đăng ký xe",
+    "svc.vehicle.desc": "Mô tô, xe gắn máy",
+    "svc.passport": "Hộ chiếu",
+    "svc.passport.desc": "Cấp, gia hạn hộ chiếu",
+    "svc.appointment": "Đặt lịch hẹn",
+    "svc.appointment.desc": "Lịch tiếp công dân",
+    "svc.hoidap": "Hỏi đáp",
+    "svc.hoidap.desc": "Câu hỏi thường gặp",
+    "util.schedule": "Lịch tiếp dân",
+    "util.feedback": "Phản ánh",
+    "doc.issued": "Ngày ban hành",
+    "doc.effective": "Có hiệu lực",
+    "doc.issuer": "Cơ quan ban hành",
+    "doc.number": "Số hiệu",
+    "doc.download": "Xem / Tải văn bản (PDF)",
+    "doc.attach": "Tải văn bản đính kèm",
+    "doc.summary": "Tóm tắt nội dung",
+    "doc.viewPdf": "Xem PDF",
+    "common.backToList": "Quay lại danh sách",
+    "common.readMore": "Đọc thêm",
+    "common.publishedAt": "Ngày đăng",
+    "common.category": "Danh mục",
+    "common.noEn": "Nội dung chỉ có bằng tiếng Việt",
   },
   en: {
     "hotline": "Hotline:",
@@ -126,6 +153,33 @@ export const I18N = {
     "contact.phone.label": "Phone",
     "contact.email.label": "Email",
     "contact.hours.label": "Working Hours",
+    "svc.cccd": "ID Card",
+    "svc.cccd.desc": "Citizen ID card",
+    "svc.residence": "Residence Registration",
+    "svc.residence.desc": "Permanent / temporary residence",
+    "svc.vehicle": "Vehicle Registration",
+    "svc.vehicle.desc": "Motorcycle, motorbike",
+    "svc.passport": "Passport",
+    "svc.passport.desc": "Issue or renew passport",
+    "svc.appointment": "Book Appointment",
+    "svc.appointment.desc": "Citizen reception schedule",
+    "svc.hoidap": "Q&A",
+    "svc.hoidap.desc": "Frequently asked questions",
+    "util.schedule": "Reception Schedule",
+    "util.feedback": "Submit Report",
+    "doc.issued": "Issued Date",
+    "doc.effective": "Effective Date",
+    "doc.issuer": "Issuing Body",
+    "doc.number": "Document No.",
+    "doc.download": "View / Download (PDF)",
+    "doc.attach": "Download attachment",
+    "doc.summary": "Summary",
+    "doc.viewPdf": "View PDF",
+    "common.backToList": "Back to list",
+    "common.readMore": "Read more",
+    "common.publishedAt": "Published",
+    "common.category": "Category",
+    "common.noEn": "Content available in Vietnamese only",
   },
 } as const;
 
@@ -150,6 +204,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         setLang(savedLang);
       }, 0);
       document.documentElement.lang = savedLang;
+      document.cookie = `lang=${savedLang};path=/;max-age=31536000`;
     }
   }, []);
 
@@ -159,6 +214,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       setLang(nextLang);
       document.documentElement.lang = nextLang;
       localStorage.setItem("lang", nextLang);
+      document.cookie = `lang=${nextLang};path=/;max-age=31536000`;
     });
   };
 

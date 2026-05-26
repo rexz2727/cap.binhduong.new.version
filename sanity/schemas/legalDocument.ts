@@ -45,6 +45,8 @@ export const legalDocumentSchema = defineType({
       options: { accept: ".pdf,.doc,.docx,.txt,.html" },
     }),
     defineField({ name: "body", title: "Nội dung chi tiết", type: "array", of: [{ type: "block" }] }),
+    defineField({ name: "titleEn", title: "Tiêu đề (EN)", type: "string" }),
+    defineField({ name: "summaryEn", title: "Tóm tắt (EN)", type: "text", rows: 4 }),
   ],
   preview: {
     select: { title: "title", documentNumber: "documentNumber", status: "status", issuedDate: "issuedDate" },

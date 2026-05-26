@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function NewsTicker({ items }: Props) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
 
   if (!items || !items.length) return null;
 
@@ -23,17 +23,22 @@ export default function NewsTicker({ items }: Props) {
       </span>
       <div className="ticker-viewport">
         <div className="ticker-track">
-          {doubled.map((item, i) => (
-            <span key={`${item._id}-${i}`} className="ticker-item">
-              {item.url ? (
-                <Link href={item.url} className="hover:underline">
-                  {item.text}
-                </Link>
-              ) : (
-                item.text
-              )}
-            </span>
-          ))}
+          {doubled.map((item, i) => {
+            const itemI18n = item as Announcement & { textEn?: string };
+            const displayText =
+              lang === "en" && itemI18n.textEn ? itemI18n.textEn : item.text;
+            return (
+              <span key={`${item._id}-${i}`} className="ticker-item">
+                {item.url ? (
+                  <Link href={item.url} className="hover:underline">
+                    {displayText}
+                  </Link>
+                ) : (
+                  displayText
+                )}
+              </span>
+            );
+          })}
         </div>
       </div>
     </div>

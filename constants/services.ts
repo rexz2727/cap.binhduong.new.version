@@ -1,15 +1,17 @@
+import type { I18nKey } from "@/lib/i18n";
+
 export interface ServiceCard {
-  label: string;
-  description: string;
+  labelKey: I18nKey;
+  descKey: I18nKey;
   href: string;
   icon: string;
 }
 
 export const SERVICE_CARDS: ServiceCard[] = [
-  { label: "Cấp CCCD", description: "Căn cước công dân", href: "/thu-tuc-hanh-chinh", icon: "#i-doc" },
-  { label: "Đăng ký cư trú", description: "Thường trú, tạm trú", href: "/thu-tuc-hanh-chinh", icon: "#i-doc" },
-  { label: "Đăng ký xe", description: "Mô tô, xe gắn máy", href: "/thu-tuc-hanh-chinh", icon: "#i-shield" },
-  { label: "Hộ chiếu", description: "Cấp, gia hạn hộ chiếu", href: "/thu-tuc-hanh-chinh", icon: "#i-globe" },
-  { label: "Đặt lịch hẹn", description: "Lịch tiếp công dân", href: "/lich-tiep-cong-dan", icon: "#i-cal" },
-  { label: "Gửi phản ánh", description: "Kiến nghị trực tuyến", href: "/phan-anh", icon: "#i-mail" },
+  { labelKey: "svc.cccd", descKey: "svc.cccd.desc", href: "/thu-tuc-hanh-chinh", icon: "#i-doc" },
+  { labelKey: "svc.residence", descKey: "svc.residence.desc", href: "/thu-tuc-hanh-chinh", icon: "#i-doc" },
+  { labelKey: "svc.vehicle", descKey: "svc.vehicle.desc", href: "/thu-tuc-hanh-chinh", icon: "#i-shield" },
+  { labelKey: "svc.passport", descKey: "svc.passport.desc", href: "/thu-tuc-hanh-chinh", icon: "#i-globe" },
+  { labelKey: "svc.appointment", descKey: "svc.appointment.desc", href: "/lich-tiep-cong-dan", icon: "#i-cal" },
+  { labelKey: "svc.hoidap", descKey: "svc.hoidap.desc", href: "/hoi-dap", icon: "#i-help" },
 ];

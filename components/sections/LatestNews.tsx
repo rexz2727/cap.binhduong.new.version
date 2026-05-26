@@ -13,12 +13,18 @@ function catPillClass(category: NewsCategory) {
 }
 
 export default function LatestNews({ posts }: { posts: NewsPostPreview[] }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
 
   if (posts.length === 0) return null;
 
   const mainPost = posts[0];
   const sidePosts = posts.slice(1, 5);
+
+  const mainPostI18n = mainPost as NewsPostPreview & { titleEn?: string; excerptEn?: string };
+  const mainTitle =
+    lang === "en" && mainPostI18n.titleEn ? mainPostI18n.titleEn : mainPost.title;
+  const mainExcerpt =
+    lang === "en" && mainPostI18n.excerptEn ? mainPostI18n.excerptEn : mainPost.excerpt;
 
   const fullDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString("vi-VN", {
@@ -59,7 +65,7 @@ export default function LatestNews({ posts }: { posts: NewsPostPreview[] }) {
               {mainPost.mainImage ? (
                 <Image
                   src={urlFor(mainPost.mainImage).width(800).height(500).url()!}
-                  alt={mainPost.mainImage.alt ?? mainPost.title}
+                  alt={mainPost.mainImage.alt ?? mainTitle}
                   fill
                   className="object-cover"
                 />
@@ -74,8 +80,8 @@ export default function LatestNews({ posts }: { posts: NewsPostPreview[] }) {
                 </span>
                 <span>{fullDate(mainPost.publishedAt)}</span>
               </div>
-              <h3>{mainPost.title}</h3>
-              <p>{mainPost.excerpt}</p>
+              <h3>{mainTitle}</h3>
+              <p>{mainExcerpt}</p>
               <span className="section-link">
                 Đọc tiếp
                 <svg className="arrow" width="14" height="14">
@@ -86,35 +92,40 @@ export default function LatestNews({ posts }: { posts: NewsPostPreview[] }) {
           </Link>
 
           <div className="news-side">
-            {sidePosts.map((post) => (
-              <Link
-                href={`/tin-tuc/${post.slug.current}`}
-                key={post._id}
-                className="news-item-side"
-              >
-                <div className="thumb">
-                  {post.mainImage ? (
-                    <Image
-                      src={urlFor(post.mainImage).width(200).height(200).url()!}
-                      alt={post.mainImage.alt ?? post.title}
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="placeholder-img">img</div>
-                  )}
-                </div>
-                <div>
-                  <div className="news-meta">
-                    <span className={catPillClass(post.category)}>
-                      {NEWS_CATEGORY_LABELS[post.category]}
-                    </span>
-                    <span>{shortDate(post.publishedAt)}</span>
+            {sidePosts.map((post) => {
+              const postI18n = post as NewsPostPreview & { titleEn?: string };
+              const sideTitle =
+                lang === "en" && postI18n.titleEn ? postI18n.titleEn : post.title;
+              return (
+                <Link
+                  href={`/tin-tuc/${post.slug.current}`}
+                  key={post._id}
+                  className="news-item-side"
+                >
+                  <div className="thumb">
+                    {post.mainImage ? (
+                      <Image
+                        src={urlFor(post.mainImage).width(200).height(200).url()!}
+                        alt={post.mainImage.alt ?? sideTitle}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="placeholder-img">img</div>
+                    )}
                   </div>
-                  <h4>{post.title}</h4>
-                </div>
-              </Link>
-            ))}
+                  <div>
+                    <div className="news-meta">
+                      <span className={catPillClass(post.category)}>
+                        {NEWS_CATEGORY_LABELS[post.category]}
+                      </span>
+                      <span>{shortDate(post.publishedAt)}</span>
+                    </div>
+                    <h4>{sideTitle}</h4>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

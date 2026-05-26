@@ -19,6 +19,9 @@ export interface NewsPost {
   category: NewsCategory;
   isFeatured?: boolean;
   body: PortableTextBlock[];
+  titleEn?: string;
+  excerptEn?: string;
+  bodyEn?: import("@portabletext/types").PortableTextBlock[];
 }
 
 export type NewsPostPreview = Pick<

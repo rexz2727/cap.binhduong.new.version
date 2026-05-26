@@ -97,7 +97,7 @@ export default function Header({ announcements, siteSettings }: Props) {
                 <svg width="12" height="12" aria-hidden="true">
                   <use href={action.icon} />
                 </svg>
-                {action.label}
+                {t(action.labelKey)}
               </Link>
             ))}
             <span className="sep">|</span>
@@ -211,9 +211,6 @@ export default function Header({ announcements, siteSettings }: Props) {
                 </Link>
               );
             })}
-            <Link href="/phan-anh" className="nav-cta-btn" data-nav="feedback">
-              {t("nav.cta", "Phản ánh ngay")}
-            </Link>
             <button
               className="search-icon-btn"
               aria-label="Tìm kiếm"

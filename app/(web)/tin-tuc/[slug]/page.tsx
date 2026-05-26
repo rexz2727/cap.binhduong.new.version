@@ -4,6 +4,7 @@ import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 import { urlFor } from "@/sanity/lib/image";
 import { getNewsBySlug } from "@/sanity/lib/queries";
+import { getLang } from "@/lib/getLang";
 import PageHeader from "@/components/ui/PageHeader";
 import Badge from "@/components/ui/Badge";
 import PrintButton from "@/components/ui/PrintButton";
@@ -14,34 +15,50 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getNewsBySlug(slug);
+  const [post, lang] = await Promise.all([getNewsBySlug(slug), getLang()]);
   if (!post) return {};
-  return { title: post.title, description: post.excerpt };
+  const p = post as typeof post & { titleEn?: string; excerptEn?: string };
+  const title = lang === "en" && p.titleEn ? p.titleEn : post.title;
+  const description =
+    lang === "en" && p.excerptEn ? p.excerptEn : post.excerpt;
+  return { title, description };
 }
 
 export default async function NewsDetailPage({ params }: Props) {
   const { slug } = await params;
-  const post = await getNewsBySlug(slug);
+  const [post, lang] = await Promise.all([getNewsBySlug(slug), getLang()]);
   if (!post) notFound();
+
+  const p = post as typeof post & {
+    titleEn?: string;
+    excerptEn?: string;
+    bodyEn?: typeof post.body;
+  };
+  const title = lang === "en" && p.titleEn ? p.titleEn : post.title;
+  const excerpt = lang === "en" && p.excerptEn ? p.excerptEn : post.excerpt;
+  const body = lang === "en" && p.bodyEn?.length ? p.bodyEn : post.body;
 
   const imgUrl = post.mainImage
     ? urlFor(post.mainImage).width(900).height(506).url()
     : null;
 
-  const formattedDate = new Date(post.publishedAt).toLocaleDateString("vi-VN", {
-    weekday: "long",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  const formattedDate = new Date(post.publishedAt).toLocaleDateString(
+    lang === "en" ? "en-US" : "vi-VN",
+    {
+      weekday: "long",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }
+  );
 
   return (
     <>
       <PageHeader
-        title={post.title}
+        title={title}
         breadcrumbs={[
           { label: "Tin tức", href: "/tin-tuc" },
-          { label: post.title },
+          { label: title },
         ]}
       />
       <section className="block">
@@ -55,7 +72,7 @@ export default async function NewsDetailPage({ params }: Props) {
             <div className="article-cover relative aspect-video overflow-hidden">
               <Image
                 src={imgUrl}
-                alt={post.mainImage?.alt ?? post.title}
+                alt={post.mainImage?.alt ?? title}
                 fill
                 style={{ objectFit: "cover" }}
                 priority
@@ -63,12 +80,12 @@ export default async function NewsDetailPage({ params }: Props) {
             </div>
           )}
 
-          {post.excerpt && (
-            <p className="article-lede">{post.excerpt}</p>
+          {excerpt && (
+            <p className="article-lede">{excerpt}</p>
           )}
 
           <div className="article-body">
-            <PortableText value={post.body} />
+            <PortableText value={body} />
           </div>
 
           <div className="article-foot">

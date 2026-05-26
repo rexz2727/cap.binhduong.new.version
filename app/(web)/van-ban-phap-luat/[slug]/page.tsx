@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLegalDocBySlug } from "@/sanity/lib/queries";
+import { getLang } from "@/lib/getLang";
 import PageHeader from "@/components/ui/PageHeader";
 import { LEGAL_CATEGORY_LABELS } from "@/constants/legal";
 
@@ -17,18 +18,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LegalDocDetailPage({ params }: Props) {
   const { slug } = await params;
-  const doc = await getLegalDocBySlug(slug);
+  const [doc, lang] = await Promise.all([getLegalDocBySlug(slug), getLang()]);
   if (!doc) notFound();
 
-  const issuedDate = new Date(doc.issuedDate).toLocaleDateString("vi-VN");
+  const d = doc as typeof doc & { titleEn?: string; summaryEn?: string };
+  const title = lang === "en" && d.titleEn ? d.titleEn : doc.title;
+  const summary = lang === "en" && d.summaryEn ? d.summaryEn : doc.summary;
+
+  const issuedDate = new Date(doc.issuedDate).toLocaleDateString(
+    lang === "en" ? "en-US" : "vi-VN"
+  );
   const effectiveDate = doc.effectiveDate
-    ? new Date(doc.effectiveDate).toLocaleDateString("vi-VN")
+    ? new Date(doc.effectiveDate).toLocaleDateString(
+        lang === "en" ? "en-US" : "vi-VN"
+      )
     : null;
 
   return (
     <>
       <PageHeader
-        title={doc.title}
+        title={title}
         breadcrumbs={[
           { label: "Văn bản pháp luật", href: "/van-ban-phap-luat" },
           { label: doc.documentNumber },
@@ -93,10 +102,10 @@ export default async function LegalDocDetailPage({ params }: Props) {
             })()}
           </div>
 
-          {doc.summary && (
+          {summary && (
             <div className="article-body">
               <h2>Tóm tắt nội dung</h2>
-              <p>{doc.summary}</p>
+              <p>{summary}</p>
             </div>
           )}
         </div>

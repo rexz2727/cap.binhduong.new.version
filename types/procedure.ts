@@ -17,5 +17,7 @@ export interface Procedure {
   steps: PortableTextBlock[];
   legalBasis?: string[];
   forms?: ProcedureForm[];
+  titleEn?: string;
+  summaryEn?: string;
   onlineServiceUrl?: string;
 }

@@ -16,9 +16,11 @@ export interface LegalDocument {
   fileUrl?: string;
   attachedFileUrl?: string;
   body?: import("@portabletext/types").PortableTextBlock[];
+  titleEn?: string;
+  summaryEn?: string;
 }
 
 export type LegalDocumentPreview = Pick<
   LegalDocument,
-  "_id" | "title" | "slug" | "documentNumber" | "issuedDate" | "category" | "issuingBody"
+  "_id" | "title" | "titleEn" | "slug" | "documentNumber" | "issuedDate" | "category" | "issuingBody"
 >;
