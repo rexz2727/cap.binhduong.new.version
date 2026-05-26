@@ -24,7 +24,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Translation not configured" }, { status: 503 });
   }
 
-  const prompt = `Translate the following Vietnamese texts to English. Return ONLY a JSON array of translated strings in the same order, no explanation.\n\nInput: ${JSON.stringify(texts)}`;
+  const prompt = `You are a professional legal translator specializing in Vietnamese government and law enforcement documents. Translate the following Vietnamese texts to English with strict accuracy and formal register. Rules:
+- Preserve all legal terminology, article numbers, decree references, and official titles exactly
+- Use formal legal English (e.g. "shall" not "will", "pursuant to" not "according to")
+- Do not paraphrase or simplify — translate faithfully
+- Keep proper nouns (place names, organization names) in Vietnamese or use their official English equivalents
+- Return ONLY a JSON array of translated strings in the same order, no explanation
+
+Input: ${JSON.stringify(texts)}`;
 
   const res = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
