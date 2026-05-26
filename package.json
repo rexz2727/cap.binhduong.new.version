@@ -19,12 +19,13 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "resend": "^6.12.3",
-    "sanity": "^5.25.1",
+    "sanity": "^5.26.0",
     "zod": "^4.4.3"
   },
   "overrides": {
     "postcss": "^8.5.10",
-    "js-yaml": "^3.14.2"
+    "js-yaml": "^3.14.2",
+    "uuid": ">=11.1.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
